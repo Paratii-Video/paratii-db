@@ -7,6 +7,7 @@ require('./db')
 
 const app = express()
 app.use(compression())
+app.use(express.json())
 
 app.use('/api/v1', api)
 

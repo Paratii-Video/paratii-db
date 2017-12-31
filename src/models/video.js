@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
-  id: {type: String, index: true},
+  _id: {type: String, index: true},
   title: {type: String, index: true},
   description: {type: String, index: true},
   price: Number, // FIXME this should be bignumber.js
