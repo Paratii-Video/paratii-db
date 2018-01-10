@@ -42,4 +42,14 @@ describe('# Parartii-db Video Model Spec', function () {
       done()
     })
   })
+
+  it('search videos and get results back', (done) => {
+    Video.search('Jim Simons', (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result).to.have.lengthOf(1)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
 })

@@ -75,6 +75,33 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
   })
 }
 
+/**
+ * find videos based on a keyword
+ * @param  {String}   keyword word to query db with.
+ * @param  {Function} cb      (err, result)
+ * @return {Array}           returns an array of videos matching keyword. limited to 6
+ */
+VideoSchema.statics.search = function (keyword, cb) {
+  const query = {
+    $or: [
+      { title: {$regex: keyword, $options: '-i'} },
+      { description: {$regex: keyword, $options: '-i'} },
+      { 'uploader.name': {$regex: keyword, $options: '-i'} },
+      { tags: {$regex: keyword, $options: '-i'} }
+    ]
+  }
+
+  // TODO Add pagination
+
+  this.find(query).limit(6).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, result)
+  })
+}
+
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video
