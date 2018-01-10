@@ -6,7 +6,14 @@ const Video = Models.video
 
 router.get('/:id/related', (req, res, next) => {
   // get related videoss
-  res.json({status: 'not yet implemented'})
+  // res.json({status: 'not yet implemented'})
+  Video.getRelated(req.params.id, (err, videos) => {
+    if (err) {
+      return res.send(err)
+    }
+
+    return res.json(videos)
+  })
 })
 
 /**
