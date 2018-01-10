@@ -7,8 +7,7 @@
     "test": "mocha tests/*.spec.js --exit",
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
-    "lint": "standard",
-    "mongod": "mongod --config /etc/mongod.conf"
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
