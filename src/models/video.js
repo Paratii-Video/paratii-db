@@ -53,6 +53,28 @@ VideoSchema.statics.bulkUpsert = function (videos, cb) {
   })
 }
 
+/**
+ * get related videos, currently it randomly returns 6 videos.
+ * @param  {String}   videoId id of the video you wanna get related videos to.
+ * @param  {Function} cb      (err, result)
+ * @return {Array}           returns an array of videos related.
+ */
+VideoSchema.statics.getRelated = function (videoId, cb) {
+  if (!videoId) {
+    return cb(new Error('video id is required for getting related ones'))
+  }
+
+  this.aggregate([
+    { $sample: {size: 6} }
+  ]).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, result)
+  })
+}
+
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video
