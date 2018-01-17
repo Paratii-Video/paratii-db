@@ -10,6 +10,7 @@ const VideoSchema = new Schema({
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
+  owner: String,
   stats: {
     likes: Number,
     dislikes: Number,
@@ -17,7 +18,8 @@ const VideoSchema = new Schema({
     dislikers: Array
   },
   uploader: {
-    name: {type: String, index: true}
+    name: {type: String, index: true},
+    address: {type: String, index: true}
   },
   tags: {type: Array, index: true}
 })

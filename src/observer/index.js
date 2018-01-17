@@ -6,7 +6,7 @@ module.exports = function (Paratii, registry) {
     provider: 'http://localhost:8545'
   })
   // just for testing
-  // paratii.setRegistry(registry)
+  paratii.eth.setRegistryAddress(registry)
   module.videoObserver = require('./video')(paratii)
   module.userObserver = require('./user')(paratii)
 

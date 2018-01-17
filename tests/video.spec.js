@@ -13,7 +13,7 @@ const Video = require('../src/models').video
 
 const fixtures = require('./data/fixtures')
 
-describe('# Parartii-db Video Model Spec', function () {
+describe('# Parartii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
@@ -25,7 +25,8 @@ describe('# Parartii-db Video Model Spec', function () {
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
     setTimeout(() => {
-      server.startServer(contract.Registry.options.address)
+      server.start(contract.Registry.options.address)
+      done()
     }, 1000)
   })
 

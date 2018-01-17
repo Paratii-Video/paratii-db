@@ -4,7 +4,7 @@
   "description": "paratii database backend",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.spec.js --exit",
+    "test": "mocha tests/*.spec.js --exit --timeout 10000",
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
     "parity": "parity --config parity-config.toml",
@@ -25,7 +25,8 @@
     "compression": "^1.7.1",
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc2",
-    "paratii-lib": "github:Paratii-Video/paratii-lib#dev"
+    "paratii-lib": "github:Paratii-Video/paratii-lib#dev",
+    "web3": "^1.0.0-beta.26"
   },
   "devDependencies": {
     "chai": "^4.1.2",
