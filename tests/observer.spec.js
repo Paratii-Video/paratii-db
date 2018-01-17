@@ -48,4 +48,22 @@ describe('# Paratii-db Observer', function () {
       ipfsData: ipfsData
     })
   })
+
+  it('subscription to Create User events should work as expected', function (done) {
+    let userId = accounts[1].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsHash: 'some-hash'
+    }
+
+    paratii.eth.events.addListener('CreateUser', function (log) {
+      const receivedVideoId = log.returnValues._address
+      assert.equal(userData.id, receivedVideoId)
+      done()
+    })
+
+    paratii.eth.users.create(userData)
+  })
 })
