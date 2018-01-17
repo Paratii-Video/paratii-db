@@ -13,7 +13,7 @@ chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function () {
   let paratii
-  beforeEach(async function () {
+  before(async function () {
     paratii = await new Paratii({
       provider: 'http://localhost:8545',
       address: accounts[0].publicKey,

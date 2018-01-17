@@ -10,9 +10,8 @@ let observer = null
 require('./db')
 
 const app = express()
-startServer('address')
 
-function startServer (registry) {
+function start (registry) {
   // Overlooking Blockchain obSERVER
   observer = require('./observer')(paratiilib.Paratii, registry)
   observer.videoObserver.init()
@@ -30,4 +29,4 @@ function startServer (registry) {
   }
 }
 
-module.exports.startServer = startServer
+module.exports.start = start
