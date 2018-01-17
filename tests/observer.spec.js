@@ -20,9 +20,32 @@ describe('# Paratii-db Observer', function () {
       privateKey: accounts[0].privateKey
     })
     await paratii.eth.deployContracts()
+    paratii.eth.web3.setProvider('ws://localhost:8546')
   })
 
   it('paratii lib okness', async function () {
     assert.isOk(paratii)
+  })
+
+  it('subscription to Create Video events should work as expected', function (done) {
+    let creator = accounts[1].publicKey
+    let price = 3 * 10 ** 18
+    let ipfsHash = 'xyz'
+    let ipfsData = 'zzz'
+    let videoId = 'some-id'
+
+    paratii.eth.events.addListener('CreateVideo', function (log) {
+      const receivedVideoId = log.returnValues.videoId
+      assert.equal(videoId, receivedVideoId)
+      done()
+    })
+
+    paratii.eth.vids.create({
+      id: videoId,
+      price: price,
+      owner: creator,
+      ipfsHash: ipfsHash,
+      ipfsData: ipfsData
+    })
   })
 })
