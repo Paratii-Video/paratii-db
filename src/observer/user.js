@@ -2,11 +2,11 @@
 
 // const Models = require('../../models')
 // const Video = Models.video
-let paratiiInstance
+// let paratiiInstance
 
 module.exports = function (paratii) {
   var module = {}
-  paratiiInstance = paratii
+  // paratiiInstance = paratii
 
   module.init = function () {
     // events hook
