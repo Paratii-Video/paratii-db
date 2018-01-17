@@ -7,6 +7,7 @@
     "test": "mocha tests/*.spec.js --exit",
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
+    "parity": "parity --config parity-config.toml",
     "lint": "standard"
   },
   "repository": {
@@ -23,11 +24,17 @@
     "async": "^2.6.0",
     "compression": "^1.7.1",
     "express": "^4.16.2",
-    "mongoose": "^5.0.0-rc2"
+    "mongoose": "^5.0.0-rc2",
+    "paratii-lib": "github:Paratii-Video/paratii-lib#dev"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "mocha": "^4.1.0",
     "standard": "^10.0.3"
   }
