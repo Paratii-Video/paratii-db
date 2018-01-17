@@ -4,30 +4,30 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
-  _id: {type: String, index: true},
-  title: {type: String, index: true},
-  description: {type: String, index: true},
-  price: Number, // FIXME this should be bignumber.js
-  src: String,
-  mimetype: String,
-  stats: {
-    likes: Number,
-    dislikes: Number,
-    likers: Array,
-    dislikers: Array
-  },
-  uploader: {
-    name: {type: String, index: true}
-  },
-  tags: {type: Array, index: true}
+	_id: {type: String, index: true},
+	title: {type: String, index: true},
+	description: {type: String, index: true},
+	price: Number, // FIXME this should be bignumber.js
+	src: String,
+	mimetype: String,
+	stats: {
+		likes: Number,
+		dislikes: Number,
+		likers: Array,
+		dislikers: Array
+	},
+	uploader: {
+		name: {type: String, index: true}
+	},
+	tags: {type: Array, index: true}
 })
 
 VideoSchema.statics.upsert = function (video, cb) {
-  if (!video || !video._id) {
-    return cb(new Error('video._id is required for upsert'))
-  }
+	if (!video || !video._id) {
+		return cb(new Error('video._id is required for upsert'))
+	}
 
-  this.findByIdAndUpdate(video._id,
+	this.findByIdAndUpdate(video._id,
   {$set: video},
   {new: true, upsert: true}, cb)
 }
@@ -39,18 +39,18 @@ VideoSchema.statics.upsert = function (video, cb) {
  * @return {Boolean}          returns error or success once all videos are in.
  */
 VideoSchema.statics.bulkUpsert = function (videos, cb) {
-  if (!Array.isArray(videos)) {
-    videos = [videos]
-  }
+	if (!Array.isArray(videos)) {
+		videos = [videos]
+	}
 
-  eachLimit(videos, 50, (video, callback) => {
-    this.findByIdAndUpdate(video._id,
+	eachLimit(videos, 50, (video, callback) => {
+		this.findByIdAndUpdate(video._id,
     {$set: video},
     {new: true, upsert: true}, callback)
-  }, (err) => {
-    if (err) return cb(err)
-    return cb(null, true)
-  })
+	}, (err) => {
+		if (err) return cb(err)
+		return cb(null, true)
+	})
 }
 
 /**
@@ -60,19 +60,19 @@ VideoSchema.statics.bulkUpsert = function (videos, cb) {
  * @return {Array}           returns an array of videos related.
  */
 VideoSchema.statics.getRelated = function (videoId, cb) {
-  if (!videoId) {
-    return cb(new Error('video id is required for getting related ones'))
-  }
+	if (!videoId) {
+		return cb(new Error('video id is required for getting related ones'))
+	}
 
-  this.aggregate([
+	this.aggregate([
     { $sample: {size: 6} }
-  ]).exec((err, result) => {
-    if (err) {
-      return cb(err)
-    }
+	]).exec((err, result) => {
+		if (err) {
+			return cb(err)
+		}
 
-    return cb(null, result)
-  })
+		return cb(null, result)
+	})
 }
 
 /**
@@ -82,24 +82,24 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (keyword, cb) {
-  const query = {
-    $or: [
+	const query = {
+		$or: [
       { title: {$regex: keyword, $options: '-i'} },
       { description: {$regex: keyword, $options: '-i'} },
       { 'uploader.name': {$regex: keyword, $options: '-i'} },
       { tags: {$regex: keyword, $options: '-i'} }
-    ]
-  }
+		]
+	}
 
   // TODO Add pagination
 
-  this.find(query).limit(6).exec((err, result) => {
-    if (err) {
-      return cb(err)
-    }
+	this.find(query).limit(6).exec((err, result) => {
+		if (err) {
+			return cb(err)
+		}
 
-    return cb(null, result)
-  })
+		return cb(null, result)
+	})
 }
 
 const Video = mongoose.model('Video', VideoSchema)
