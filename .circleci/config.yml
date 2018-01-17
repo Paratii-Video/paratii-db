@@ -20,12 +20,15 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
+      - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
+      - run:
+          name: run parity in background
+          command: yarn parity
+          background: true    
       - run: npm run lint
       - run: npm test
