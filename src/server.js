@@ -2,6 +2,13 @@
 
 const express = require('express')
 const compression = require('compression')
+const paratiilib = require('paratii-lib')
+
+// Overlooking Blockchain obSERVER
+const observer = require('./observer')(paratiilib.Paratii)
+observer.videoObserver.init()
+observer.userObserver.init()
+
 const api = require('./api/v1')
 require('./db')
 
