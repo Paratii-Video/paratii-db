@@ -22,7 +22,7 @@ describe('# Paratii-db Observer', function () {
     await paratii.eth.deployContracts()
   })
 
-  it('paratii lib exists..', async function () {
+  it('paratii lib okness', async function () {
     assert.isOk(paratii)
   })
 })
