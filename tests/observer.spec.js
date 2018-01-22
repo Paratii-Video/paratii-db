@@ -3,24 +3,26 @@
 
 const chai = require('chai')
 const dirtyChai = require('dirty-chai')
-const Paratii = require('paratii-lib').Paratii
+const paratiilib = require('paratii-lib')
 const accounts = require('./data/accounts')
 const assert = chai.assert
-
+const Video = require('../src/models').video
 // const assert = chai.assert
 // const expect = chai.expect
 chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function () {
   let paratii
-  beforeEach(async function () {
-    paratii = await new Paratii({
-      provider: 'http://localhost:8545',
+  before(async () => {
+    paratii = await new paratiilib.Paratii({
+      provider: 'http://localhost:8545/rpc/',
       address: accounts[0].publicKey,
       privateKey: accounts[0].privateKey
     })
-    await paratii.eth.deployContracts()
     paratii.eth.web3.setProvider('ws://localhost:8546')
+    const contract = await paratii.eth.deployContracts()
+    console.log(contract.Registry.options.address)
+    require('../src/server').start(contract.Registry.options.address)
   })
 
   it('paratii lib okness', async function () {
@@ -32,38 +34,26 @@ describe('# Paratii-db Observer', function () {
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
     let ipfsData = 'zzz'
-    let videoId = 'some-id'
+    let number = Math.random() // 0.9394456857981651
+    var videoId = number.toString(36).substr(2, 9)
 
-    paratii.eth.events.addListener('CreateVideo', function (log) {
-      const receivedVideoId = log.returnValues.videoId
-      assert.equal(videoId, receivedVideoId)
-      done()
-    })
-
-    paratii.eth.vids.create({
-      id: videoId,
-      price: price,
-      owner: creator,
-      ipfsHash: ipfsHash,
-      ipfsData: ipfsData
-    })
-  })
-
-  it('subscription to Create User events should work as expected', function (done) {
-    let userId = accounts[1].publicKey
-    let userData = {
-      id: userId,
-      name: 'Humbert Humbert',
-      email: 'humbert@humbert.ru',
-      ipfsHash: 'some-hash'
-    }
-
-    paratii.eth.events.addListener('CreateUser', function (log) {
-      const receivedVideoId = log.returnValues._address
-      assert.equal(userData.id, receivedVideoId)
-      done()
-    })
-
-    paratii.eth.users.create(userData)
+    setTimeout(() => {
+      paratii.eth.vids.create({
+        id: videoId,
+        price: price,
+        owner: creator,
+        ipfsHash: ipfsHash,
+        ipfsData: ipfsData
+      }).then(function (res) {
+        Video.findOne({_id: videoId}, (err, video) => {
+          if (err) {
+            throw err
+          } else {
+            assert.equal(video._id, videoId)
+            done()
+          }
+        })
+      })
+    }, 100)
   })
 })

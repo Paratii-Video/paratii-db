@@ -22,6 +22,7 @@ jobs:
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
+      - run: npm install web3@1.0.0-beta.27 --save
       - save_cache:
           paths:
             - node_modules
@@ -29,6 +30,6 @@ jobs:
       - run:
           name: run parity in background
           command: yarn parity
-          background: true    
+          background: true
       - run: npm run lint
       - run: npm test

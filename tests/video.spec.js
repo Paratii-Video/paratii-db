@@ -2,7 +2,10 @@
 'use strict'
 
 const chai = require('chai')
+const paratiilib = require('paratii-lib')
 const dirtyChai = require('dirty-chai')
+const accounts = require('./data/accounts')
+
 const assert = chai.assert
 const expect = chai.expect
 chai.use(dirtyChai)
@@ -10,10 +13,19 @@ const Video = require('../src/models').video
 
 const fixtures = require('./data/fixtures')
 
-describe('# Parartii-db Video Model Spec', function () {
-  before((done) => {
-    require('../src/server')
+describe('# Parartii-db Video Model Spec', function (done) {
+  let paratii
+
+  before(async () => {
+    paratii = await new paratiilib.Paratii({
+      provider: 'http://localhost:8545/rpc/',
+      address: accounts[0].publicKey,
+      privateKey: accounts[0].privateKey
+    })
+    const contract = await paratii.eth.deployContracts()
+    const server = require('../src/server')
     setTimeout(() => {
+      server.start(contract.Registry.options.address)
       done()
     }, 1000)
   })
