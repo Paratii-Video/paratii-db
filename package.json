@@ -26,7 +26,7 @@
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#dev",
-    "web3": "^1.0.0-beta.27"
+    "web3": "^1.0.0-beta.28"
   },
   "devDependencies": {
     "chai": "^4.1.2",

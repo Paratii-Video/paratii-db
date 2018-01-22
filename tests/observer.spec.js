@@ -37,23 +37,23 @@ describe('# Paratii-db Observer', function () {
     let number = Math.random() // 0.9394456857981651
     var videoId = number.toString(36).substr(2, 9)
 
-    paratii.eth.vids.create({
-      id: videoId,
-      price: price,
-      owner: creator,
-      ipfsHash: ipfsHash,
-      ipfsData: ipfsData
-    })
-
     setTimeout(() => {
-      Video.findOne({_id: videoId}, (err, video) => {
-        if (err) {
-          throw err
-        } else {
-          assert.equal(video._id, videoId)
-          done()
-        }
+      paratii.eth.vids.create({
+        id: videoId,
+        price: price,
+        owner: creator,
+        ipfsHash: ipfsHash,
+        ipfsData: ipfsData
+      }).then(function (res) {
+        Video.findOne({_id: videoId}, (err, video) => {
+          if (err) {
+            throw err
+          } else {
+            assert.equal(video._id, videoId)
+            done()
+          }
+        })
       })
-    }, 3000)
+    }, 100)
   })
 })
