@@ -37,6 +37,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^4.1.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "wait-until": "0.0.2"
   }
 }
