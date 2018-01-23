@@ -22,7 +22,7 @@ jobs:
           - v1-dependencies-
       - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
-      - run: npm install web3@1.0.0-beta.27 --save
+      - run: npm install web3@1.0.0-beta.28 --save
       - save_cache:
           paths:
             - node_modules
