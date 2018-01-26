@@ -21,7 +21,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       # - run: sudo apt-get update
-      - run: apt-get install openssl libssl-dev libudev-dev
+      - run: sudo apt-get install openssl libssl-dev libudev-dev
       - run: bash <(curl https://get.parity.io -Lk) -r stable
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
