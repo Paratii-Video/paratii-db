@@ -29,7 +29,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: run parity in background
-          command: yarn parity
+          command: npm run parity
           background: true
       - run: npm run lint
       - run: npm test
