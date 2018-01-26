@@ -8,3 +8,6 @@ reseal_on_uncle = true
 force_sealing = true
 [rpc]
 cors = "*"
+[network]
+min_peers = 0
+max_peers = 0

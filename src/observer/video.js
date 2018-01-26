@@ -10,8 +10,6 @@ module.exports = function (paratii) {
   module.init = async function () {
     // events hook
 
-    paratii.eth.web3.setProvider('ws://localhost:8546')
-
     await paratii.eth.events.addListener('CreateVideo', function (log) {
       Video.upsert(parser.video(log), (err, vid) => {
         if (err) {
@@ -19,19 +17,22 @@ module.exports = function (paratii) {
         }
       })
     })
+    await paratii.eth.events.addListener('UpdateVideo', function (log) {
+      Video.upsert(parser.video(log), (err, vid) => {
+        if (err) {
+          throw err
+        }
+      })
+    })
+    await paratii.eth.events.addListener('RemoveVideo', function (log) {
+      Video.delete(log.returnValues.videoId, (err, res) => {
+        if (err) {
+          throw err
+        }
+      })
+    })
+
     console.log('inizialized all video events')
-
-    // let removeVideo = await paratii.eth.events.addListener('RemoveVideo', function (log) {
-    //   console.log(log)
-    //   const videoId = log.returnValues.videoId
-    //   Video.deleteMany({_id: videoId}, (err, vid) => {
-    //     if (err) {
-    //       throw err
-    //     }
-    //   })
-    // })
-
-    // console.log(removeVideo)
   }
 
   return module
