@@ -30,7 +30,7 @@ describe('# Paratii-db Observer', function (done) {
     done()
   })
 
-  it.skip('subscription to Create Video events should work as expected', function (done) {
+  it('subscription to Create Video events should work as expected', function (done) {
     let creator = accounts[1].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
