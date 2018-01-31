@@ -104,6 +104,25 @@ VideoSchema.statics.search = function (keyword, cb) {
   })
 }
 
+/**
+ * delete video by videoid
+ * @param  {videoId}   videoId.
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}          returns error or success once video is deleted.
+ */
+VideoSchema.statics.delete = function (videoId, cb) {
+  const query = {
+    _id: videoId
+  }
+  this.remove(query).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, true)
+  })
+}
+
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video

@@ -10,7 +10,7 @@ module.exports = function (paratii) {
 
   module.init = function () {
     // events hook
-    console.log('inizializing all user events')
+    console.log('inizialized all user events')
   }
 
   return module
