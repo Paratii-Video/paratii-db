@@ -24,7 +24,7 @@ jobs:
       # - run: sudo apt-get install openssl libssl-dev libudev-dev
       - run: wget https://www.openssl.org/source/openssl-1.1.0g.tar.gz
       - run: tar xzvf openssl-1.1.0g.tar.gz && cd openssl-1.1.0g
-      - run: cd openssl-1.1.0g && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' && make && make install
+      - run: cd openssl-1.1.0g && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' && make && sudo make install
       - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
