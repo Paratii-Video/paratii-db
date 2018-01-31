@@ -24,8 +24,7 @@ jobs:
       # - run: sudo apt-get install openssl libssl-dev libudev-dev
       - run: wget https://www.openssl.org/source/openssl-1.1.0g.tar.gz
       - run: tar xzvf openssl-1.1.0g.tar.gz && cd openssl-1.1.0g
-      - run: cd openssl-1.1.0g
-      - run: ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
+      - run: cd openssl-1.1.0g && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
       - run: make
       - run: make install
       - run: cd ..
