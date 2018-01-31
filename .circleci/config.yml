@@ -22,7 +22,14 @@ jobs:
           - v1-dependencies-
       # - run: sudo apt-get update
       # - run: sudo apt-get install openssl libssl-dev libudev-dev
-      - run: openssl version
+      - run: wget https://www.openssl.org/source/openssl-1.1.0.tar.gz
+      - run: tar xf openssl-1.1.0.tar.gz
+      - run: cd openssl-1.1.0
+      - run: ./config
+      - run: make
+      - run: make install
+      - run: cd ..
+      - run: rm -rf openssl-1.1.0*
       - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
