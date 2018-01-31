@@ -10,6 +10,7 @@ const VideoSchema = new Schema({
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
+  owner: String,
   stats: {
     likes: Number,
     dislikes: Number,
@@ -17,7 +18,8 @@ const VideoSchema = new Schema({
     dislikers: Array
   },
   uploader: {
-    name: {type: String, index: true}
+    name: {type: String, index: true},
+    address: {type: String, index: true}
   },
   tags: {type: Array, index: true}
 })
@@ -99,6 +101,25 @@ VideoSchema.statics.search = function (keyword, cb) {
     }
 
     return cb(null, result)
+  })
+}
+
+/**
+ * delete video by videoid
+ * @param  {videoId}   videoId.
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}          returns error or success once video is deleted.
+ */
+VideoSchema.statics.delete = function (videoId, cb) {
+  const query = {
+    _id: videoId
+  }
+  this.remove(query).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, true)
   })
 }
 
