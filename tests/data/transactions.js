@@ -1,4 +1,5 @@
 module.exports = [{
+  _id: 'arandomid',
   address: '0x390c445DdEFadc987bd421D5e2dF3FFcEbB0C448',
   blockHash: '0x81d62de19f7bf79bad4f6f9f786abb1e4829987dcb74cb4a0597d097dffcf7f4',
   blockNumber: 3476,
