@@ -2,10 +2,8 @@
 
 const express = require('express')
 const compression = require('compression')
-const paratiilib = require('paratii-lib')
 
 const api = require('./api/v1')
-let observer = null
 
 require('./db')
 
