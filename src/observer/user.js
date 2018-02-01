@@ -1,8 +1,8 @@
 'use strict'
 
-// const Models = require('../../models')
-// const Video = Models.video
-// let paratiiInstance
+const Models = require('../models')
+const parser = require('../parser')
+const User = Models.user
 
 module.exports = function (paratii) {
   var module = {}
@@ -10,21 +10,22 @@ module.exports = function (paratii) {
 
   module.init = async function () {
     // events hook
-    await paratii.eth.events.addListener('CreateVideo', function (log) {
-      Video.upsert(parser.video(log), (err, vid) => {
+
+    await paratii.eth.events.addListener('CreateUser', function (log) {
+      User.upsert(parser.user(log), (err, user) => {
+        if (err) {
+          throw err
+        }
+      })
+    })
+    await paratii.eth.events.addListener('RemoveUser', function (log) {
+      User.delete(log.returnValues._address, (err, res) => {
         if (err) {
           throw err
         }
       })
     })
 
-    await paratii.eth.events.addListener('RemoveVideo', function (log) {
-      Video.delete(log.returnValues.videoId, (err, res) => {
-        if (err) {
-          throw err
-        }
-      })
-    })
     console.log('inizialized all user events')
   }
 
