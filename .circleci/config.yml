@@ -9,7 +9,6 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.9.1
       - image: circleci/mongo:latest
-      - image: parity/parity
     working_directory: ~/repo
 
     steps:
