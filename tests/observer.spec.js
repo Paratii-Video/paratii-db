@@ -205,4 +205,35 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
+  it('subscription to Tranfer PTI events should work as expected', function (done) {
+    let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
+    let amount = paratii.eth.web3.utils.toWei('4', 'ether')
+
+    sleep(1000).then(function () {
+      paratii.eth.transfer(beneficiary, amount, 'PTI')
+      sleep(1000).then(function () {
+        done()
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Tranfer ETH events should work as expected', function (done) {
+    let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
+    let amount = paratii.eth.web3.utils.toWei('4', 'ether')
+    let description = 'thanks for all the fish'
+
+    sleep(1000).then(function () {
+      paratii.eth.transfer(beneficiary, amount, 'ETH', description)
+
+      sleep(1000).then(function () {
+        done()
+      })
+    })
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
 })

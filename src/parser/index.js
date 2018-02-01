@@ -18,3 +18,17 @@ module.exports.user = function (log) {
 
   return user
 }
+
+module.exports.tx = function (log) {
+  var tx = {}
+  tx._id = log.transactionHash
+  tx.blockNumber = log.blockNumber
+  tx.event = log.event
+  tx.description = log.returnValues.description
+  tx.from = log.returnValues.from
+  tx.logIndex = log.logIndex
+  tx.to = log.returnValues.to
+  tx.value = log.returnValues.value
+
+  return tx
+}
