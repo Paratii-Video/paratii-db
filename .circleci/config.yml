@@ -27,7 +27,7 @@ jobs:
       # - run: sudo apt-get install lsb-release
       # - run: wget https://www.openssl.org/source/openssl-1.1.0.tar.gz && tar xf openssl-1.1.0.tar.gz && cd openssl-1.1.0 && ./config && make && sudo make install && cd .. && rm -rf openssl-1.1.0* && ls
       # - run: sudo find /usr/lib/ -iname 'libssl*'
-      - run: bash <(curl https://get.parity.io -Lk)
+      # - run: bash <(curl https://get.parity.io -Lk)
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
       - save_cache:
