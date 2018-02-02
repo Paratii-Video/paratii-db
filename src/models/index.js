@@ -3,5 +3,6 @@
 module.exports = {
   transaction: require('./transaction'),
   video: require('./video'),
-  event: require('./event')
+  event: require('./event'),
+  user: require('./user')
 }

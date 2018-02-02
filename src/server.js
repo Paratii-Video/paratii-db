@@ -16,6 +16,8 @@ function start (registry) {
   observer = require('./observer')(paratiilib.Paratii, registry)
   observer.videoObserver.init()
   observer.userObserver.init()
+  observer.transactionObserver.init()
+
   if (registry) {
     app.use(compression())
     app.use(express.json())

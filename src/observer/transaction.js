@@ -2,7 +2,7 @@
 
 const Models = require('../models')
 const parser = require('../parser')
-const User = Models.user
+const Transaction = Models.transaction
 
 module.exports = function (paratii) {
   var module = {}
@@ -11,22 +11,23 @@ module.exports = function (paratii) {
   module.init = async function () {
     // events hook
 
-    await paratii.eth.events.addListener('CreateUser', function (log) {
-      User.upsert(parser.user(log), (err, user) => {
-        if (err) {
-          throw err
-        }
-      })
-    })
-    await paratii.eth.events.addListener('RemoveUser', function (log) {
-      User.delete(log.returnValues._address, (err, res) => {
+    await paratii.eth.events.addListener('TransferPTI', function (log) {
+      Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
           throw err
         }
       })
     })
 
-    console.log('inizialized all user events')
+    await paratii.eth.events.addListener('TransferETH', function (log) {
+      Transaction.upsert(parser.tx(log), (err, user) => {
+        if (err) {
+          throw err
+        }
+      })
+    })
+
+    console.log('inizialized all transaction events')
   }
 
   return module
