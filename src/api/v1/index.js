@@ -2,24 +2,15 @@
 const express = require('express')
 const router = express.Router()
 const videoAPI = require('./video')
-
-const Models = require('../../models')
-const Video = Models.video
+const userAPI = require('./user')
+const searchAPI = require('./search')
 
 router.get('/', (req, res, next) => {
   res.json({test: 1})
 })
 
-router.get('/search/:keyword', (req, res, next) => {
-  Video.search(req.params.keyword, (err, result) => {
-    if (err) {
-      return res.send(err).statusCode(500)
-    }
-
-    return res.json(result)
-  })
-})
-
+router.use('/search', searchAPI)
 router.use('/video', videoAPI)
+router.use('/user', userAPI)
 
 module.exports = router

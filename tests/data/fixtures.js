@@ -6,12 +6,13 @@ module.exports = [{
   'src': '/ipfs/QmQvhvzMXKX71jLGjSfM9iKiWVKETXDmkPaQXhe4WrMmZ9',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmQvhvzMXKX71jLGjSfM9iKiWVKETXDmkPaQXhe4WrMmZ9/thumbnail-1280x720_2.png',
+  'owner': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
   'stats': {
     'likes': 0,
     'dislikes': 0
   },
   'uploader': {
-    'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     'name': 'TED'
   },
   'tags': [
@@ -35,12 +36,13 @@ module.exports = [{
   'src': '/ipfs/QmU1f8mKebPzCHskk3DDsFUJLxFLVeCxJ1BqyhQvkV8FyJ',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmU1f8mKebPzCHskk3DDsFUJLxFLVeCxJ1BqyhQvkV8FyJ/thumbnail-1280x720_3.png',
+  'owner': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
   'stats': {
     'likes': 0,
     'dislikes': 0
   },
   'uploader': {
-    'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     'name': 'Ethereum Foundation'
   },
   'tags': [
@@ -59,12 +61,13 @@ module.exports = [{
   'src': '/ipfs/QmVf18CJ4kBJTXVZKMWVm54obnwVzMQs6JU9YxuTfDm5F2',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmVf18CJ4kBJTXVZKMWVm54obnwVzMQs6JU9YxuTfDm5F2/thumbnail-1280x720_2.png',
+  'owner': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
   'stats': {
     'likes': 0,
     'dislikes': 0
   },
   'uploader': {
-    'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     'name': 'Blockchain at Berkeley'
   },
   'tags': ''
@@ -77,6 +80,7 @@ module.exports = [{
   'src': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -99,6 +103,7 @@ module.exports = [{
   'src': '/ipfs/QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmPDG5AxEpfsQ1cfWU6Kcguc9Bn6eDEdKiUbqxUwSRQBi7/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -124,6 +129,7 @@ module.exports = [{
   'src': '/ipfs/QmWVYEZKE1E4U8Xgh88Td5iqhFgnHq4giTM7JoaDu89WMw',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmWVYEZKE1E4U8Xgh88Td5iqhFgnHq4giTM7JoaDu89WMw/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -155,6 +161,7 @@ module.exports = [{
   'src': '/ipfs/QmTJ6eCzaK2rzVr4hcbyxu8ZjSdSLDoHUn7ddgndeTXCa7',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmTJ6eCzaK2rzVr4hcbyxu8ZjSdSLDoHUn7ddgndeTXCa7/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -177,6 +184,7 @@ module.exports = [{
   'src': '/ipfs/Qma1wQ1H3hBD5imQiFv6SWW4idx6FV1F1BdnFjADCdwA7z',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qma1wQ1H3hBD5imQiFv6SWW4idx6FV1F1BdnFjADCdwA7z/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -194,6 +202,7 @@ module.exports = [{
   'src': '/ipfs/QmevuGixcmVJg8FB2y6i1GvBSNWTaTNFpbxwgKnhUf2RAd',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmevuGixcmVJg8FB2y6i1GvBSNWTaTNFpbxwgKnhUf2RAd/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -212,6 +221,7 @@ module.exports = [{
   'src': '/ipfs/QmXtoDgqzSr5ECwzQYYeqsDJoSmccj7xpJdDqsicBqm2Lo',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmXtoDgqzSr5ECwzQYYeqsDJoSmccj7xpJdDqsicBqm2Lo/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -230,6 +240,7 @@ module.exports = [{
   'src': '/ipfs/QmaW2T8QESQvABYFTiFbFGjMXiBfVxcZiU3tpzNiStH18f',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmaW2T8QESQvABYFTiFbFGjMXiBfVxcZiU3tpzNiStH18f/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -248,6 +259,7 @@ module.exports = [{
   'src': '/ipfs/QmQZbQJ5nRkAafVg3yhE8Jmftwgh69cBx2Kyjaht5jgU1a',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmQZbQJ5nRkAafVg3yhE8Jmftwgh69cBx2Kyjaht5jgU1a/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -266,6 +278,7 @@ module.exports = [{
   'src': '/ipfs/QmaHJqPEHxRh6wkgiXsFL4Xt9ZhLVJ6JD4sbD6MRi5zveB',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmaHJqPEHxRh6wkgiXsFL4Xt9ZhLVJ6JD4sbD6MRi5zveB/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -284,6 +297,7 @@ module.exports = [{
   'src': '/ipfs/QmRDpg7zQxVZqC1sjq3Lyb1SYZMekBpcmdJWc1HKDWQ7xM',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmRDpg7zQxVZqC1sjq3Lyb1SYZMekBpcmdJWc1HKDWQ7xM/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -314,6 +328,7 @@ module.exports = [{
   'src': '/ipfs/QmcG7zfXxsjrCrRby6SBG2wLabzix61WZkFwJAQQJmQvuV',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmcG7zfXxsjrCrRby6SBG2wLabzix61WZkFwJAQQJmQvuV/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -357,6 +372,7 @@ module.exports = [{
   'src': '/ipfs/QmPMU2eiLf5sqXw37EwKd5U6d65GqyD7FoaihHXBA5avxE',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmPMU2eiLf5sqXw37EwKd5U6d65GqyD7FoaihHXBA5avxE/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -375,6 +391,7 @@ module.exports = [{
   'src': '/ipfs/QmdALMEdZ9KbiFBDqPq61SAy3wotbB3Fy57ods1a9gg191',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmdALMEdZ9KbiFBDqPq61SAy3wotbB3Fy57ods1a9gg191/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -397,6 +414,7 @@ module.exports = [{
   'src': '/ipfs/QmSJPDbaUsFR236vaVKYyqFPoVShBv2RrYgJ1yeqStj4uB',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmSJPDbaUsFR236vaVKYyqFPoVShBv2RrYgJ1yeqStj4uB/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -419,6 +437,7 @@ module.exports = [{
   'src': '/ipfs/Qmeds3RhqZfVPGy4DD6kL1W4xVXXfcikqR9jxpTMLKjGAZ',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmeds3RhqZfVPGy4DD6kL1W4xVXXfcikqR9jxpTMLKjGAZ/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -437,6 +456,7 @@ module.exports = [{
   'src': '/ipfs/QmPMnPN53mRGXvm2y3t3Ba8aypuW53aMYbfienZVZNRbWX',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmPMnPN53mRGXvm2y3t3Ba8aypuW53aMYbfienZVZNRbWX/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -455,6 +475,7 @@ module.exports = [{
   'src': '/ipfs/QmRPaoXoARwgt4c83wWRuZoaSL3Vn4X2MtbVEzzjpcyaxW',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmRPaoXoARwgt4c83wWRuZoaSL3Vn4X2MtbVEzzjpcyaxW/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -473,6 +494,7 @@ module.exports = [{
   'src': '/ipfs/Qmf52shAzKuuNSiZDyYoMeitzrb54yzwczxNoyuKEdpVHz',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmf52shAzKuuNSiZDyYoMeitzrb54yzwczxNoyuKEdpVHz/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -512,6 +534,7 @@ module.exports = [{
   'src': '/ipfs/QmYSAM1QnHtc6NH13MnYgeenUbLwBLQF6c3owjeAfurQMN',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmYSAM1QnHtc6NH13MnYgeenUbLwBLQF6c3owjeAfurQMN/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -535,6 +558,7 @@ module.exports = [{
   'src': '/ipfs/Qmeb223WSUVerCuF1bEqqv848ZCC6ECmZus4jzVMsXrhpE',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmeb223WSUVerCuF1bEqqv848ZCC6ECmZus4jzVMsXrhpE/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -566,6 +590,7 @@ module.exports = [{
   'src': '/ipfs/QmTigQbUpPrTiQ97koyNZGYfx5FRMf3viz2rxkz4kTcx9K',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmTigQbUpPrTiQ97koyNZGYfx5FRMf3viz2rxkz4kTcx9K/thumbnail-502x360_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -588,6 +613,7 @@ module.exports = [{
   'src': '/ipfs/QmTQAKHPifrS5m6CSLcBs1kroCRPSsCaJsdN9XHFctqj4N',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmTQAKHPifrS5m6CSLcBs1kroCRPSsCaJsdN9XHFctqj4N/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -606,6 +632,7 @@ module.exports = [{
   'src': '/ipfs/QmT8gz3ZCde4LKjypmHsKLRTGh1AFzQxp31qKE2VgNcC3Y',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmT8gz3ZCde4LKjypmHsKLRTGh1AFzQxp31qKE2VgNcC3Y/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -623,6 +650,7 @@ module.exports = [{
   'src': '/ipfs/QmVmf5BgvH2Qvq9R4b4P7r9kx4ZNMQ24E41iAwAXkvoLZn',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmVmf5BgvH2Qvq9R4b4P7r9kx4ZNMQ24E41iAwAXkvoLZn/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -658,6 +686,7 @@ module.exports = [{
   'src': '/ipfs/QmNo1yJnFP3E5pTQFu5bnSkZtxs4G4sSDYLVLxefbVZxq1',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmNo1yJnFP3E5pTQFu5bnSkZtxs4G4sSDYLVLxefbVZxq1/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -676,6 +705,7 @@ module.exports = [{
   'src': '/ipfs/QmXQvcG42ZWK4r7rkfL3JNCmWas4haWbhkD6tAmRRw376o',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmXQvcG42ZWK4r7rkfL3JNCmWas4haWbhkD6tAmRRw376o/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -694,6 +724,7 @@ module.exports = [{
   'src': '/ipfs/Qme3GH9CWn8iTzaUG5Lo6ZYRSuFF7tASaWNsRwTwcymHpQ',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qme3GH9CWn8iTzaUG5Lo6ZYRSuFF7tASaWNsRwTwcymHpQ/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -711,6 +742,7 @@ module.exports = [{
   'src': '/ipfs/QmP7UrJauwsnsguuQsjpXw6SzSWTU8KaSnjzfF57SDz5Nj',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmP7UrJauwsnsguuQsjpXw6SzSWTU8KaSnjzfF57SDz5Nj/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -743,6 +775,7 @@ module.exports = [{
   'src': '/ipfs/QmX4qHN35WBwLhXWZgkQERPYWgtQev4ZrpJNvUv7tjYyBr',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmX4qHN35WBwLhXWZgkQERPYWgtQev4ZrpJNvUv7tjYyBr/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -761,6 +794,7 @@ module.exports = [{
   'src': '/ipfs/QmcsGURc4MtPXYa5X1nAw6bppWHopBHRjZ7SeHPQeWTmUQ',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmcsGURc4MtPXYa5X1nAw6bppWHopBHRjZ7SeHPQeWTmUQ/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -779,6 +813,7 @@ module.exports = [{
   'src': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -801,6 +836,7 @@ module.exports = [{
   'src': '/ipfs/QmSveLgoX6kVU2mjVcX14mnJFvwfLMdN2onSdTpKNz5K4V',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmSveLgoX6kVU2mjVcX14mnJFvwfLMdN2onSdTpKNz5K4V/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -834,6 +870,7 @@ module.exports = [{
   'src': '/ipfs/QmZEPqtxBNXfqtYNih35AAeiYLP4fyrYfdFtk9xQFzZepa',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmZEPqtxBNXfqtYNih35AAeiYLP4fyrYfdFtk9xQFzZepa/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -856,6 +893,7 @@ module.exports = [{
   'src': '/ipfs/QmRDpg7zQxVZqC1sjq3Lyb1SYZMekBpcmdJWc1HKDWQ7xM',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmRDpg7zQxVZqC1sjq3Lyb1SYZMekBpcmdJWc1HKDWQ7xM/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -886,6 +924,7 @@ module.exports = [{
   'src': '/ipfs/Qmcw1YXdtmik4KsELVjVW25T5F9EZRVYefATXhbWDYK19t',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmcw1YXdtmik4KsELVjVW25T5F9EZRVYefATXhbWDYK19t/thumbnail-640x360_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -903,6 +942,7 @@ module.exports = [{
   'src': '/ipfs/Qmaa7MurPx8Sn4d5vN1pG2Ba6aLFyyKSqF55Tnk5n1KzUH',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmaa7MurPx8Sn4d5vN1pG2Ba6aLFyyKSqF55Tnk5n1KzUH/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -921,6 +961,7 @@ module.exports = [{
   'src': '/ipfs/QmfRKofRfoqiUbvNvcEMbWrALBTHGQKti93i1xFCnyBeUu',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmfRKofRfoqiUbvNvcEMbWrALBTHGQKti93i1xFCnyBeUu/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -948,6 +989,7 @@ module.exports = [{
   'src': '/ipfs/QmZUbZ7HKWwgRyXw6ERt443knQYjoQzJ6KoYuetN6xgLji',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmZUbZ7HKWwgRyXw6ERt443knQYjoQzJ6KoYuetN6xgLji/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -966,6 +1008,7 @@ module.exports = [{
   'src': '/ipfs/QmY1NVqNmXjpaNAcnYhjfQk89NYBU5P1p7gD9ZjRFQA3n6',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmY1NVqNmXjpaNAcnYhjfQk89NYBU5P1p7gD9ZjRFQA3n6/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -988,6 +1031,7 @@ module.exports = [{
   'src': '/ipfs/QmejwMM42y5xYuV3sACxztQsK6YqMxTnMAq4FEWokxqwZ6',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmejwMM42y5xYuV3sACxztQsK6YqMxTnMAq4FEWokxqwZ6/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1005,6 +1049,7 @@ module.exports = [{
   'src': '/ipfs/QmaWGPxjeW8s747ho9dBvZ1Fa7pDR6JrRNBKSFVhQkWTL3',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmaWGPxjeW8s747ho9dBvZ1Fa7pDR6JrRNBKSFVhQkWTL3/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1030,6 +1075,7 @@ module.exports = [{
   'src': '/ipfs/QmWFmxUcShFirqXnkhXJGwrJNPopK42RKYtbBT6fy5TGEK',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmWFmxUcShFirqXnkhXJGwrJNPopK42RKYtbBT6fy5TGEK/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1063,6 +1109,7 @@ module.exports = [{
   'src': '/ipfs/QmWBCVR7N4QtnMYtKC34tGjJXbJgnDSEDZVLA6wDxmK7BP',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmWBCVR7N4QtnMYtKC34tGjJXbJgnDSEDZVLA6wDxmK7BP/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1091,6 +1138,7 @@ module.exports = [{
   'src': '/ipfs/Qmb1va4tA3vpv2K4RfjYqT1a184E2Ka2dfUh2ZJF6xMN7L',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/Qmb1va4tA3vpv2K4RfjYqT1a184E2Ka2dfUh2ZJF6xMN7L/thumbnail-1280x720_3.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1120,6 +1168,7 @@ module.exports = [{
   'src': '/ipfs/QmTtWttorVKfpwttiWk4ri8DZseKEPrZzT7JVLaCZCNPoP',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmTtWttorVKfpwttiWk4ri8DZseKEPrZzT7JVLaCZCNPoP/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1149,6 +1198,7 @@ module.exports = [{
   'src': '/ipfs/QmZwP1YRqy3QdGpMTWobXpkkGJ7VguLtXmJnfFCLd9gWL2',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmZwP1YRqy3QdGpMTWobXpkkGJ7VguLtXmJnfFCLd9gWL2/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1171,6 +1221,7 @@ module.exports = [{
   'src': '/ipfs/QmdALMEdZ9KbiFBDqPq61SAy3wotbB3Fy57ods1a9gg191',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmdALMEdZ9KbiFBDqPq61SAy3wotbB3Fy57ods1a9gg191/thumbnail-1280x720_1.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1193,6 +1244,7 @@ module.exports = [{
   'src': '/ipfs/QmVmf5BgvH2Qvq9R4b4P7r9kx4ZNMQ24E41iAwAXkvoLZn',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmVmf5BgvH2Qvq9R4b4P7r9kx4ZNMQ24E41iAwAXkvoLZn/thumbnail-1280x720_2.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1228,6 +1280,7 @@ module.exports = [{
   'src': '/ipfs/QmRhf69i7kRifoLh7J8iypzbsPtQjDEweMf4mwL2Yia8y3',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmRhf69i7kRifoLh7J8iypzbsPtQjDEweMf4mwL2Yia8y3/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -1246,6 +1299,7 @@ module.exports = [{
   'src': '/ipfs/QmPtuzp74oi9rmThkApSm8UMbRBEbJ8KeGCa2x1FXhHc5U',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmPtuzp74oi9rmThkApSm8UMbRBEbJ8KeGCa2x1FXhHc5U/thumbnail-1280x720_4.png',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
