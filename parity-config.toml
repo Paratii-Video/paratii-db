@@ -7,7 +7,9 @@ reseal_max_period = 0
 reseal_on_uncle = true
 force_sealing = true
 [rpc]
-cors = "*"
+cors = ["*"]
+[websockets]
+origins = ["localhost:8080"]
 [network]
 min_peers = 0
 max_peers = 0
