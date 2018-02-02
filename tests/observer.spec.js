@@ -7,6 +7,7 @@ const paratiilib = require('paratii-lib')
 const accounts = require('./data/accounts')
 const assert = chai.assert
 const Video = require('../src/models').video
+const User = require('../src/models').user
 const waitUntil = require('wait-until')
 // const expect = chai.expect
 chai.use(dirtyChai)
@@ -61,6 +62,7 @@ describe('# Paratii-db Observer', function (done) {
       })
       .done(function (result) {
         assert.equal(true, result)
+        console.log('create video')
         done()
       })
     })
@@ -105,16 +107,131 @@ describe('# Paratii-db Observer', function (done) {
                 cb(condition)
               }
             })
-            cb(condition)
+            // cb(condition)
           })
           .done(function (result) {
             assert.equal(true, result)
+            console.log('remove video')
             done()
           })
         })
       })
     })
 
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+
+  it('subscription to Create User events should work as expected', function (done) {
+    let userId = accounts[1].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsHash: 'some-hash'
+    }
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.users.create(userData)
+
+      waitUntil()
+      .interval(500)
+      .times(5)
+      .condition(function (cb) {
+        let condition = false
+        User.findOne({_id: userId}).exec().then(function (user) {
+          if (user) {
+            condition = (user._id === userId)
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        assert.equal(true, result)
+        console.log('create user')
+        done()
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+
+  it('subscription to Remove User events should work as expected', function (done) {
+    let userId = accounts[0].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsHash: 'some-hash'
+    }
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.users.create(userData).then(function () {
+        sleep(1000).then(function () {
+          paratii.eth.users.delete(userId)
+
+          waitUntil()
+          .interval(500)
+          .times(5)
+          .condition(function (cb) {
+            let condition = false
+            User.findOne({_id: userId}, function (err, user) {
+              if (err) {
+                throw err
+              }
+
+              if (user == null) {
+                condition = true
+                cb(condition)
+              }
+            })
+            // cb(condition)
+          })
+          .done(function (result) {
+            assert.equal(true, result)
+            console.log('remove user')
+            done()
+          })
+        })
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Tranfer PTI events should work as expected', function (done) {
+    let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
+    let amount = paratii.eth.web3.utils.toWei('4', 'ether')
+
+    sleep(1000).then(function () {
+      paratii.eth.transfer(beneficiary, amount, 'PTI')
+      sleep(1000).then(function () {
+        done()
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Tranfer ETH events should work as expected', function (done) {
+    let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
+    let amount = paratii.eth.web3.utils.toWei('4', 'ether')
+    let description = 'thanks for all the fish'
+
+    sleep(1000).then(function () {
+      paratii.eth.transfer(beneficiary, amount, 'ETH', description)
+
+      sleep(1000).then(function () {
+        done()
+      })
+    })
     function sleep (ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }

@@ -9,6 +9,7 @@ module.exports = function (Paratii, registry) {
   paratii.eth.setRegistryAddress(registry)
   module.videoObserver = require('./video')(paratii)
   module.userObserver = require('./user')(paratii)
+  module.transactionObserver = require('./transaction')(paratii)
 
   return module
 }

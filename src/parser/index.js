@@ -8,3 +8,27 @@ module.exports.video = function (log) {
   video.uploader.address = log.returnValues.registrar
   return video
 }
+
+module.exports.user = function (log) {
+  var user = {}
+  user._id = log.returnValues._address
+  user.name = log.returnValues._name
+  user.email = log.returnValues._email
+  user.ipfsHash = log.returnValues._ipfsData
+
+  return user
+}
+
+module.exports.tx = function (log) {
+  var tx = {}
+  tx._id = log.transactionHash
+  tx.blockNumber = log.blockNumber
+  tx.event = log.event
+  tx.description = log.returnValues.description
+  tx.from = log.returnValues.from
+  tx.logIndex = log.logIndex
+  tx.to = log.returnValues.to
+  tx.value = log.returnValues.value
+
+  return tx
+}
