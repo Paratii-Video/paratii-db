@@ -27,28 +27,3 @@ RUN rpm -Uvh http://d1h4xl4cr1h0mo.cloudfront.net/v1.9.0/x86_64-unknown-centos-g
 # yarn
 RUN wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
 RUN yum -y install yarn
-
-# chrom
-
-# RUN sh -c 'echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch\nenabled=1\ngpgcheck=1\ngpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"' >> /etc/yum.repos.d/google-chrome.repo
-RUN yum -y install chromium
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-RUN yum -y install ./google-chrome-stable_current_*.rpm
-RUN export CHROME_BIN=/usr/bin/google-chrome
-
-# phatomjs
-
-RUN yum install -y fontconfig freetype freetype-devel fontconfig-devel libstdc++
-RUN rpm -Uvh --force http://mirror.centos.org/centos/7/os/x86_64/Packages/bzip2-libs-1.0.6-13.el7.x86_64.rpm
-RUN yum install -y bzip2
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2
-RUN bunzip2 phantomjs*.tar.bz2
-RUN tar xvf phantomjs*.tar
-RUN cp phantomjs*/bin/phantomjs /usr/bin/phantomjs
-
-# firefox
-
-# RUN yum -y install firefox  libXfont Xorg
-# RUN yum -y groupinstall "X Window System" "Desktop" "Fonts" "General Purpose Desktop"
-
-RUN npm install fibers && npm install scrypt
