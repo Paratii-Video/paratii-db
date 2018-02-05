@@ -20,6 +20,7 @@ router.get('/:id/related', (req, res, next) => {
  * get video by _id
  * @param {String}  id  video _id
  */
+
 router.get('/:id', (req, res, next) => {
   Video.findOne({_id: req.params.id}, (err, video) => {
     if (err) return res.send(err)
