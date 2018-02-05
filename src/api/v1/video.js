@@ -35,4 +35,28 @@ router.post('/', (req, res, next) => {
   res.json(req.body)
 })
 
+/**
+ * Get all video or seach
+ */
+router.get('/', (req, res, next) => {
+  console.log(req.query)
+  const keyword = req.query.s
+  console.log(keyword)
+  // console.log('req.body: ', req.body)
+  if (keyword === undefined || keyword === '') {
+    Video.find({}, (err, video) => {
+      if (err) return res.send(err)
+      res.json(video)
+    })
+  } else {
+    Video.search(keyword, (err, result) => {
+      if (err) {
+        return res.send(err).statusCode(500)
+      }
+
+      return res.json(result)
+    })
+  }
+})
+
 module.exports = router
