@@ -30,6 +30,7 @@ router.get('/:id', (req, res, next) => {
 /**
  * Get all video or seach
  */
+
 router.get('/', (req, res, next) => {
   console.log(req.query)
   const keyword = req.query.s
