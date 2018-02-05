@@ -13,14 +13,11 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-      # - run: bash <(curl https://get.parity.io -Lk)
+
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
+      - run: npm -v
+      - run: node -v
       - save_cache:
           paths:
             - node_modules
