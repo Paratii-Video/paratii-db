@@ -15,6 +15,8 @@ jobs:
 
       - run: npm install
       - run: npm install web3@1.0.0-beta.28 --save
+      - run: npm -v
+      - run: node -v
       - save_cache:
           paths:
             - node_modules
