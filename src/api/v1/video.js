@@ -28,14 +28,6 @@ router.get('/:id', (req, res, next) => {
 })
 
 /**
- * Add a new video the the DB
- */
-router.post('/', (req, res, next) => {
-  // console.log('req.body: ', req.body)
-  res.json(req.body)
-})
-
-/**
  * Get all video or seach
  */
 router.get('/', (req, res, next) => {
