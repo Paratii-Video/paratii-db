@@ -9,7 +9,7 @@ RUN yum clean all
 RUN yum -y install centos-release-scl
 RUN yum -y install epel-release curl wget git gcc gcc-c++ make
 RUN yum -y install openssl libssl-devel libudev-devel openssl-devel
-RUN curl --silent --location https://rpm.nodesource.com/setup_9.x | bash -
+RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
 RUN yum -y install nodejs
 
 # openssl 1.1.0
