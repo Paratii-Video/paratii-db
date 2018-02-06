@@ -20,6 +20,7 @@ router.get('/:id/related', (req, res, next) => {
  * get video by _id
  * @param {String}  id  video _id
  */
+
 router.get('/:id', (req, res, next) => {
   Video.findOne({_id: req.params.id}, (err, video) => {
     if (err) return res.send(err)
@@ -28,11 +29,28 @@ router.get('/:id', (req, res, next) => {
 })
 
 /**
- * Add a new video the the DB
+ * Get all video or seach
  */
-router.post('/', (req, res, next) => {
+
+router.get('/', (req, res, next) => {
+  console.log(req.query)
+  const keyword = req.query.s
+  console.log(keyword)
   // console.log('req.body: ', req.body)
-  res.json(req.body)
+  if (keyword === undefined || keyword === '') {
+    Video.find({}, (err, video) => {
+      if (err) return res.send(err)
+      res.json(video)
+    })
+  } else {
+    Video.search(keyword, (err, result) => {
+      if (err) {
+        return res.send(err).statusCode(500)
+      }
+
+      return res.json(result)
+    })
+  }
 })
 
 module.exports = router
