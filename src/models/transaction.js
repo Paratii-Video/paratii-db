@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { eachLimit } = require('async')
 
 const TransactionSchema = new Schema({
   _id: String,
@@ -26,6 +27,20 @@ TransactionSchema.statics.upsert = function (tx, cb) {
   {new: true, upsert: true}, cb)
 }
 
+TransactionSchema.statics.bulkUpsert = function (txs, cb) {
+  if (!Array.isArray(txs)) {
+    txs = [txs]
+  }
+
+  eachLimit(txs, 50, (tx, callback) => {
+    this.findByIdAndUpdate(tx._id,
+    {$set: tx},
+    {new: true, upsert: true}, callback)
+  }, (err) => {
+    if (err) return cb(err)
+    return cb(null, true)
+  })
+}
 const Transaction = mongoose.model('Transaction', TransactionSchema)
 
 module.exports = Transaction

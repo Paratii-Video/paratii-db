@@ -33,9 +33,7 @@ router.get('/:id', (req, res, next) => {
  */
 
 router.get('/', (req, res, next) => {
-  console.log(req.query)
   const keyword = req.query.s
-  console.log(keyword)
   // console.log('req.body: ', req.body)
   if (keyword === undefined || keyword === '') {
     Video.find({}, (err, video) => {

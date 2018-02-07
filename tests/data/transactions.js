@@ -9,6 +9,8 @@ module.exports = [{
   transactionLogIndex: '0x0',
   type: 'mined',
   id: 'log_1777601f',
+  from: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+  to: '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf',
   returnValues: {
     '0': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     '1': '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf',
