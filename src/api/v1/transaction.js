@@ -2,26 +2,24 @@
 const express = require('express')
 const router = express.Router()
 const Models = require('../../models')
-const User = Models.user
-const Video = Models.video
+const Transaction = Models.transaction
 
 /**
- * get user by _id
+ * get transactions from/to user _id
  * @param {String}  id  user _id
  */
 router.get('/:id', (req, res, next) => {
-  User.findOne({_id: req.params.id}, (err, user) => {
+  Transaction.find({ $or: [ { from: req.params.id }, { to: req.params.id } ] }, (err, user) => {
     if (err) return res.send(err)
     res.json(user)
   })
 })
 
 /**
- * get user videos by _id
- * @param {String}  id  user _id
+ * get transactions
  */
-router.get('/:id/videos', (req, res, next) => {
-  Video.find({owner: req.params.id}, (err, user) => {
+router.get('/', (req, res, next) => {
+  Transaction.find({ }, (err, user) => {
     if (err) return res.send(err)
     res.json(user)
   })

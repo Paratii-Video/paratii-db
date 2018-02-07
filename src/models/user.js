@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { eachLimit } = require('async')
 
 const UserSchema = new Schema({
 
@@ -30,6 +31,21 @@ UserSchema.statics.delete = function (userId, cb) {
       return cb(err)
     }
 
+    return cb(null, true)
+  })
+}
+
+UserSchema.statics.bulkUpsert = function (users, cb) {
+  if (!Array.isArray(users)) {
+    users = [users]
+  }
+
+  eachLimit(users, 50, (user, callback) => {
+    this.findByIdAndUpdate(user._id,
+    {$set: user},
+    {new: true, upsert: true}, callback)
+  }, (err) => {
+    if (err) return cb(err)
     return cb(null, true)
   })
 }

@@ -14,7 +14,6 @@ chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function (done) {
   let paratii
-
   before(async () => {
     paratii = await new paratiilib.Paratii({
       address: accounts[0].publicKey,
