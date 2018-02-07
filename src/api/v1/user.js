@@ -20,7 +20,7 @@ router.get('/:id', (req, res, next) => {
  * get user videos by _id
  * @param {String}  id  user _id
  */
-router.get('/:id/video', (req, res, next) => {
+router.get('/:id/videos', (req, res, next) => {
   Video.find({owner: req.params.id}, (err, user) => {
     if (err) return res.send(err)
     res.json(user)

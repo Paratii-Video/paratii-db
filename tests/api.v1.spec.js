@@ -119,11 +119,11 @@ describe('# Paratii-api', function () {
     })
   })
 
-  it('api users/:id/video should work as expected', (done) => {
+  it('api users/:id/videos should work as expected', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
-    fetch(baseurl + apiVersion + userApi + userId + '/video', {
+    fetch(baseurl + apiVersion + userApi + userId + '/videos', {
       method: 'get'
     }).then(function (response) {
       return response.json()
