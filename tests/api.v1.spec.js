@@ -25,6 +25,8 @@ const paratiilib = require('paratii-lib')
 
 describe('# Paratii-api', function () {
   let paratii
+  let app
+  let server
   before(async () => {
     Video.bulkUpsert(videos, (err, success) => {
       if (err) throw err
@@ -41,11 +43,12 @@ describe('# Paratii-api', function () {
       privateKey: accounts[0].privateKey
     })
     const contract = await paratii.eth.deployContracts()
-    const server = require('../src/server')
-
-    server.start(contract.Registry.options.address)
+    server = require('../src/server')
+    app = server.start(contract.Registry.options.address)
   })
-
+  after(() => {
+    server.stop(app)
+  })
   it('api videos/:id/related should work as expected', async () => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
