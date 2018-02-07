@@ -49,97 +49,113 @@ describe('# Paratii-api', function () {
   after(() => {
     server.stop(app)
   })
-  it('api videos/:id/related should work as expected', async () => {
+  it('api videos/:id/related should work as expected', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
-    let videos = await fetch(baseurl + apiVersion + videoApi + videoId + '/related', {
+    fetch(baseurl + apiVersion + videoApi + videoId + '/related', {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data.length > 1
+      assert.equal(check, true)
+      done()
     })
-    check = videos.length > 1
-    assert.equal(check, true)
   })
-  it('api videos/:id should work as expected', async () => {
+  it('api videos/:id should work as expected', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
-    let videos = await fetch(baseurl + apiVersion + videoApi + videoId, {
+
+    fetch(baseurl + apiVersion + videoApi + videoId, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data._id === videoId
+      assert.equal(check, true)
+      done()
     })
-    check = videos._id === videoId
-    assert.equal(check, true)
   })
-  it('api videos/ should work as expected', async () => {
+  it('api videos/ should work as expected', (done) => {
     let check = false
-    let videos = await fetch(baseurl + apiVersion + videoApi, {
+    fetch(baseurl + apiVersion + videoApi, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data.length > 1
+      assert.equal(check, true)
+      done()
     })
-    check = videos.length > 1
-    assert.equal(check, true)
   })
-  it('api videos/?s=keyword should work as expected', async () => {
+  it('api videos/?s=keyword should work as expected', (done) => {
     let check = false
     let keyword = 'The mathematician who cracked'
     const matchId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
 
-    let videos = await fetch(baseurl + apiVersion + videoApi + '?s=' + keyword, {
+    fetch(baseurl + apiVersion + videoApi + '?s=' + keyword, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data[0]._id === matchId
+      assert.equal(check, true)
+      done()
     })
-
-    check = videos[0]._id === matchId
-    assert.equal(check, true)
   })
-  it('api users/:id should work as expected', async () => {
+  it('api users/:id should work as expected', (done) => {
     const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
     let check = false
 
-    let user = await fetch(baseurl + apiVersion + userApi + userId, {
+    fetch(baseurl + apiVersion + userApi + userId, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data._id === userId
+      assert.equal(check, true)
+      done()
     })
-    check = user._id === userId
-    assert.equal(check, true)
   })
-  it('api users/:id/video should work as expected', async () => {
+  it('api users/:id/video should work as expected', (done) => {
     const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
     let check = false
 
-    let videos = await fetch(baseurl + apiVersion + userApi + userId + '/video', {
+    fetch(baseurl + apiVersion + userApi + userId + '/video', {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data.length > 1
+      assert.equal(check, true)
+      done()
     })
-    check = videos.length > 1
-    assert.equal(check, true)
   })
-  it('api transactions/:id should work as expected', async () => {
+  it('api transactions/:id should work as expected', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
-    let txs = await fetch(baseurl + apiVersion + txApi + userId, {
+    fetch(baseurl + apiVersion + txApi + userId, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data[0].from === userId || data[0].to === userId
+      assert.equal(check, true)
+      done()
     })
-    check = txs[0].from === userId || txs[0].to === userId
-    assert.equal(check, true)
   })
-  it('api transactions/ should work as expected', async () => {
+  it('api transactions/ should work as expected', (done) => {
     let check = false
 
-    let txs = await fetch(baseurl + apiVersion + txApi, {
+    fetch(baseurl + apiVersion + txApi, {
       method: 'get'
     }).then(function (response) {
       return response.json()
+    }).then(function (data) {
+      check = data.length > 1
+      assert.equal(check, true)
+      done()
     })
-    check = txs.length > 1
-    assert.equal(check, true)
   })
 })
