@@ -88,7 +88,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api videos/?s=keyword should work as expected', (done) => {
+  it.skip('api videos/?s=keyword should work as expected', (done) => {
     let check = false
     let keyword = 'The mathematician who cracked'
     const matchId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
