@@ -48,8 +48,8 @@ describe('# Paratii-db Observer', function (done) {
       })
 
       waitUntil()
-      .interval(500)
-      .times(5)
+      .interval(1000)
+      .times(10)
       .condition(function (cb) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {

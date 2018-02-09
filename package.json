@@ -4,7 +4,7 @@
   "description": "paratii database backend",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.spec.js --exit --timeout 20000",
+    "test": "mocha tests/*.spec.js --exit --timeout 30000",
     "start": "NODE_ENV=production node src/server-prod.js",
     "dev": "NODE_ENV=development node src/server.js",
     "parity": "parity --config parity-config.toml",
