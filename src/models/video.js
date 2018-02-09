@@ -4,13 +4,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
-  _id: {type: String, index: true},
+  _id: String,
   title: {type: String, index: true},
   description: {type: String, index: true},
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
-  owner: String,
+  owner: {type: String, index: true},
   stats: {
     likes: Number,
     dislikes: Number,
@@ -24,6 +24,15 @@ const VideoSchema = new Schema({
   tags: {type: Array, index: true}
 })
 
+// definition of compound indexes
+VideoSchema.index({title: 1, description: 1, owner: 1, 'uploader.name': 1, 'uploader.address': 1, tags: 1})
+
+/**
+ * upsert
+ * @param  {Object}   video Json objects
+ * @param  {Function} cb    (err, success)
+ * @return {[type]}         [description]
+ */
 VideoSchema.statics.upsert = function (video, cb) {
   if (!video || !video._id) {
     return cb(new Error('video._id is required for upsert'))
@@ -83,25 +92,41 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @param  {Function} cb      (err, result)
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
-VideoSchema.statics.search = function (keyword, cb) {
-  const query = {
-    $or: [
-      { title: {$regex: keyword, $options: '-i'} },
-      { description: {$regex: keyword, $options: '-i'} },
-      { 'uploader.name': {$regex: keyword, $options: '-i'} },
-      { tags: {$regex: keyword, $options: '-i'} }
-    ]
+VideoSchema.statics.search = function (query, cb) {
+  // TODO we need and index that combine fields, $or is to expansive
+  console.log(Object.keys(query).length)
+
+  if (Object.keys(query).length === 0) {
+    // this is a full search on video
+    this.find(query).limit(6).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else {
+    // this is a complex search
+
   }
+  // const query = {
+  //   $or: [
+  //     { title: {$regex: keyword, $options: '-i'} },
+  //     { description: {$regex: keyword, $options: '-i'} },
+  //     { 'uploader.name': {$regex: keyword, $options: '-i'} },
+  //     { tags: {$regex: keyword, $options: '-i'} }
+  //   ]
+  // }
 
   // TODO Add pagination
 
-  this.find(query).limit(6).exec((err, result) => {
-    if (err) {
-      return cb(err)
-    }
-
-    return cb(null, result)
-  })
+  // this.find(query).limit(6).exec((err, result) => {
+  //   if (err) {
+  //     return cb(err)
+  //   }
+  //
+  //   return cb(null, result)
+  // })
 }
 
 /**

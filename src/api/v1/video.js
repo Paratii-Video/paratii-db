@@ -33,22 +33,13 @@ router.get('/:id', (req, res, next) => {
  */
 
 router.get('/', (req, res, next) => {
-  const keyword = req.query.s
-  // console.log('req.body: ', req.body)
-  if (keyword === undefined || keyword === '') {
-    Video.find({}, (err, video) => {
-      if (err) return res.send(err)
-      res.json(video)
-    })
-  } else {
-    Video.search(keyword, (err, result) => {
-      if (err) {
-        return res.send(err).statusCode(500)
-      }
+  Video.search(req.query, (err, result) => {
+    if (err) {
+      return res.send(err).statusCode(500)
+    }
 
-      return res.json(result)
-    })
-  }
+    return res.json(result)
+  })
 })
 
 module.exports = router
