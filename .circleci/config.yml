@@ -27,12 +27,12 @@ jobs:
           background: true
       - run: npm run lint
       - run: npm test
-      - deploy:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./deploy.sh production
-            fi
-            if [ "${CIRCLE_BRANCH}" == "feature/deploy-automation" ]; then
-              ./deploy.sh production
-              ./update_deploy.sh
-            fi
+      # - deploy:
+      #     command: |
+      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      #         ./deploy.sh production
+      #       fi
+      #       if [ "${CIRCLE_BRANCH}" == "feature/deploy-automation" ]; then
+      #         ./deploy.sh production
+      #         ./update_deploy.sh
+      #       fi
