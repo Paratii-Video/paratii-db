@@ -11,6 +11,7 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
+      console.log(log)
       Video.upsert(parser.video(log), (err, vid) => {
         if (err) {
           throw err
