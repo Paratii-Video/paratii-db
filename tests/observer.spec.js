@@ -22,7 +22,7 @@ describe('# Paratii-db Observer', function (done) {
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
 
-    server.start(contract.Registry.options.address)
+    server.start(contract.Registry.options.address, 'ws://localhost:8546')
   })
 
   it('paratii lib okness', async function (done) {
