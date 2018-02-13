@@ -103,11 +103,21 @@ VideoSchema.statics.search = function (query, cb) {
 
       return cb(null, result)
     })
-  } else {
+  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+    // this is a full text search on video with other fields
     let search = Object.assign(baseSearch, query)
     delete search['keyword']
 
     this.find(search).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else {
+    // this is a full list of videos
+    this.find({}).exec((err, result) => {
       if (err) {
         return cb(err)
       }

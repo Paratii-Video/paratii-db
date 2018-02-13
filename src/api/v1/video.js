@@ -33,6 +33,7 @@ router.get('/:id', (req, res, next) => {
  */
 
 router.get('/', (req, res, next) => {
+  console.log(req.query)
   Video.search(req.query, (err, result) => {
     if (err) {
       return res.send(err).statusCode(500)
