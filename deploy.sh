@@ -13,6 +13,7 @@ if [[ $1 == staging ]]; then
 elif [[ $1 == production ]]; then
     # ok
     echo "deploying to $1"
+    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_db </dev/null"
 else
     echo "unknown parameter - please specify one of 'staging' or 'production'"
     exit
