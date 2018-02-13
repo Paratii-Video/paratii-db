@@ -87,7 +87,7 @@ module.exports = [{
   },
   'uploader': {
     'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-    'name': 'Aron Privacy'
+    'name': 'uploadernametarget'
   },
   'tags': [
     'swarm',

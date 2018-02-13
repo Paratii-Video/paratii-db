@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
     if (err) {
       return res.send(err).statusCode(500)
     }
-
+    // TODO: add query params, total, start, limit and results
     return res.json(result)
   })
 })

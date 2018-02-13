@@ -6,9 +6,9 @@ const { eachLimit } = require('async')
 
 const UserSchema = new Schema({
 
-  _id: {type: String, index: true},
-  name: {type: String, index: true},
-  email: {type: String, index: true},
+  _id: {type: String},
+  name: {type: String},
+  email: {type: String},
   ipfsHash: String
 })
 

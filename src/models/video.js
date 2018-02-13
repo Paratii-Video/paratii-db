@@ -95,10 +95,10 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  */
 VideoSchema.statics.search = function (query, cb) {
   // TODO we need and index that combine fields, $or is to expansive
-
-  if (typeof (query) === 'string') {
+  let baseSearch = { $text: { $search: query.keyword } }
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // this is a full text search on video
-    this.find({ $text: { $search: query } }).limit(6).exec((err, result) => {
+    this.find(baseSearch).exec((err, result) => {
       if (err) {
         return cb(err)
       }
@@ -106,8 +106,17 @@ VideoSchema.statics.search = function (query, cb) {
       return cb(null, result)
     })
   } else {
-    // this is a complex search
+    let search = Object.assign(baseSearch, query)
+    delete search['keyword']
 
+    this.find(search).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+    console.log('complex search')
   }
   // const query = {
   //   $or: [
