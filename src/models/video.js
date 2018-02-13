@@ -116,7 +116,6 @@ VideoSchema.statics.search = function (query, cb) {
 
       return cb(null, result)
     })
-    console.log('complex search')
   }
   // const query = {
   //   $or: [
