@@ -12,7 +12,7 @@ require('./db')
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
-  start('0x0B101ff870F8BAd6c437C45eCb2964D7e8034593', 'ws://chain.paratii.video:8546')
+  start('0x0B101ff870F8BAd6c437C45eCb2964D7e8034593', 'ws://chainws.paratii.video')
 } else if (process.env.NODE_ENV === 'development') {
   start(null, 'ws://localhost:8546')
 }
