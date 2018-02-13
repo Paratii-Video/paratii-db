@@ -5,12 +5,12 @@ const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
   _id: String,
-  title: {type: String, index: true},
-  description: {type: String, index: true},
+  title: {type: String},
+  description: {type: String},
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
-  owner: {type: String, index: true},
+  owner: {type: String},
   stats: {
     likes: Number,
     dislikes: Number,
@@ -18,15 +18,15 @@ const VideoSchema = new Schema({
     dislikers: Array
   },
   uploader: {
-    name: {type: String, index: true},
-    address: {type: String, index: true}
+    name: {type: String},
+    address: {type: String}
   },
-  tags: {type: Array, index: true}
-})
+  tags: {type: [String]}
+},
+{ emitIndexErrors: true, autoIndex: true })
 
 // definition of compound indexes
-VideoSchema.index({title: 1, description: 1, owner: 1, 'uploader.name': 1, 'uploader.address': 1, tags: 1})
-
+VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text'})
 /**
  * upsert
  * @param  {Object}   video Json objects
@@ -87,18 +87,28 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
 }
 
 /**
- * find videos based on a keyword
+ * find videos based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
-  // TODO we need and index that combine fields, $or is to expansive
-  console.log(Object.keys(query).length)
+  let baseSearch = { $text: { $search: query.keyword } }
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+    // this is a full text search on video
+    this.find(baseSearch).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
 
-  if (Object.keys(query).length === 0) {
-    // this is a full search on video
-    this.find(query).limit(6).exec((err, result) => {
+      return cb(null, result)
+    })
+  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+    // this is a full text search on video with other fields
+    let search = Object.assign(baseSearch, query)
+    delete search['keyword']
+
+    this.find(search).exec((err, result) => {
       if (err) {
         return cb(err)
       }
@@ -106,27 +116,17 @@ VideoSchema.statics.search = function (query, cb) {
       return cb(null, result)
     })
   } else {
-    // this is a complex search
+    // this is a full list of videos
+    this.find({}).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
 
+      return cb(null, result)
+    })
   }
-  // const query = {
-  //   $or: [
-  //     { title: {$regex: keyword, $options: '-i'} },
-  //     { description: {$regex: keyword, $options: '-i'} },
-  //     { 'uploader.name': {$regex: keyword, $options: '-i'} },
-  //     { tags: {$regex: keyword, $options: '-i'} }
-  //   ]
-  // }
 
   // TODO Add pagination
-
-  // this.find(query).limit(6).exec((err, result) => {
-  //   if (err) {
-  //     return cb(err)
-  //   }
-  //
-  //   return cb(null, result)
-  // })
 }
 
 /**

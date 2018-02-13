@@ -28,6 +28,9 @@ describe('# Paratii-api', function () {
   let app
   let server
   before(async () => {
+    Video.remove({})
+    User.remove({})
+    Transaction.remove({})
     Video.bulkUpsert(videos, (err, success) => {
       if (err) throw err
     })
@@ -42,13 +45,16 @@ describe('# Paratii-api', function () {
       address: accounts[0].publicKey,
       privateKey: accounts[0].privateKey
     })
+
     const contract = await paratii.eth.deployContracts()
     server = require('../src/server')
-    app = server.start(contract.Registry.options.address)
+    app = server.start(contract.Registry.options.address, 'ws://localhost:8546')
   })
+
   after(() => {
     server.stop(app)
   })
+
   it('api videos/:id/related should work as expected', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
@@ -88,12 +94,12 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it.skip('api videos/?s=keyword should work as expected', (done) => {
+  it('api videos/?keyword=keyword should work as expected', (done) => {
     let check = false
     let keyword = 'The mathematician who cracked'
     const matchId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
 
-    fetch(baseurl + apiVersion + videoApi + '?s=' + keyword, {
+    fetch(baseurl + apiVersion + videoApi + '?keyword=' + keyword, {
       method: 'get'
     }).then(function (response) {
       return response.json()

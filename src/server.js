@@ -11,28 +11,40 @@ require('./db')
 
 const app = express()
 
+if (process.env.NODE_ENV === 'production') {
+  start('0x0B101ff870F8BAd6c437C45eCb2964D7e8034593', 'ws://chain.paratii.video:8546')
+} else if (process.env.NODE_ENV === 'development') {
+  start(null, 'ws://localhost:8546')
+}
+
 function stop (app) {
   app.close()
 }
 
-function start (registry) {
+function start (registry, provider) {
   // Overlooking Blockchain obSERVER
-  observer = require('./observer')(paratiilib.Paratii, registry)
+
+  let server
+  if (process.env.NODE_ENV === 'production') {
+    console.log('production')
+    observer = require('./observer')(paratiilib.Paratii, '0x0B101ff870F8BAd6c437C45eCb2964D7e8034593', provider)
+  } else {
+    console.log('devel')
+    console.log(registry)
+    observer = require('./observer')(paratiilib.Paratii, registry, provider)
+  }
+
   observer.videoObserver.init()
   observer.userObserver.init()
   observer.transactionObserver.init()
-  let server
-  if (registry) {
-    app.use(compression())
-    app.use(express.json())
 
-    app.use('/api/v1', api)
+  app.use(compression())
+  app.use(express.json())
 
-    server = app.listen(3000)
-    console.log('listening at 3000')
-  } else {
-    throw Error('Registry address needed!')
-  }
+  app.use('/api/v1', api)
+
+  server = app.listen(3000)
+  console.log('listening at 3000')
 
   return server
 }

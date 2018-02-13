@@ -42,7 +42,7 @@ module.exports = [{
     'dislikes': 0
   },
   'uploader': {
-    'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
+    'address': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7',
     'name': 'Ethereum Foundation'
   },
   'tags': [
@@ -68,7 +68,7 @@ module.exports = [{
   },
   'uploader': {
     'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
-    'name': 'Blockchain at Berkeley'
+    'name': 'uploadernametarget'
   },
   'tags': ''
 },
@@ -87,7 +87,7 @@ module.exports = [{
   },
   'uploader': {
     'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-    'name': 'Aron Privacy'
+    'name': 'uploadernametarget'
   },
   'tags': [
     'swarm',
@@ -118,12 +118,13 @@ module.exports = [{
     'blockchain',
     'scaling',
     'vitalik buterin',
-    'vlad zamfir'
+    'vlad zamfir',
+    'tagtarget'
   ]
 },
 {
   '_id': 'QmPRWjy3xqbxukKBMVTYH6Zk44gkVJFwzexzvZYfM164Rv',
-  'title': 'We\'ve stopped trusting institutions and started trusting strangers | Rachel Botsman',
+  'title': 'Titletarget',
   'description': 'Something profound is changing our concept of trust, says Rachel Botsman. While we used to place our trust in institutions like governments and banks, today we increasingly rely on others, often strangers, on platforms like Airbnb and Uber and through technologies like the blockchain. This new era of trust could bring with it a more transparent, inclusive and accountable society — if we get it right. Who do you trust?\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference',
   'price': 0,
   'src': '/ipfs/QmWVYEZKE1E4U8Xgh88Td5iqhFgnHq4giTM7JoaDu89WMw',
@@ -179,7 +180,7 @@ module.exports = [{
 {
   '_id': 'QmPxeBDGspPx7ir6sT7bWrHqMjwXEmqPjPRKa7eAep3bwp',
   'title': 'Introducing the Render Token',
-  'description': 'Co-founder and CEO Jules Urbach introduces the Render Token network and system.\nTo learn more visit rendertoken.com/\nStay updated @rendertoken on Twitter and Medium',
+  'description': 'descriptiontarget Co-founder and CEO Jules Urbach introduces the Render Token network and system.\nTo learn more visit rendertoken.com/\nStay updated @rendertoken on Twitter and Medium',
   'price': 0,
   'src': '/ipfs/Qma1wQ1H3hBD5imQiFv6SWW4idx6FV1F1BdnFjADCdwA7z',
   'mimetype': 'video/mp4',
@@ -235,7 +236,7 @@ module.exports = [{
 {
   '_id': 'QmQUgoZTGjJYdMYbaRZgSYwuJhLfiej7TwxJnwbw5Akmo9',
   'title': 'CESC2017 - Shin’ichiro Matsuo - Global Scale Research Networks and Cryptoeconomics',
-  'description': '',
+  'description': 'descriptiontarget',
   'price': 0,
   'src': '/ipfs/QmaW2T8QESQvABYFTiFbFGjMXiBfVxcZiU3tpzNiStH18f',
   'mimetype': 'video/mp4',
