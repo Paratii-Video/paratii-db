@@ -48,8 +48,8 @@ describe('# Paratii-db Observer', function (done) {
       })
 
       waitUntil()
-      .interval(500)
-      .times(5)
+      .interval(1000)
+      .times(10)
       .condition(function (cb) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
@@ -61,7 +61,6 @@ describe('# Paratii-db Observer', function (done) {
       })
       .done(function (result) {
         assert.equal(true, result)
-        console.log('create video')
         done()
       })
     })
@@ -110,7 +109,6 @@ describe('# Paratii-db Observer', function (done) {
           })
           .done(function (result) {
             assert.equal(true, result)
-            console.log('remove video')
             done()
           })
         })
@@ -128,7 +126,7 @@ describe('# Paratii-db Observer', function (done) {
       id: userId,
       name: 'Humbert Humbert',
       email: 'humbert@humbert.ru',
-      ipfsHash: 'some-hash'
+      ipfsData: 'some-hash'
     }
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
@@ -149,7 +147,6 @@ describe('# Paratii-db Observer', function (done) {
       })
       .done(function (result) {
         assert.equal(true, result)
-        console.log('create user')
         done()
       })
     })
@@ -165,12 +162,12 @@ describe('# Paratii-db Observer', function (done) {
       id: userId,
       name: 'Humbert Humbert',
       email: 'humbert@humbert.ru',
-      ipfsHash: 'some-hash'
+      ipfsData: 'some-hash'
     }
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
-      paratii.eth.users.create(userData).then(function () {
+      paratii.eth.users.create(userData).then(function (user) {
         sleep(1000).then(function () {
           paratii.eth.users.delete(userId)
 
@@ -193,7 +190,6 @@ describe('# Paratii-db Observer', function (done) {
           })
           .done(function (result) {
             assert.equal(true, result)
-            console.log('remove user')
             done()
           })
         })

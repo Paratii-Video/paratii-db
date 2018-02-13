@@ -3,7 +3,7 @@
 module.exports = function (Paratii, registry) {
   var module = {}
   let paratii = new Paratii({
-    provider: 'http://localhost:8545'
+    provider: 'ws://localhost:8546'
   })
   // just for testing
   paratii.eth.setRegistryAddress(registry)
