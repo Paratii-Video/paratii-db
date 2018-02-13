@@ -5,12 +5,12 @@ const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
   _id: String,
-  title: {type: String, index: true},
-  description: {type: String, index: true},
+  title: {type: String},
+  description: {type: String},
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
-  owner: {type: String, index: true},
+  owner: {type: String},
   stats: {
     likes: Number,
     dislikes: Number,
@@ -18,15 +18,16 @@ const VideoSchema = new Schema({
     dislikers: Array
   },
   uploader: {
-    name: {type: String, index: true},
-    address: {type: String, index: true}
+    name: {type: String},
+    address: {type: String}
   },
-  tags: {type: Array, index: true}
-})
+  tags: {type: [String]}
+},
+{ emitIndexErrors: true, autoIndex: true })
 
+console.log('creating index')
 // definition of compound indexes
-VideoSchema.index({title: 1, description: 1, owner: 1, 'uploader.name': 1, 'uploader.address': 1, tags: 1})
-
+VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text'})
 /**
  * upsert
  * @param  {Object}   video Json objects
@@ -94,11 +95,10 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  */
 VideoSchema.statics.search = function (query, cb) {
   // TODO we need and index that combine fields, $or is to expansive
-  console.log(Object.keys(query).length)
 
-  if (Object.keys(query).length === 0) {
-    // this is a full search on video
-    this.find(query).limit(6).exec((err, result) => {
+  if (typeof (query) === 'string') {
+    // this is a full text search on video
+    this.find({ $text: { $search: query } }).limit(6).exec((err, result) => {
       if (err) {
         return cb(err)
       }
