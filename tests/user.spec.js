@@ -17,6 +17,7 @@ describe('# Parartii-db User Model Spec', function (done) {
   let paratii
 
   before(async () => {
+    User.remove({})
     paratii = await new paratiilib.Paratii({
       provider: 'http://localhost:8545/rpc/',
       address: accounts[0].publicKey,

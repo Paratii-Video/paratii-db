@@ -15,7 +15,10 @@ const TransactionSchema = new Schema({
   source: String,
   to: String,
   value: Number // FIXME use BigNumber.js here <===
-})
+},
+{ emitIndexErrors: true, autoIndex: true })
+
+TransactionSchema.index({from: 'text', to: 'text', description: 'text'})
 
 TransactionSchema.statics.upsert = function (tx, cb) {
   if (!tx || !tx._id) {
@@ -40,6 +43,33 @@ TransactionSchema.statics.bulkUpsert = function (txs, cb) {
     if (err) return cb(err)
     return cb(null, true)
   })
+}
+
+TransactionSchema.statics.search = function (query, cb) {
+  let baseSearch = { $text: { $search: query.keyword } }
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+    // this is a full text search on video
+    this.find(baseSearch).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else {
+    let search = Object.assign(baseSearch, query)
+    delete search['keyword']
+
+    this.find(search).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  }
+
+  // TODO Add pagination
 }
 const Transaction = mongoose.model('Transaction', TransactionSchema)
 
