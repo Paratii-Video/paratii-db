@@ -25,7 +25,6 @@ const VideoSchema = new Schema({
 },
 { emitIndexErrors: true, autoIndex: true })
 
-console.log('creating index')
 // definition of compound indexes
 VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text'})
 /**
@@ -88,13 +87,12 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
 }
 
 /**
- * find videos based on a keyword
+ * find videos based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
-  // TODO we need and index that combine fields, $or is to expansive
   let baseSearch = { $text: { $search: query.keyword } }
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // this is a full text search on video
@@ -117,24 +115,8 @@ VideoSchema.statics.search = function (query, cb) {
       return cb(null, result)
     })
   }
-  // const query = {
-  //   $or: [
-  //     { title: {$regex: keyword, $options: '-i'} },
-  //     { description: {$regex: keyword, $options: '-i'} },
-  //     { 'uploader.name': {$regex: keyword, $options: '-i'} },
-  //     { tags: {$regex: keyword, $options: '-i'} }
-  //   ]
-  // }
 
   // TODO Add pagination
-
-  // this.find(query).limit(6).exec((err, result) => {
-  //   if (err) {
-  //     return cb(err)
-  //   }
-  //
-  //   return cb(null, result)
-  // })
 }
 
 /**

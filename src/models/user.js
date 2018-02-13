@@ -10,7 +10,10 @@ const UserSchema = new Schema({
   name: {type: String},
   email: {type: String},
   ipfsHash: String
-})
+},
+{ emitIndexErrors: true, autoIndex: true })
+
+UserSchema.index({name: 'text', email: 'text'})
 
 UserSchema.statics.upsert = function (user, cb) {
   if (!user || !user._id) {
@@ -48,6 +51,39 @@ UserSchema.statics.bulkUpsert = function (users, cb) {
     if (err) return cb(err)
     return cb(null, true)
   })
+}
+
+/**
+ * find user based on a keyword or params
+ * @param  {String}   keyword word to query db with.
+ * @param  {Function} cb      (err, result)
+ * @return {Array}           returns an array of videos matching keyword. limited to 6
+ */
+UserSchema.statics.search = function (query, cb) {
+  let baseSearch = { $text: { $search: query.keyword } }
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+    // this is a full text search on video
+    this.find(baseSearch).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else {
+    let search = Object.assign(baseSearch, query)
+    delete search['keyword']
+
+    this.find(search).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  }
+
+  // TODO Add pagination
 }
 
 const User = mongoose.model('User', UserSchema)

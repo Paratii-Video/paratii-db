@@ -5,6 +5,7 @@ const chai = require('chai')
 const paratiilib = require('paratii-lib')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
+const expect = chai.expect
 
 const assert = chai.assert
 chai.use(dirtyChai)
@@ -33,6 +34,32 @@ describe('# Parartii-db User Model Spec', function (done) {
     User.upsert(users[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)
+      done()
+    })
+  })
+  it('should be able to insert multiple users.', (done) => {
+    User.bulkUpsert(users, (err, vid) => {
+      if (err) return done(err)
+      assert.isOk(vid)
+      done()
+    })
+  })
+
+  it('search users by name and get results back', (done) => {
+    User.search({keyword: 'Gino'}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result).to.have.lengthOf(2)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search users by email and get results back', (done) => {
+    User.search({keyword: '/emailtarget/'}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result).to.have.lengthOf(2)
+      // console.log('found related videos', result)
       done()
     })
   })
