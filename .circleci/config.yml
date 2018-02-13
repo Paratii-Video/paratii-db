@@ -31,9 +31,4 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               sh ./deploy.sh production
-              sh ./update_deploy.sh
-            fi
-            if [ "${CIRCLE_BRANCH}" == "feature/deploy-automation" ]; then
-              sh ./deploy.sh production
-              sh ./update_deploy.sh
             fi
