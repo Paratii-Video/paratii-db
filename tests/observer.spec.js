@@ -9,7 +9,6 @@ const assert = chai.assert
 const Video = require('../src/models').video
 const User = require('../src/models').user
 const waitUntil = require('wait-until')
-// const expect = chai.expect
 chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function (done) {
