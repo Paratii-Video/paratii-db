@@ -6,37 +6,34 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9.1
+      - image: leeaandrob/paratii-db:0.0.1
       - image: circleci/mongo:latest
     working_directory: ~/repo
-
     steps:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-      # - run: sudo apt-get update
-      # - run: sudo apt-get install openssl libssl-dev libudev-dev
-      - run: wget -q http://d1h4xl4cr1h0mo.cloudfront.net/v1.8.6/x86_64-unknown-debian-gnu/parity_1.8.6_amd64.deb
-      - run: sudo dpkg -i parity_1.8.6_amd64.deb
-      # - run: sudo apt-get install lsb-release
-      # - run: wget https://www.openssl.org/source/openssl-1.1.0.tar.gz && tar xf openssl-1.1.0.tar.gz && cd openssl-1.1.0 && ./config && make && sudo make install && cd .. && rm -rf openssl-1.1.0* && ls
-      # - run: sudo find /usr/lib/ -iname 'libssl*'
-      # - run: bash <(curl https://get.parity.io -Lk)
+
       - run: npm install
-      - run: npm install web3@1.0.0-beta.28 --save
+      # - run: npm install web3@1.0.0-beta.28 --save
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      # - run: npm install github:Paratii-Video/paratii-lib#dev
       - run:
           name: run parity in background
           command: npm run parity
           background: true
       - run: npm run lint
       - run: npm test
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              sh ./deploy.sh production
+              sh ./update_deploy.sh
+            fi
+            if [ "${CIRCLE_BRANCH}" == "feature/deploy-automation" ]; then
+              sh ./deploy.sh production
+              sh ./update_deploy.sh
+            fi

@@ -4,13 +4,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
-  _id: {type: String, index: true},
-  title: {type: String, index: true},
-  description: {type: String, index: true},
+  _id: String,
+  title: {type: String},
+  description: {type: String},
   price: Number, // FIXME this should be bignumber.js
   src: String,
   mimetype: String,
-  owner: String,
+  owner: {type: String},
   stats: {
     likes: Number,
     dislikes: Number,
@@ -18,12 +18,21 @@ const VideoSchema = new Schema({
     dislikers: Array
   },
   uploader: {
-    name: {type: String, index: true},
-    address: {type: String, index: true}
+    name: {type: String},
+    address: {type: String}
   },
-  tags: {type: Array, index: true}
-})
+  tags: {type: [String]}
+},
+{ emitIndexErrors: true, autoIndex: true })
 
+// definition of compound indexes
+VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text'})
+/**
+ * upsert
+ * @param  {Object}   video Json objects
+ * @param  {Function} cb    (err, success)
+ * @return {[type]}         [description]
+ */
 VideoSchema.statics.upsert = function (video, cb) {
   if (!video || !video._id) {
     return cb(new Error('video._id is required for upsert'))
@@ -78,30 +87,46 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
 }
 
 /**
- * find videos based on a keyword
+ * find videos based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
-VideoSchema.statics.search = function (keyword, cb) {
-  const query = {
-    $or: [
-      { title: {$regex: keyword, $options: '-i'} },
-      { description: {$regex: keyword, $options: '-i'} },
-      { 'uploader.name': {$regex: keyword, $options: '-i'} },
-      { tags: {$regex: keyword, $options: '-i'} }
-    ]
+VideoSchema.statics.search = function (query, cb) {
+  let baseSearch = { $text: { $search: query.keyword } }
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+    // this is a full text search on video
+    this.find(baseSearch).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+    // this is a full text search on video with other fields
+    let search = Object.assign(baseSearch, query)
+    delete search['keyword']
+
+    this.find(search).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
+  } else {
+    // this is a full list of videos
+    this.find({}).exec((err, result) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return cb(null, result)
+    })
   }
 
   // TODO Add pagination
-
-  this.find(query).limit(6).exec((err, result) => {
-    if (err) {
-      return cb(err)
-    }
-
-    return cb(null, result)
-  })
 }
 
 /**

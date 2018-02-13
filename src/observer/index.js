@@ -1,10 +1,11 @@
 'use strict'
 
-module.exports = function (Paratii, registry) {
+module.exports = function (Paratii, registry, provider) {
   var module = {}
   let paratii = new Paratii({
-    provider: 'http://localhost:8545'
+    provider
   })
+
   // just for testing
   paratii.eth.setRegistryAddress(registry)
   module.videoObserver = require('./video')(paratii)
