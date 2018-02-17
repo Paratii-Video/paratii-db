@@ -8,6 +8,7 @@ reseal_on_uncle = true
 force_sealing = true
 [rpc]
 cors = []
+hosts = ["all"]
 [websockets]
 origins = ["localhost:8080"]
 [network]

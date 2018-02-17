@@ -7,7 +7,7 @@
     "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 30000",
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
-    "parity": "parity --config parity-config.toml",
+    "parity": "parity --config parity-config.toml --gasprice 0",
     "lint": "standard"
   },
   "repository": {

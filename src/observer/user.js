@@ -12,6 +12,8 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateUser', function (log) {
+      console.log('creating user ', log.returnValues._address)
+
       User.upsert(parser.user(log), (err, user) => {
         if (err) {
           throw err
@@ -19,6 +21,7 @@ module.exports = function (paratii) {
       })
     })
     await paratii.eth.events.addListener('RemoveUser', function (log) {
+      console.log('removing user ', log.returnValues._address)
       User.delete(log.returnValues._address, (err, res) => {
         if (err) {
           throw err

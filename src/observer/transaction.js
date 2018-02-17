@@ -12,6 +12,8 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('TransferPTI', function (log) {
+      console.log('creating transactions PTI', log.transactionHash)
+
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
           throw err
@@ -20,6 +22,8 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('TransferETH', function (log) {
+      console.log('creating transactions ETH', log.transactionHash)
+
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
           throw err
