@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   _id: {type: String},
   name: {type: String},
   email: {type: String},
-  ipfsHash: String
+  ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
 
