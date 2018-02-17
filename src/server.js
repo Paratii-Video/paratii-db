@@ -27,7 +27,7 @@ function start (registry, provider) {
   let server
   if (process.env.NODE_ENV === 'production') {
     console.log('production')
-    observer = require('./observer')(paratiilib.Paratii, '0x0B101ff870F8BAd6c437C45eCb2964D7e8034593', provider)
+    observer = require('./observer')(paratiilib.Paratii, registry, provider)
   } else {
     console.log('devel')
     console.log(registry)
