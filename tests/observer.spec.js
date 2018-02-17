@@ -31,7 +31,7 @@ describe('# Paratii-db Observer', function (done) {
   })
 
   it('subscription to Create Video events should work as expected', function (done) {
-    let creator = accounts[1].publicKey
+    let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
     let ipfsData = 'zzz'
@@ -71,7 +71,7 @@ describe('# Paratii-db Observer', function (done) {
   })
 
   it('subscription to Remove Video events should work as expected', function (done) {
-    let creator = accounts[1].publicKey
+    let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
     let ipfsData = 'zzz'
@@ -87,12 +87,12 @@ describe('# Paratii-db Observer', function (done) {
         ipfsHash: ipfsHash,
         ipfsData: ipfsData
       }).then(function () {
-        sleep(1000).then(function () {
+        sleep(3000).then(function () {
           paratii.eth.vids.delete(videoId)
 
           waitUntil()
           .interval(500)
-          .times(5)
+          .times(15)
           .condition(function (cb) {
             let condition = false
             Video.findOne({_id: videoId}, function (err, video) {
@@ -102,6 +102,9 @@ describe('# Paratii-db Observer', function (done) {
 
               if (video == null) {
                 condition = true
+                cb(condition)
+              } else {
+                condition = false
                 cb(condition)
               }
             })
@@ -121,7 +124,7 @@ describe('# Paratii-db Observer', function (done) {
   })
 
   it('subscription to Create User events should work as expected', function (done) {
-    let userId = accounts[1].publicKey
+    let userId = accounts[0].publicKey
     let userData = {
       id: userId,
       name: 'Humbert Humbert',
@@ -135,12 +138,15 @@ describe('# Paratii-db Observer', function (done) {
 
       waitUntil()
       .interval(500)
-      .times(5)
+      .times(15)
       .condition(function (cb) {
         let condition = false
         User.findOne({_id: userId}).exec().then(function (user) {
           if (user) {
             condition = (user._id === userId)
+            cb(condition)
+          } else {
+            condition = false
             cb(condition)
           }
         })
@@ -173,7 +179,7 @@ describe('# Paratii-db Observer', function (done) {
 
           waitUntil()
           .interval(500)
-          .times(5)
+          .times(15)
           .condition(function (cb) {
             let condition = false
             User.findOne({_id: userId}, function (err, user) {
@@ -183,6 +189,9 @@ describe('# Paratii-db Observer', function (done) {
 
               if (user == null) {
                 condition = true
+                cb(condition)
+              } else {
+                condition = false
                 cb(condition)
               }
             })
