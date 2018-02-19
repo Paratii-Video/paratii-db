@@ -17,14 +17,18 @@ describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
-    await Video.remove({})
+    console.log('run 1')
+    // await Video.remove({})
+    console.log('run 2')
     paratii = await new paratiilib.Paratii({
       provider: 'http://localhost:8545/rpc/',
       address: accounts[0].publicKey,
       privateKey: accounts[0].privateKey
     })
+    console.log('run 2')
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
+    console.log('run 3')
     setTimeout(() => {
       server.start(contract.Registry.options.address)
       done()
@@ -32,6 +36,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
   })
 
   it('should be able to insert 1 video and get it back.', (done) => {
+    console.log('run 4')
     Video.upsert(fixtures[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)

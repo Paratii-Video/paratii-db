@@ -23,7 +23,7 @@ function stop (app) {
 
 function start (registry, provider) {
   // Overlooking Blockchain obSERVER
-
+  console.log('run')
   let server
   if (process.env.NODE_ENV === 'production') {
     console.log('production')
