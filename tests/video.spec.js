@@ -17,18 +17,14 @@ describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
-    console.log('run 1')
-    // await Video.remove({})
-    console.log('run 2')
+    await Video.remove({})
     paratii = await new paratiilib.Paratii({
       provider: 'http://localhost:8545/rpc/',
       address: accounts[0].publicKey,
       privateKey: accounts[0].privateKey
     })
-    console.log('run 2')
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
-    console.log('run 3')
     setTimeout(() => {
       server.start(contract.Registry.options.address)
       done()
