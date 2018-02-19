@@ -13,7 +13,7 @@ const Video = require('../src/models').video
 
 const fixtures = require('./data/fixtures')
 
-describe('# Parartii-db Video Model Spec', function (done) {
+describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {

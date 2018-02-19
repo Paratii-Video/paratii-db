@@ -13,7 +13,7 @@ const Transaction = require('../src/models').transaction
 
 const transactions = require('./data/transactions')
 
-describe('# Parartii-db User Model Spec', function (done) {
+describe('# Paratii-db User Model Spec', function (done) {
   let paratii
 
   before(async () => {
