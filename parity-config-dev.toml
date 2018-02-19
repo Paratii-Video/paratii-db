@@ -7,7 +7,7 @@ reseal_max_period = 0
 reseal_on_uncle = true
 force_sealing = true
 [rpc]
-cors = ["portal.paratii.video", "localhost:8080", "127.0.0.1:8080"]
+cors = []
 hosts = ["all"]
 [websockets]
 origins = ["localhost:8080"]

@@ -93,10 +93,9 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
-  let baseSearch = { $text: { $search: query.keyword } }
-  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+  if (Object.keys({ $text: { $search: query.keyword } }).length === 1 && query.keyword !== undefined) {
     // this is a full text search on video
-    this.find(baseSearch).exec((err, result) => {
+    this.find({ $text: { $search: query.keyword } }).exec((err, result) => {
       if (err) {
         return cb(err)
       }
@@ -105,7 +104,7 @@ VideoSchema.statics.search = function (query, cb) {
     })
   } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
     // this is a full text search on video with other fields
-    let search = Object.assign(baseSearch, query)
+    let search = Object.assign({ $text: { $search: query.keyword } }, query)
     delete search['keyword']
 
     this.find(search).exec((err, result) => {
@@ -117,7 +116,7 @@ VideoSchema.statics.search = function (query, cb) {
     })
   } else {
     // this is a full list of videos
-    this.find({}).exec((err, result) => {
+    this.find(query).exec((err, result) => {
       if (err) {
         return cb(err)
       }
