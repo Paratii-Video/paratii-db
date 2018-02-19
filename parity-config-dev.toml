@@ -10,7 +10,7 @@ force_sealing = true
 cors = []
 hosts = ["all"]
 [websockets]
-origins = ["localhost:8080"]
+origins = ["*"]
 [network]
 min_peers = 0
 max_peers = 0
