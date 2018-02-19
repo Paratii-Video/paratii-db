@@ -8,6 +8,7 @@ const accounts = require('./data/accounts')
 const assert = chai.assert
 const Video = require('../src/models').video
 const User = require('../src/models').user
+const Transaction = require('../src/models').user
 const waitUntil = require('wait-until')
 chai.use(dirtyChai)
 
@@ -213,7 +214,30 @@ describe('# Paratii-db Observer', function (done) {
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
     sleep(1000).then(function () {
-      paratii.eth.transfer(beneficiary, amount, 'PTI')
+      paratii.eth.transfer(beneficiary, amount, 'PTI').then(function (tx) {
+        let txHash = tx.transactfindOneionHash
+
+        waitUntil()
+        .interval(500)
+        .times(15)
+        .condition(function (cb) {
+          let condition = false
+          Transaction.findOne({_id: txHash}).exec().then(function (tx) {
+            if (tx) {
+              condition = true
+              cb(condition)
+            } else {
+              condition = false
+              cb(condition)
+            }
+          })
+          // cb(condition)
+        })
+        .done(function (result) {
+          assert.equal(true, result)
+          done()
+        })
+      })
       sleep(1000).then(function () {
         done()
       })
@@ -229,12 +253,35 @@ describe('# Paratii-db Observer', function (done) {
     let description = 'thanks for all the fish'
 
     sleep(1000).then(function () {
-      paratii.eth.transfer(beneficiary, amount, 'ETH', description)
+      paratii.eth.transfer(beneficiary, amount, 'ETH', description).then(function (tx) {
+        let txHash = tx.transactfindOneionHash
 
+        waitUntil()
+        .interval(500)
+        .times(15)
+        .condition(function (cb) {
+          let condition = false
+          Transaction.findOne({_id: txHash}).exec().then(function (tx) {
+            if (tx) {
+              condition = true
+              cb(condition)
+            } else {
+              condition = false
+              cb(condition)
+            }
+          })
+          // cb(condition)
+        })
+        .done(function (result) {
+          assert.equal(true, result)
+          done()
+        })
+      })
       sleep(1000).then(function () {
         done()
       })
     })
+
     function sleep (ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
