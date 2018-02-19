@@ -13,7 +13,7 @@ const Video = require('../src/models').video
 
 const fixtures = require('./data/fixtures')
 
-describe('# Parartii-db Video Model Spec', function (done) {
+describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
@@ -32,6 +32,7 @@ describe('# Parartii-db Video Model Spec', function (done) {
   })
 
   it('should be able to insert 1 video and get it back.', (done) => {
+    console.log('run 4')
     Video.upsert(fixtures[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)

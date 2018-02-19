@@ -13,7 +13,7 @@ const User = require('../src/models').user
 
 const users = require('./data/users')
 
-describe('# Parartii-db User Model Spec', function (done) {
+describe('# Paratii-db User Model Spec', function (done) {
   let paratii
 
   before(async () => {
