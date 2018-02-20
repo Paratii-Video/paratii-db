@@ -4,7 +4,7 @@
   "description": "paratii database backend",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 30000",
+    "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 5000",
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development node src/server.js",
     "parity-dev": "parity --config parity-config-dev.toml --gasprice 0",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "cors": "^2.8.4",
     "dirty-chai": "^2.0.1",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
