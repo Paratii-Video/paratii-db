@@ -37,10 +37,8 @@ function start (registry, provider) {
   observer.videoObserver.init()
   observer.userObserver.init()
   observer.transactionObserver.init()
-
   app.use(compression())
   app.use(express.json())
-
   app.use('/api/v1', api)
 
   server = app.listen(3000)
