@@ -13,7 +13,7 @@ module.exports = function (paratii) {
     await paratii.eth.events.addListener('CreateVideo', function (log) {
       console.log('creating video', log.returnValues.videoId)
       console.log('ipfsData', log.returnValues.ipfsData)
-
+      console.log(log)
       Video.upsert(parser.video(log), (err, vid) => {
         if (err) {
           throw err
