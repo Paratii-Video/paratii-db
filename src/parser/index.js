@@ -1,7 +1,9 @@
-module.exports.video = function (log) {
+module.exports.video = function (log, ipfsData) {
   var video = {}
   video._id = log.returnValues.videoId
   video.price = log.returnValues.price
+  video.title = ipfsData.title
+  video.description = ipfsData.description
   video.src = log.returnValues.ipfsHash
   video.owner = log.returnValues.owner
   video.uploader = {}
