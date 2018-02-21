@@ -11,21 +11,18 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
-      console.log('creating video ', log.returnValues.videoId)
-      Video.upsert(parser.video(log), (err, vid) => {
-        if (err) {
-          throw err
-        }
+      console.log('creating video', log.returnValues.videoId)
+      console.log('ipfsData', log.returnValues.ipfsData)
+      paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
+        console.log(ipfsData)
+        Video.upsert(parser.video(log, ipfsData), (err, vid) => {
+          if (err) {
+            throw err
+          }
+        })
       })
     })
-    // await paratii.eth.events.addListener('UpdateVideo', function (log) {
-    //   console.log(log)
-    //   Video.upsert(parser.video(log), (err, vid) => {
-    //     if (err) {
-    //       throw err
-    //     }
-    //   })
-    // })
+
     await paratii.eth.events.addListener('RemoveVideo', function (log) {
       console.log('removing video ', log.returnValues.videoId)
       Video.delete(log.returnValues.videoId, (err, res) => {

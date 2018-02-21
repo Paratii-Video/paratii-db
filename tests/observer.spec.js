@@ -22,7 +22,7 @@ describe('# Paratii-db Observer', function (done) {
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
 
-    server.start(contract.Registry.options.address, 'ws://localhost:8546')
+    server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
 
   it('paratii lib okness', async function (done) {
@@ -34,17 +34,21 @@ describe('# Paratii-db Observer', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
-    let ipfsData = 'zzz'
+    // let ipfsData = 'zzz'
     let number = Math.random()
     let videoId = number.toString(36).substr(2, 9)
+    let title = 'Just a title'
+    let description = 'and its description'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
-      paratii.eth.vids.create({
+      paratii.core.vids.create({
         id: videoId,
         price: price,
         owner: creator,
         ipfsHash: ipfsHash,
-        ipfsData: ipfsData
+        // ipfsData: ipfsData,
+        title: title,
+        description: description
       })
 
       waitUntil()
@@ -53,15 +57,22 @@ describe('# Paratii-db Observer', function (done) {
       .condition(function (cb) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
+          console.log(video)
+          console.log(videoId)
           if (video) {
             condition = (video._id === videoId)
+            cb(condition)
+          } else {
             cb(condition)
           }
         })
       })
       .done(function (result) {
-        assert.equal(true, result)
-        done()
+        console.log()
+        if (result) {
+          assert.equal(true, result)
+          done()
+        }
       })
     })
 

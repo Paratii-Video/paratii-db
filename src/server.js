@@ -21,7 +21,7 @@ function stop (app) {
   app.close()
 }
 
-function start (registry, provider) {
+function start (registry, provider, ipfsRepo) {
   // Overlooking Blockchain obSERVER
   console.log('run')
   let server
@@ -31,7 +31,7 @@ function start (registry, provider) {
   } else {
     console.log('devel')
     console.log(registry)
-    observer = require('./observer')(paratiilib.Paratii, registry, provider)
+    observer = require('./observer')(paratiilib.Paratii, registry, provider, ipfsRepo)
   }
 
   observer.videoObserver.init()
