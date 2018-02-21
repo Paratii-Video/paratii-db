@@ -231,7 +231,7 @@ User:
 ## Request cors access
 
 Currently our API have limited cors access.
-Want to develop a project that use out API?
+Want to develop a project that use Paratii API?
 Write us on our beloved telegram channel =)
 
 https://t.me/joinchat/EWZMBQ9mnqJ1--NKHpyF8A
