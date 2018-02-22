@@ -9,6 +9,7 @@ force_sealing = true
 [rpc]
 hosts = ["portal.paratii.video", "newchain.paratii.video", "localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
 cors = ["*"]
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
 [websockets]
 origins = ["*"]
 hosts = ["chainws.paratii.video", "localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
