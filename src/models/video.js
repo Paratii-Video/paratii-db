@@ -9,6 +9,9 @@ const VideoSchema = new Schema({
   description: {type: String},
   price: Number, // FIXME this should be bignumber.js
   ipfsHash: String,
+  ipfsData: String,
+  ipfsHashOrig: String,
+  duration: String,
   mimetype: String,
   owner: {type: String},
   stats: {

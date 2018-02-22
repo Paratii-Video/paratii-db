@@ -11,23 +11,29 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
-      console.log('creating video', log.returnValues.videoId)
-      console.log('ipfsData', log.returnValues.ipfsData)
-      Video.upsert(parser.video(log), (err, vid) => {
-        if (err) {
-          throw err
-        }
-      })
+      console.log('returnValues', log.returnValues)
 
-      // FIX
-      // paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
-      //   console.log(ipfsData)
-      //   Video.upsert(parser.video(log, ipfsData), (err, vid) => {
-      //     if (err) {
-      //       throw err
-      //     }
-      //   })
-      // })
+      if (log.returnValues.ipfsData !== '') {
+        // if ipfsdata is present wait for data from ipfs then insert
+        console.log('getting data from IPFS')
+        paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
+          console.log(ipfsData)
+          Video.upsert(parser.video(log, ipfsData), (err, vid) => {
+            if (err) {
+              throw err
+            }
+          })
+        })
+      } else {
+        // if no ipfsdata is present just insert inside db
+        console.log('just upser the video')
+
+        Video.upsert(parser.video(log), (err, vid) => {
+          if (err) {
+            throw err
+          }
+        })
+      }
     })
 
     await paratii.eth.events.addListener('RemoveVideo', function (log) {

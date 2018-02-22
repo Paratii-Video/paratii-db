@@ -39,6 +39,7 @@ describe('# Paratii-db Observer', function (done) {
     let videoId = number.toString(36).substr(2, 9)
     let title = 'Just a title'
     let description = 'and its description'
+    let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
       paratii.core.vids.create({
@@ -47,8 +48,9 @@ describe('# Paratii-db Observer', function (done) {
         owner: creator,
         ipfsHash: ipfsHash,
         // ipfsData: ipfsData,
-        title: title,
-        description: description
+        title,
+        description
+        // duration
       })
 
       waitUntil()

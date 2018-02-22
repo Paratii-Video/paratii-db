@@ -1,10 +1,14 @@
 module.exports.video = function (log, ipfsData) {
   var video = {}
+  // TODO: add a data validator
   video._id = log.returnValues.videoId
   video.price = log.returnValues.price
-  // video.title = ipfsData.title
-  // video.description = ipfsData.description
+  video.title = (ipfsData) ? ipfsData.title : ''
+  video.description = (ipfsData) ? ipfsData.description : ''
+  video.duration = (ipfsData) ? ipfsData.duration : ''
   video.ipfsHash = log.returnValues.ipfsHash
+  video.ipfsData = log.returnValues.ipfsData
+  video.ipfsHashOrig = log.returnValues.ipfsHashOrig
   video.owner = log.returnValues.owner
   video.uploader = {}
   video.uploader.address = log.returnValues.registrar
