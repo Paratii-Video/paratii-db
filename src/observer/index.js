@@ -12,6 +12,11 @@ module.exports = function (Paratii, registry, provider, testsparatii) {
     })
   }
 
+  paratii.ipfs.start((err) => {
+    if (err) {
+      console.log('ipfs start failed ', err)
+    }
+  })
   // just for testing
   paratii.eth.setRegistryAddress(registry)
   module.videoObserver = require('./video')(paratii)
