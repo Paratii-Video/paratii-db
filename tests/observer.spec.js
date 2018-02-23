@@ -8,7 +8,8 @@ const accounts = require('./data/accounts')
 const assert = chai.assert
 const Video = require('../src/models').video
 const User = require('../src/models').user
-const Transaction = require('../src/models').user
+const Transaction = require('../src/models').transaction
+const Voucher = require('../src/models').voucher
 const waitUntil = require('wait-until')
 chai.use(dirtyChai)
 
@@ -21,7 +22,9 @@ describe('# Paratii-db Observer', function (done) {
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
-
+    let token = await paratii.eth.getContract('ParatiiToken')
+    let vouchers = await paratii.eth.getContract('Vouchers')
+    await token.methods.transfer(vouchers.options.address, 2 * 10 ** 18).send()
     server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
 
@@ -222,7 +225,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('TODO subscription to Tranfer PTI events should work as expected', function (done) {
+  it('subscription to Tranfer PTI events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -260,7 +263,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('TODO subscription to Tranfer ETH events should work as expected', function (done) {
+  it('subscription to Tranfer ETH events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -292,6 +295,84 @@ describe('# Paratii-db Observer', function (done) {
       })
       sleep(1000).then(function () {
         done()
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+
+  it('subscription to Create Voucher events should work as expected', function (done) {
+    let voucher = {
+      voucherCode: 'FISHFORFEE42',
+      amount: 42
+    }
+
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.vouchers.create(voucher).then(function (hashedVoucher) {
+        waitUntil()
+        .interval(1000)
+        .times(10)
+        .condition(function (cb) {
+          let condition = false
+          Voucher.findOne({_id: hashedVoucher}).exec().then(function (vou) {
+            if (vou) {
+              condition = (hashedVoucher === vou._id)
+              cb(condition)
+            } else {
+              cb(condition)
+            }
+          })
+        })
+        .done(function (result) {
+          console.log()
+          if (result) {
+            assert.equal(true, result)
+            done()
+          }
+        })
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Create Voucher events should work as expected', function (done) {
+    let voucher = {
+      voucherCode: 'FISHFORFEE42',
+      amount: 42
+    }
+
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(2000).then(function () {
+      paratii.eth.vouchers.redeem(voucher.voucherCode).then(function (hashedVoucher) {
+        waitUntil()
+        .interval(1000)
+        .times(10)
+        .condition(function (cb) {
+          let condition = false
+          Voucher.findOne({voucherCode: voucher.voucherCode}).exec().then(function (vou) {
+            console.log('from the query', vou)
+            if (vou) {
+              condition = (voucher.voucherCode === vou.voucherCode)
+              cb(condition)
+            } else {
+              cb(condition)
+            }
+          })
+        })
+        .done(function (result) {
+          console.log()
+          if (result) {
+            assert.equal(true, result)
+            done()
+          }
+        })
       })
     })
 
