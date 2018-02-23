@@ -13,7 +13,7 @@ require('./db')
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
-  start('0x48063E31cDecd17E8a50Cd0e71086695D9a80aED', 'ws://chainws.paratii.video')
+  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
 } else if (process.env.NODE_ENV === 'development') {
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
