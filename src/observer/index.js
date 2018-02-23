@@ -1,10 +1,11 @@
 'use strict'
+const helper = require('../helper')
 
 module.exports = function (Paratii, registry, provider, testlib) {
   var module = {}
   let paratii
   if (testlib) {
-    console.log('Paratii is setted externally ')
+    helper.log('Paratii is setted externally ')
     paratii = testlib
   } else {
     paratii = new Paratii({

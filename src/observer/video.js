@@ -3,6 +3,7 @@
 const Models = require('../models')
 const parser = require('../parser')
 const Video = Models.video
+const helper = require('../helper')
 
 module.exports = function (paratii) {
   var module = {}
@@ -11,16 +12,7 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
-      console.log('|      📼  CreateVideo Event at Videos contract events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
+      helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
 
       Video.upsert(parser.video(log), (err, vid) => {
         if (err) {
@@ -30,7 +22,7 @@ module.exports = function (paratii) {
 
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
-        console.log('getting data from IPFS')
+        console.log('getting data from ipfs')
         paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
           console.log(ipfsData)
           Video.upsert(parser.video(log, ipfsData), (err, vid) => {
@@ -43,16 +35,7 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('RemoveVideo', function (log) {
-      console.log('|      📼  RemoveVideo Event at Videos contract events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
+      helper.logEvents(log, '📼  RemoveVideo Event at Videos contract events')
 
       Video.delete(log.returnValues.videoId, (err, res) => {
         if (err) {
@@ -61,7 +44,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at 📼 Videos contract events')
+    helper.log('|      👓  observing at 📼 Videos contract events')
   }
 
   return module

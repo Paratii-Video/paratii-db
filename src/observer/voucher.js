@@ -3,6 +3,7 @@
 const Models = require('../models')
 const parser = require('../parser')
 const Voucher = Models.voucher
+const helper = require('../helper')
 
 module.exports = function (paratii) {
   var module = {}
@@ -12,12 +13,7 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVoucher', function (log) {
-      console.log('|      🎫  CreateVoucher Event at Vouchers contract events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
+      helper.logEvents(log, '🎫  CreateVoucher Event at Vouchers contract events')
 
       Voucher.upsert(parser.voucher(log), (err, user) => {
         if (err) {
@@ -27,13 +23,7 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('RedeemVoucher', function (log) {
-      console.log('|      🎫  RedeemVoucher Event at Vouchers contract events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
-
+      helper.logEvents(log, '🎫  RedeemVoucher Event at Vouchers contract events')
       Voucher.upsert(parser.voucher(log), (err, user) => {
         if (err) {
           throw err
@@ -41,7 +31,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at 🎫 Vouchers contract events')
+    helper.log('|      👓  observing at 🎫 Vouchers contract events')
   }
 
   return module

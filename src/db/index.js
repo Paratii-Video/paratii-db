@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const config = require('../../default-config.js')
+const helper = require('../helper')
 
 // NOTE: options is **required** for mongoose v5
 var options = {
@@ -19,5 +20,5 @@ mongoose.connect(config.mongodb.url, options)
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
-  console.log('|      MONGO ready for saving incoming events')
+  helper.log('|      MONGO ready for saving incoming events')
 })

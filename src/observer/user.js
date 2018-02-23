@@ -3,6 +3,7 @@
 const Models = require('../models')
 const parser = require('../parser')
 const User = Models.user
+const helper = require('../helper')
 
 module.exports = function (paratii) {
   var module = {}
@@ -12,16 +13,7 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateUser', function (log) {
-      console.log('       🙌  CreateUser Event at Users contract events  ')
-      console.log('           ####### here the log: #######              ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log(log)
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('           ####### end of the log #######             ')
+      helper.logEvents(log, '🙌  CreateUser Event at Users contract events')
 
       User.upsert(parser.user(log), (err, user) => {
         if (err) {
@@ -30,16 +22,8 @@ module.exports = function (paratii) {
       })
     })
     await paratii.eth.events.addListener('RemoveUser', function (log) {
-      console.log('       🙌  Removing Event at Users contract events  ')
-      console.log('           ####### here the log: #######              ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log(log)
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('                                                      ')
-      console.log('           ####### end of the log #######             ')
+      helper.logEvents(log, '🙌  Removing Event at Users contract events')
+
       User.delete(log.returnValues._address, (err, res) => {
         if (err) {
           throw err
@@ -47,7 +31,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at 🙌 User contract events')
+    helper.log('|      👓  observing at 🙌 User contract events')
   }
 
   return module
