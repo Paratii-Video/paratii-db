@@ -4,6 +4,7 @@ const Models = require('../models')
 const parser = require('../parser')
 const Video = Models.video
 const helper = require('../helper')
+const https = require('https')
 
 module.exports = function (paratii) {
   var module = {}
@@ -22,14 +23,32 @@ module.exports = function (paratii) {
 
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
-        console.log('getting data from ipfs')
-        paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
-          console.log(ipfsData)
-          Video.upsert(parser.video(log, ipfsData), (err, vid) => {
-            if (err) {
-              throw err
-            }
+
+        // temporary fix for getting data from ipfs
+        let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
+        console.log('getting data from ipfs gateway ' + ipfsDataUrl)
+
+        https.get(ipfsDataUrl, function (res) {
+          // console.log(res)
+
+          var body = ''
+
+          res.on('data', function (chunk) {
+            body += chunk
           })
+
+          res.on('end', function () {
+            var ipfsResponse = JSON.parse(body)
+            console.log('Got a response: ', ipfsResponse)
+
+            Video.upsert(parser.video(log, ipfsResponse), (err, vid) => {
+              if (err) {
+                throw err
+              }
+            })
+          })
+        }).on('error', function (e) {
+          console.log('Got an error: ', e)
         })
       }
     })
