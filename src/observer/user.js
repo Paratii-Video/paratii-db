@@ -47,7 +47,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at User contract events')
+    console.log('|      👓  observing at 🙌 User contract events')
   }
 
   return module

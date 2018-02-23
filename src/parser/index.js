@@ -39,3 +39,11 @@ module.exports.tx = function (log) {
 
   return tx
 }
+module.exports.voucher = function (log) {
+  var voucher = {}
+  voucher._id = log.returnValues._hashedVoucher
+  voucher.amount = log.returnValues._amount
+  voucher.voucherCode = log.returnValues._voucher
+  voucher.claimant = log.returnValues._claimant
+  return voucher
+}
