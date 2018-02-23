@@ -123,7 +123,7 @@ VideoSchema.statics.search = function (query, cb) {
     })
   } else {
      // this is a full list of videos
-    this.find({}).exec((err, result) => {
+    this.find(query).exec((err, result) => {
       if (err) {
         return cb(err)
       }
