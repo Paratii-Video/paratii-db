@@ -28,7 +28,7 @@ module.exports = function (paratii) {
         let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
         console.log('getting data from ipfs gateway ' + ipfsDataUrl)
 
-        https.get(ipfsDataUrl, function (res) {
+        let request = https.get(ipfsDataUrl, function (res) {
           // console.log(res)
 
           var body = ''
@@ -49,6 +49,10 @@ module.exports = function (paratii) {
           })
         }).on('error', function (e) {
           console.log('Got an error: ', e)
+        })
+
+        request.setTimeout(5000, function () {
+          console.log('Time out on getting ipfsData')
         })
       }
     })
