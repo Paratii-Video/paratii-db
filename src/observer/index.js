@@ -1,6 +1,5 @@
 'use strict'
 const helper = require('../helper')
-
 module.exports = function (Paratii, registry, provider, testlib) {
   var module = {}
   let paratii
