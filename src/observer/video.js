@@ -22,7 +22,9 @@ module.exports = function (paratii) {
 
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
+        console.log('getting data from ipfs')
         paratii.ipfs.getJSON(log.returnValues.ipfsData).then(function (ipfsData) {
+          console.log(ipfsData)
           Video.upsert(parser.video(log, ipfsData), (err, vid) => {
             if (err) {
               throw err
