@@ -12,3 +12,6 @@ cors = ["*"]
 [websockets]
 origins = ["*"]
 hosts = ["chainws.paratii.video", "localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
+[network]
+min_peers = 0
+max_peers = 0
