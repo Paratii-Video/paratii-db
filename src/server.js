@@ -76,6 +76,7 @@ function start (registry, provider, testlib) {
   observer.videoObserver.init()
   observer.userObserver.init()
   observer.transactionObserver.init()
+  observer.voucherObserver.init()
   app.use(compression())
   app.use(express.json())
   app.use('/api/v1', api)

@@ -22,6 +22,7 @@ module.exports = function (Paratii, registry, provider, testlib) {
   module.videoObserver = require('./video')(paratii)
   module.userObserver = require('./user')(paratii)
   module.transactionObserver = require('./transaction')(paratii)
+  module.voucherObserver = require('./voucher')(paratii)
 
   return module
 }

@@ -61,7 +61,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at Videos contract events')
+    console.log('|      👓  observing at 📼 Videos contract events')
   }
 
   return module
