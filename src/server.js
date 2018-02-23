@@ -28,7 +28,11 @@ function stop (app) {
 
 function start (registry, provider, testlib) {
   // Overlooking Blockchain obSERVER
-
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
   console.log('                                                                                                              0000  0000 ')
   console.log('      0x00                                                                                             00     xxxx  0xxxx')
   console.log('      0xxxxx00                                                                                       xxxx0               ')
@@ -51,6 +55,9 @@ function start (registry, provider, testlib) {
   console.log('       ___ | |_ |   __||   __|| __  ||  |  ||   __|| __  |                                                               ')
   console.log('      | . || . ||__   ||   __||    -||  |  ||   __||    -|                                                               ')
   console.log('      |___||___||_____||_____||__|__| \\___/ |_____||__|__|                                                              ')
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
+  console.log('                                                                                                                         ')
   console.log('                                                                                                                         ')
   console.log('                                                                                                                         ')
   console.log('                                                                                                                         ')
