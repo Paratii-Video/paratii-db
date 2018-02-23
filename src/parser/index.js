@@ -12,7 +12,6 @@ module.exports.video = function (log, ipfsData) {
   video.owner = log.returnValues.owner
   video.uploader = {}
   video.uploader.address = log.returnValues.registrar
-  console.log(video)
   return video
 }
 

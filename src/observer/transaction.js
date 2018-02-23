@@ -3,6 +3,7 @@
 const Models = require('../models')
 const parser = require('../parser')
 const Transaction = Models.transaction
+const helper = require('../helper')
 
 module.exports = function (paratii) {
   var module = {}
@@ -12,12 +13,7 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('TransferPTI', function (log) {
-      console.log('|      ⛵  TransferPTI Event at Transactions contracts events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
+      helper.logEvents(log, '⛵  TransferPTI Event at Transactions contracts events')
 
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
@@ -27,13 +23,7 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('TransferETH', function (log) {
-      console.log('|      ⛵  TransferETH Event at Transactions contracts events')
-      console.log('|          ####### here the log: #######              ')
-      console.log('|                                                     ')
-      console.log(log)
-      console.log('|                                                     ')
-      console.log('|          ####### end of the log #######             ')
-
+      helper.logEvents(log, '⛵  TransferETH Event at Transactions contracts events')
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
           throw err
@@ -41,7 +31,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('|      👓  observing at ⛵ Transactions contracts events')
+    helper.log('|      👓  observing at ⛵ Transactions contracts events')
   }
 
   return module

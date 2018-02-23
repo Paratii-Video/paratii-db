@@ -62,8 +62,6 @@ describe('# Paratii-db Observer', function (done) {
       .condition(function (cb) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
-          console.log(video)
-          console.log(videoId)
           if (video) {
             condition = (video._id === videoId)
             cb(condition)
@@ -73,7 +71,6 @@ describe('# Paratii-db Observer', function (done) {
         })
       })
       .done(function (result) {
-        console.log()
         if (result) {
           assert.equal(true, result)
           done()
@@ -328,7 +325,6 @@ describe('# Paratii-db Observer', function (done) {
           })
         })
         .done(function (result) {
-          console.log()
           if (result) {
             assert.equal(true, result)
             done()
@@ -357,7 +353,6 @@ describe('# Paratii-db Observer', function (done) {
         .condition(function (cb) {
           let condition = false
           Voucher.findOne({voucherCode: voucher.voucherCode}).exec().then(function (vou) {
-            console.log('from the query', vou)
             if (vou) {
               condition = (voucher.voucherCode === vou.voucherCode)
               cb(condition)
@@ -367,7 +362,6 @@ describe('# Paratii-db Observer', function (done) {
           })
         })
         .done(function (result) {
-          console.log()
           if (result) {
             assert.equal(true, result)
             done()
