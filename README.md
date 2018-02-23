@@ -20,11 +20,11 @@ $ git clone https://github.com/Paratii-Video/paratii-db.git
 $ cd paratii-db
 $ npm install
 
-# for development
+# for development (needs Parity node running)
 $ npm run dev
 
-# in production
-$ npm start
+# for production against Paratii Chain
+$ npm run start
 
 # Note: You can also use yarn. I'm not gonna judge :)
 ```
@@ -45,9 +45,6 @@ $ npm run test
 
 ## Documentation
 
-TODO , But take a look at `src/server.js` and follow along the jsdocs and you should be able to get around the code.
-
-In the meantime, if you have any question, head to our [gitter dev channel](https://gitter.im/Paratii-Video/dev) and feel free to use the issues section aswell :)
 
 ### API
 
