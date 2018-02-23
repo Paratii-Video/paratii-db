@@ -3,7 +3,6 @@
 const express = require('express')
 const compression = require('compression')
 const paratiilib = require('paratii-lib')
-const registryFilename = require('/tmp/registry.json')
 
 const api = require('./api/v1')
 let observer = null
@@ -11,13 +10,16 @@ let observer = null
 require('./db')
 
 const app = express()
-const registryAddress = registryFilename.registryAddress
 
 if (process.env.NODE_ENV === 'production') {
   start('0x48063E31cDecd17E8a50Cd0e71086695D9a80aED', 'ws://chainws.paratii.video')
 } else if (process.env.NODE_ENV === 'development') {
-  console.log(registryAddress)
+  const registryFilename = require('/tmp/registry.json')
+  const registryAddress = registryFilename.registryAddress
+
   start(registryAddress, 'ws://localhost:8546')
+} else if (process.env.NODE_ENV === 'test') {
+  // start(null, 'ws://localhost:8546')
 }
 
 function stop (app) {
