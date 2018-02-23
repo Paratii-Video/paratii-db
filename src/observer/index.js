@@ -1,11 +1,11 @@
 'use strict'
 
-module.exports = function (Paratii, registry, provider, testsparatii) {
+module.exports = function (Paratii, registry, provider, testlib) {
   var module = {}
   let paratii
-  if (testsparatii) {
+  if (testlib) {
     console.log('Paratii is setted externally ')
-    paratii = testsparatii
+    paratii = testlib
   } else {
     paratii = new Paratii({
       provider
