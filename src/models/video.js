@@ -13,6 +13,9 @@ const VideoSchema = new Schema({
   ipfsHashOrig: String,
   duration: String,
   mimetype: String,
+  author: String,
+  free: String,
+  publish: String,
   owner: {type: String},
   stats: {
     likes: Number,
@@ -29,7 +32,7 @@ const VideoSchema = new Schema({
 { emitIndexErrors: true, autoIndex: true })
 
 // definition of compound indexes
-VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text'})
+VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text', author: 'text'})
 /**
  * upsert
  * @param  {Object}   video Json objects

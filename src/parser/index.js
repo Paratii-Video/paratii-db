@@ -6,6 +6,7 @@ module.exports.video = function (log, ipfsData) {
   video.title = (ipfsData) ? ipfsData.title : ''
   video.description = (ipfsData) ? ipfsData.description : ''
   video.duration = (ipfsData) ? ipfsData.duration : ''
+  video.author = (ipfsData) ? ipfsData.author : ''
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
   video.ipfsHashOrig = log.returnValues.ipfsHashOrig
