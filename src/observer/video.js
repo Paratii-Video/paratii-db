@@ -11,7 +11,16 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
-      console.log('returnValues', log.returnValues)
+      console.log('|      📼  CreateVideo Event at Videos contract events')
+      console.log('|          ####### here the log: #######              ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log(log)
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|          ####### end of the log #######             ')
 
       Video.upsert(parser.video(log), (err, vid) => {
         if (err) {
@@ -34,7 +43,17 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('RemoveVideo', function (log) {
-      console.log('removing video ', log.returnValues.videoId)
+      console.log('|      📼  RemoveVideo Event at Videos contract events')
+      console.log('|          ####### here the log: #######              ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log(log)
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|                                                     ')
+      console.log('|          ####### end of the log #######             ')
+
       Video.delete(log.returnValues.videoId, (err, res) => {
         if (err) {
           throw err
@@ -42,7 +61,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('inizialized all video events')
+    console.log('|      👓  observing at Videos contract events')
   }
 
   return module

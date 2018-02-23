@@ -12,7 +12,12 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('TransferPTI', function (log) {
-      console.log('creating transactions PTI', log.transactionHash)
+      console.log('|      ⛵  TransferPTI Event at Transactions contracts events')
+      console.log('|          ####### here the log: #######              ')
+      console.log('|                                                     ')
+      console.log(log)
+      console.log('|                                                     ')
+      console.log('|          ####### end of the log #######             ')
 
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
@@ -22,7 +27,12 @@ module.exports = function (paratii) {
     })
 
     await paratii.eth.events.addListener('TransferETH', function (log) {
-      console.log('creating transactions ETH', log.transactionHash)
+      console.log('|      ⛵  TransferETH Event at Transactions contracts events')
+      console.log('|          ####### here the log: #######              ')
+      console.log('|                                                     ')
+      console.log(log)
+      console.log('|                                                     ')
+      console.log('|          ####### end of the log #######             ')
 
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
@@ -31,7 +41,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('inizialized all transaction events')
+    console.log('|      👓  observing at Transactions contracts events')
   }
 
   return module

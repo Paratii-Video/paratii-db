@@ -12,7 +12,16 @@ module.exports = function (paratii) {
     // events hook
 
     await paratii.eth.events.addListener('CreateUser', function (log) {
-      console.log('creating user ', log.returnValues._address)
+      console.log('       🙌  CreateUser Event at Users contract events  ')
+      console.log('           ####### here the log: #######              ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log(log)
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('           ####### end of the log #######             ')
 
       User.upsert(parser.user(log), (err, user) => {
         if (err) {
@@ -21,7 +30,16 @@ module.exports = function (paratii) {
       })
     })
     await paratii.eth.events.addListener('RemoveUser', function (log) {
-      console.log('removing user ', log.returnValues._address)
+      console.log('       🙌  Removing Event at Users contract events  ')
+      console.log('           ####### here the log: #######              ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log(log)
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('                                                      ')
+      console.log('           ####### end of the log #######             ')
       User.delete(log.returnValues._address, (err, res) => {
         if (err) {
           throw err
@@ -29,7 +47,7 @@ module.exports = function (paratii) {
       })
     })
 
-    console.log('inizialized all user events')
+    console.log('|      👓  observing at User contract events')
   }
 
   return module

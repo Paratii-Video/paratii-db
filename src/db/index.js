@@ -19,5 +19,5 @@ mongoose.connect(config.mongodb.url, options)
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
-  console.log('MONGODB connected!')
+  console.log('|      MONGO ready for saving incoming events')
 })
