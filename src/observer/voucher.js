@@ -12,6 +12,10 @@ module.exports = function (paratii) {
   module.init = async function () {
     // events hook
 
+    /**
+     * Observer and upserter for created voucher event
+     * @param  {String} log the CreateVoucher event
+     */
     await paratii.eth.events.addListener('CreateVoucher', function (log) {
       helper.logEvents(log, '🎫  CreateVoucher Event at Vouchers contract events')
 
@@ -22,6 +26,10 @@ module.exports = function (paratii) {
       })
     })
 
+    /**
+     * Observer and upserter for redeemed voucher event
+     * @param  {String} log the RedeemVoucher event
+     */
     await paratii.eth.events.addListener('RedeemVoucher', function (log) {
       helper.logEvents(log, '🎫  RedeemVoucher Event at Vouchers contract events')
       Voucher.upsert(parser.voucher(log), (err, user) => {

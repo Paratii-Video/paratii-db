@@ -15,6 +15,12 @@ const UserSchema = new Schema({
 
 UserSchema.index({name: 'text', email: 'text'})
 
+/**
+ * Upsert parsed transaction event
+ * @param  {Object}   user a parsed user log
+ * @param  {Function} cb      (err, result)
+ * @return {Object | Error}        the upsert user document or an error
+ */
 UserSchema.statics.upsert = function (user, cb) {
   if (!user || !user._id) {
     return cb(new Error('user._id is required for upsert'))
@@ -25,6 +31,12 @@ UserSchema.statics.upsert = function (user, cb) {
   {new: true, upsert: true}, cb)
 }
 
+/**
+ * Delete an user
+ * @param  {String}   userId the id of the user to delete
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}          if the query has success
+ */
 UserSchema.statics.delete = function (userId, cb) {
   const query = {
     _id: userId
@@ -38,6 +50,12 @@ UserSchema.statics.delete = function (userId, cb) {
   })
 }
 
+/**
+ * Bulkupsert users events
+ * @param  {Array}   users an array of parsed user object
+ * @param  {Function} cb      (err, result)
+ * @return {Object | Error} gives the updated documents or an error
+ */
 UserSchema.statics.bulkUpsert = function (users, cb) {
   if (!Array.isArray(users)) {
     users = [users]
@@ -60,6 +78,8 @@ UserSchema.statics.bulkUpsert = function (users, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 UserSchema.statics.search = function (query, cb) {
+  // TODO: keep it simple and readable
+
   let baseSearch = { $text: { $search: query.keyword } }
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // this is a full text search on video

@@ -11,6 +11,12 @@ module.exports = function (paratii) {
 
   module.init = async function () {
     // events hook
+    // TODO: fix getJson ipfsData
+
+    /**
+     * Observer and upserter for created video event
+     * @param  {String} log the CreateVideo event
+     */
 
     await paratii.eth.events.addListener('CreateVideo', function (log) {
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
@@ -57,6 +63,10 @@ module.exports = function (paratii) {
       }
     })
 
+    /**
+     * Observer and remover for removed video event
+     * @param  {String} log the RemoveVideo event
+     */
     await paratii.eth.events.addListener('RemoveVideo', function (log) {
       helper.logEvents(log, '📼  RemoveVideo Event at Videos contract events')
 

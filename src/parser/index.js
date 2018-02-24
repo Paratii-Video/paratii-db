@@ -1,6 +1,13 @@
+
+/**
+ * Parse the video logs and ipfs MetaData as the model require
+ * @param  {Object} log      the Videos contract event
+ * @param  {Object} ipfsData json containing video meta data
+ * @return {Object}          a video object acceptable for Videos collection
+ */
 module.exports.video = function (log, ipfsData) {
   var video = {}
-  // TODO: add a data validator
+  // TODO: add data validator
   video._id = log.returnValues.videoId
   video.price = log.returnValues.price
   video.title = (ipfsData) ? ipfsData.title : ''
@@ -16,7 +23,13 @@ module.exports.video = function (log, ipfsData) {
   return video
 }
 
+/**
+ * Parse the user logs as the model require
+ * @param  {Object} log the Users contract event
+ * @return {Object}     a user object acceptable for Users collection
+ */
 module.exports.user = function (log) {
+  // TODO: add data validator
   var user = {}
   user._id = log.returnValues._address
   user.name = log.returnValues._name
@@ -26,7 +39,13 @@ module.exports.user = function (log) {
   return user
 }
 
+/**
+ * Parse the transaction logs as the model require
+ * @param  {Object} log the Transactions contracts event
+ * @return {Object}     a transaction object acceptable for Transactions collection
+ */
 module.exports.tx = function (log) {
+  // TODO: add data validator
   var tx = {}
   tx._id = log.transactionHash
   tx.blockNumber = log.blockNumber
@@ -39,7 +58,14 @@ module.exports.tx = function (log) {
 
   return tx
 }
+
+/**
+ * Parse the voucher logs as the model require
+ * @param  {Object} log the Vouchers contract event
+ * @return {Object}     a voucher object acceptable for Vouchers collection
+ */
 module.exports.voucher = function (log) {
+  // TODO: add data validator
   var voucher = {}
   voucher._id = log.returnValues._hashedVoucher
   voucher.amount = log.returnValues._amount

@@ -11,6 +11,12 @@ const VoucherSchema = new Schema({
   claimant: String
 })
 
+/**
+ * upsert
+ * @param  {Object}   video Json objects
+ * @param  {Function} cb    (err, success)
+ * @return {[type]}         [description]
+ */
 VoucherSchema.statics.upsert = function (tx, cb) {
   if (!tx || !tx._id) {
     return cb(new Error('tx._id is required for upsert'))
@@ -20,7 +26,12 @@ VoucherSchema.statics.upsert = function (tx, cb) {
   {$set: tx},
   {new: true, upsert: true}, cb)
 }
-
+/**
+ * bulk upsert vouchers into the DB
+ * @param  {Array}   videos Array of Json voucher objects
+ * @param  {Function} cb     (err, success)
+ * @return {Boolean}          returns error or success once all videos are in.
+ */
 VoucherSchema.statics.bulkUpsert = function (txs, cb) {
   if (!Array.isArray(txs)) {
     txs = [txs]

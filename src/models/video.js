@@ -33,6 +33,7 @@ const VideoSchema = new Schema({
 
 // definition of compound indexes
 VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text', author: 'text'})
+
 /**
  * upsert
  * @param  {Object}   video Json objects
@@ -99,6 +100,8 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
+  // TODO: keep it simple and readable
+
   let baseSearch = { $text: { $search: query.keyword } }
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
      // this is a full text search on video

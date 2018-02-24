@@ -1,6 +1,7 @@
 'use strict'
 const helper = require('../helper')
 module.exports = function (Paratii, registry, provider, testlib) {
+  // TODO: make more comprensible
   var module = {}
   let paratii
   if (testlib) {
@@ -17,7 +18,7 @@ module.exports = function (Paratii, registry, provider, testlib) {
       console.log('ipfs start failed ', err)
     }
   })
-  // just for testing
+
   paratii.eth.setRegistryAddress(registry)
   module.videoObserver = require('./video')(paratii)
   module.userObserver = require('./user')(paratii)

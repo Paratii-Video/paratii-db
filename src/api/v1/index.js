@@ -9,6 +9,7 @@ const cors = require('cors')
 const whitelist = require('./cors.json').whitelisted
 let corsOptions = {}
 
+// setting for cors whitelist
 if (process.env.NODE_ENV === 'production') {
   corsOptions = {
     origin: function (origin, callback) {
@@ -27,13 +28,12 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
-// const searchAPI = require('./search')
-
 router.get('/', (req, res, next) => {
   res.json({test: 1})
 })
 
-// router.use('/search', searchAPI)
+// initialized REST API routes
+
 router.use('/videos', cors(corsOptions), videoAPI)
 router.use('/users', cors(corsOptions), userAPI)
 router.use('/transactions', cors(corsOptions), transactionAPI)

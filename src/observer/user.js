@@ -7,11 +7,14 @@ const helper = require('../helper')
 
 module.exports = function (paratii) {
   var module = {}
-  // paratiiInstance = paratii
 
   module.init = async function () {
     // events hook
 
+    /**
+     * Observer and upserter for created user event
+     * @param  {String} log the CreateUser event
+     */
     await paratii.eth.events.addListener('CreateUser', function (log) {
       helper.logEvents(log, '🙌  CreateUser Event at Users contract events')
 
@@ -21,6 +24,11 @@ module.exports = function (paratii) {
         }
       })
     })
+
+    /**
+     * Observer and remover for removed user event
+     * @param  {String} log the RemoveUser event
+     */
     await paratii.eth.events.addListener('RemoveUser', function (log) {
       helper.logEvents(log, '🙌  Removing Event at Users contract events')
 
