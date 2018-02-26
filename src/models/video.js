@@ -19,7 +19,7 @@ const VideoSchema = new Schema({
   transcodingStatus: Object,
   uploadStatus: Object,
   thumbnails: Array,
-  publish: String,
+  published: String,
   owner: {type: String},
   stats: {
     likes: Number,

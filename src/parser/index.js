@@ -19,6 +19,7 @@ module.exports.video = function (log, ipfsData) {
   video.storageStatus = (ipfsData) ? ipfsData.storageStatus : ''
   video.transcodingStatus = (ipfsData) ? ipfsData.transcodingStatus : ''
   video.uploadStatus = (ipfsData) ? ipfsData.uploadStatus : ''
+  video.published = (ipfsData) ? ipfsData.published : ''
 
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
