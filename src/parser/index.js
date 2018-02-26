@@ -10,10 +10,16 @@ module.exports.video = function (log, ipfsData) {
   // TODO: add data validator
   video._id = log.returnValues.videoId
   video.price = log.returnValues.price
+
+  // TODO: this can be handle better with an assign
   video.title = (ipfsData) ? ipfsData.title : ''
   video.description = (ipfsData) ? ipfsData.description : ''
   video.duration = (ipfsData) ? ipfsData.duration : ''
   video.author = (ipfsData) ? ipfsData.author : ''
+  video.storageStatus = (ipfsData) ? ipfsData.storageStatus : ''
+  video.transcodingStatus = (ipfsData) ? ipfsData.transcodingStatus : ''
+  video.uploadStatus = (ipfsData) ? ipfsData.uploadStatus : ''
+
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
   video.ipfsHashOrig = log.returnValues.ipfsHashOrig

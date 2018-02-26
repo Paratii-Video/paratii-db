@@ -15,6 +15,10 @@ const VideoSchema = new Schema({
   mimetype: String,
   author: String,
   free: String,
+  storageStatus: Object,
+  transcodingStatus: Object,
+  uploadStatus: Object,
+  thumbnails: Array,
   publish: String,
   owner: {type: String},
   stats: {
