@@ -7,20 +7,20 @@
  */
 module.exports.video = function (log, ipfsData) {
   var video = {}
-  // TODO: add data validator
+  // TODO: add data validator -> JOY
   video._id = log.returnValues.videoId
   video.price = log.returnValues.price
 
   // TODO: this can be handle better with an assign
   video.title = (ipfsData) ? ipfsData.title : ''
-  video.description = (ipfsData) ? ipfsData.description : ''
-  video.duration = (ipfsData) ? ipfsData.duration : ''
-  video.author = (ipfsData) ? ipfsData.author : ''
-  video.storageStatus = (ipfsData) ? ipfsData.storageStatus : ''
-  video.transcodingStatus = (ipfsData) ? ipfsData.transcodingStatus : ''
-  video.filesize = (ipfsData) ? ipfsData.filesize : ''
-  video.uploadStatus = (ipfsData) ? ipfsData.uploadStatus : ''
-  video.published = (ipfsData) ? ipfsData.published : ''
+  video.description = (ipfsData && ipfsData.description) ? ipfsData.description : ''
+  video.duration = (ipfsData && ipfsData.duration) ? ipfsData.duration : ''
+  video.author = (ipfsData && ipfsData.author) ? ipfsData.author : ''
+  video.storageStatus = (ipfsData && ipfsData.storageStatus) ? ipfsData.storageStatus : { data: {} }
+  video.transcodingStatus = (ipfsData && ipfsData.transcodingStatus) ? ipfsData.transcodingStatus : { data: {} }
+  video.filesize = (ipfsData && ipfsData.filesize) ? ipfsData.filesize : ''
+  video.uploadStatus = (ipfsData && ipfsData.uploadStatus) ? ipfsData.uploadStatus : { data: {} }
+  video.published = (ipfsData && ipfsData.published) ? ipfsData.published : ''
 
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
