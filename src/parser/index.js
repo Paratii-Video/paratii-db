@@ -18,6 +18,7 @@ module.exports.video = function (log, ipfsData) {
   video.author = (ipfsData) ? ipfsData.author : ''
   video.storageStatus = (ipfsData) ? ipfsData.storageStatus : ''
   video.transcodingStatus = (ipfsData) ? ipfsData.transcodingStatus : ''
+  video.filesize = (ipfsData) ? ipfsData.filesize : ''
   video.uploadStatus = (ipfsData) ? ipfsData.uploadStatus : ''
   video.published = (ipfsData) ? ipfsData.published : ''
 

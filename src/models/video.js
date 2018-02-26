@@ -17,6 +17,7 @@ const VideoSchema = new Schema({
   free: String,
   storageStatus: Object,
   transcodingStatus: Object,
+  filesize: String,
   uploadStatus: Object,
   thumbnails: Array,
   published: String,
