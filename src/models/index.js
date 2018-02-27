@@ -5,5 +5,6 @@ module.exports = {
   video: require('./video'),
   event: require('./event'),
   user: require('./user'),
-  voucher: require('./voucher')
+  voucher: require('./voucher'),
+  application: require('./application')
 }
