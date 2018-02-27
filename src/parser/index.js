@@ -82,3 +82,17 @@ module.exports.voucher = function (log) {
   voucher.claimant = log.returnValues._claimant
   return voucher
 }
+
+/**
+ * Parse the voucher logs as the model require
+ * @param  {Object} log the Vouchers contract event
+ * @return {Object}     a voucher object acceptable for Vouchers collection
+ */
+module.exports.application = function (log) {
+  // TODO: add data validator
+  var application = {}
+  application._id = log.returnValues.videoId
+  application.deposit = log.returnValues.deposit
+  console.log(application)
+  return application
+}

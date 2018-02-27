@@ -30,7 +30,7 @@ module.exports = function (paratii) {
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
 
-        // temporary fix for getting data from ipfs
+        // FIXME: temporary fix for getting data from ipfs
         let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
         console.log('getting data from ipfs gateway ' + ipfsDataUrl)
 
