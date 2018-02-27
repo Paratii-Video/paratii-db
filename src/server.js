@@ -54,6 +54,8 @@ function start (registry, provider, testlib) {
   observer.userObserver.init()
   observer.transactionObserver.init()
   observer.voucherObserver.init()
+  observer.applicationObserver.init()
+
   app.use(compression())
   app.use(express.json())
   app.use('/api/v1', api)
