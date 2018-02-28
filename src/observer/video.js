@@ -9,7 +9,7 @@ const https = require('https')
 module.exports = function (paratii) {
   var module = {}
 
-  module.init = async function () {
+  module.init = async function (options) {
     // events hook
     // TODO: fix getJson ipfsData
 
@@ -18,7 +18,7 @@ module.exports = function (paratii) {
      * @param  {String} log the CreateVideo event
      */
 
-    await paratii.eth.events.addListener('CreateVideo', function (log) {
+    await paratii.eth.events.addListener('CreateVideo', options, function (log) {
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
 
       if (log.returnValues.ipfsData !== '') {
@@ -39,7 +39,7 @@ module.exports = function (paratii) {
 
           res.on('end', function () {
             var ipfsResponse = JSON.parse(body)
-
+            console.log(ipfsResponse)
             Video.upsert(parser.video(log, ipfsResponse), (err, vid) => {
               if (err) {
                 throw err
@@ -50,8 +50,8 @@ module.exports = function (paratii) {
           console.log('Got an error: ', e)
         })
 
-        request.setTimeout(5000, function () {
-          console.log('Time out on getting ipfsData')
+        request.setTimeout(1000, function () {
+          console.log('Time out on getting ipfsData from ' + ipfsDataUrl)
         })
       } else {
         Video.upsert(parser.video(log), (err, vid) => {
@@ -66,7 +66,7 @@ module.exports = function (paratii) {
      * Observer and remover for removed video event
      * @param  {String} log the RemoveVideo event
      */
-    await paratii.eth.events.addListener('RemoveVideo', function (log) {
+    await paratii.eth.events.addListener('RemoveVideo', options, function (log) {
       helper.logEvents(log, '📼  RemoveVideo Event at Videos contract events')
 
       Video.delete(log.returnValues.videoId, (err, res) => {
@@ -76,7 +76,11 @@ module.exports = function (paratii) {
       })
     })
 
-    helper.log('|      👓  observing at 📼 Videos contract events')
+    if (options.fromBlock !== undefined) {
+      helper.log('|      👓  syncing 📼 Videos contract events since the block ' + options.fromBlock)
+    } else {
+      helper.log('|      👓  observing at 📼 Videos contract events')
+    }
   }
 
   return module

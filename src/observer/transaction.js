@@ -8,14 +8,14 @@ const helper = require('../helper')
 module.exports = function (paratii) {
   var module = {}
 
-  module.init = async function () {
+  module.init = async function (options) {
     // events hook
 
     /**
      * Observer and upserter for new PTI transfer
      * @param  {String} log the transfer event
      */
-    await paratii.eth.events.addListener('TransferPTI', function (log) {
+    await paratii.eth.events.addListener('TransferPTI', options, function (log) {
       helper.logEvents(log, '⛵  TransferPTI Event at Transactions contracts events')
 
       Transaction.upsert(parser.tx(log), (err, user) => {
@@ -29,7 +29,7 @@ module.exports = function (paratii) {
      * Observer and upserter for new ETH transfer
      * @param  {String} log the transfer event
      */
-    await paratii.eth.events.addListener('TransferETH', function (log) {
+    await paratii.eth.events.addListener('TransferETH', options, function (log) {
       helper.logEvents(log, '⛵  TransferETH Event at Transactions contracts events')
       Transaction.upsert(parser.tx(log), (err, user) => {
         if (err) {
@@ -38,7 +38,11 @@ module.exports = function (paratii) {
       })
     })
 
-    helper.log('|      👓  observing at ⛵ Transactions contracts events')
+    if (options.fromBlock !== undefined) {
+      helper.log('|      👓  syncing ⛵ Transactions contract events since the block ' + options.fromBlock)
+    } else {
+      helper.log('|      👓  observing at ⛵ Transactions contract events')
+    }
   }
 
   return module
