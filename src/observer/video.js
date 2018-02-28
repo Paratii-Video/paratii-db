@@ -21,16 +21,10 @@ module.exports = function (paratii) {
     await paratii.eth.events.addListener('CreateVideo', function (log) {
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
 
-      Video.upsert(parser.video(log), (err, vid) => {
-        if (err) {
-          throw err
-        }
-      })
-
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
 
-        // FIXME: temporary fix for getting data from ipfs
+        // temporary fix for getting data from ipfs
         let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
         console.log('getting data from ipfs gateway ' + ipfsDataUrl)
 
@@ -45,7 +39,6 @@ module.exports = function (paratii) {
 
           res.on('end', function () {
             var ipfsResponse = JSON.parse(body)
-            console.log('Got a response: ', ipfsResponse)
 
             Video.upsert(parser.video(log, ipfsResponse), (err, vid) => {
               if (err) {
@@ -59,6 +52,12 @@ module.exports = function (paratii) {
 
         request.setTimeout(5000, function () {
           console.log('Time out on getting ipfsData')
+        })
+      } else {
+        Video.upsert(parser.video(log), (err, vid) => {
+          if (err) {
+            throw err
+          }
         })
       }
     })
