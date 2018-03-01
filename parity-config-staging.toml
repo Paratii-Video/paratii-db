@@ -1,0 +1,17 @@
+# https://github.com/paritytech/parity/wiki/Configuring-Parity
+[parity]
+chain = "chain.json"
+[mining]
+reseal_min_period = 0
+reseal_max_period = 0
+reseal_on_uncle = true
+force_sealing = true
+[rpc]
+hosts = ["staging.paratii.video", "localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
+cors = ["*"]
+[websockets]
+origins = ["*"]
+hosts = ["db-chainws-staging.paratii.video", "localhost:8080", "127.0.0.1:8080", "0.0.0.0:8080"]
+[network]
+min_peers = 0
+max_peers = 0
