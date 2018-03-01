@@ -50,8 +50,8 @@ $ npm run test
 
 ### API
 
-Api are available on db.paratii.video wuith rescricted cors origin.
-You can use API also using paratii-lib nad paratii.core features, check the docs at:
+REST API are available on db.paratii.video.
+You can use API also using paratii-lib and paratii.core features, check the docs at:
 
 https://github.com/Paratii-Video/paratii-lib/blob/dev/docs/paratii-core.md
 
