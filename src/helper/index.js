@@ -84,9 +84,11 @@ module.exports.wellcomeLogo = function (log, ipfsData) {
   console.log('                                                                                                                         ')
 }
 
-module.exports.envParams = function (provider, registry, port) {
+module.exports.envParams = function (registry, provider, port) {
   console.log('|      Paratii obSERVER running in ' + process.env.NODE_ENV + ' mode')
-  console.log('|      is obSERVING the current provider:' + provider)
-  console.log('|      and the Paratii Registry at:' + registry)
-  console.log('|      API rest interface available at ' + port)
+  console.log('|      is obSERVING the current provider: ' + provider)
+  console.log('|      and the Paratii Registry at: ' + registry)
+  if (port) {
+    console.log('|      API rest interface available at ' + port)
+  }
 }

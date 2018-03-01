@@ -2,6 +2,9 @@
 
 const paratiilib = require('paratii-lib')
 const helper = require('./helper')
+const Models = require('./models')
+const Video = Models.video
+const Transaction = Models.transaction
 
 let observer = null
 
@@ -44,12 +47,17 @@ function start (registry, provider, testlib) {
     observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
   }
 
-  // Inizializing observers for sync
-  observer.videoObserver.init({fromBlock: 0})
-  observer.userObserver.init({fromBlock: 0})
-  observer.transactionObserver.init({fromBlock: 0})
-  observer.voucherObserver.init({fromBlock: 0})
-  observer.applicationObserver.init({fromBlock: 0})
+  Video.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.videoObserver.init({fromBlock: res})
+  })
+
+  Transaction.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.transactionObserver.init({fromBlock: res})
+  })
+
+  helper.envParams(registry, provider)
 
   return server
 }

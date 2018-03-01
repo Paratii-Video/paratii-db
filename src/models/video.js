@@ -150,6 +150,15 @@ VideoSchema.statics.search = function (query, cb) {
    // TODO Add pagination
 }
 
+VideoSchema.statics.findLastBlockNumber = async function () {
+  let result = await this.findOne({ }).sort('-blockNumber').exec()
+  if (!result) {
+    result = {}
+    result.blockNumber = 0
+  }
+  return result.blockNumber
+}
+
 /**
  * delete video by videoid
  * @param  {videoId}   videoId.

@@ -20,6 +20,15 @@ const TransactionSchema = new Schema({
 
 TransactionSchema.index({from: 'text', to: 'text', description: 'text'})
 
+TransactionSchema.statics.findLastBlockNumber = async function () {
+  let result = await this.findOne({ }).sort('-blockNumber').exec()
+  if (!result) {
+    result = {}
+    result.blockNumber = 0
+  }
+  return result.blockNumber
+}
+
 /**
  * Upsert parsed transaction events
  * @param  {Object}   tx a parsed transaction log
