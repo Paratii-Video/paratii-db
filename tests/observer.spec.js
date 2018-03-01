@@ -29,12 +29,12 @@ describe('# Paratii-db Observer', function (done) {
     server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
 
-  it.skip('paratii lib okness', async function (done) {
+  it('paratii lib okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it.skip('subscription to Create Video events should work as expected', function (done) {
+  it('subscription to Create Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -84,7 +84,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it.skip('subscription to Remove Video events should work as expected', function (done) {
+  it('subscription to Remove Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -137,7 +137,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it.skip('subscription to Create User events should work as expected', function (done) {
+  it('subscription to Create User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -176,7 +176,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it.skip('subscription to Remove User events should work as expected', function (done) {
+  it('subscription to Remove User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -223,7 +223,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it.skip('subscription to Tranfer PTI events should work as expected', function (done) {
+  it('subscription to Tranfer PTI events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -261,7 +261,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it.skip('subscription to Tranfer ETH events should work as expected', function (done) {
+  it('subscription to Tranfer ETH events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -301,7 +301,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it.skip('subscription to Create Voucher events should work as expected', function (done) {
+  it('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -338,7 +338,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it.skip('subscription to Create Voucher events should work as expected', function (done) {
+  it('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42

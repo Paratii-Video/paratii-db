@@ -25,6 +25,7 @@ module.exports.video = function (log, ipfsData) {
 
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
+  video.blockNumber = log.blockNumber
   video.ipfsHashOrig = log.returnValues.ipfsHashOrig
   video.owner = log.returnValues.owner
   video.uploader = {}

@@ -1,16 +1,14 @@
 'use strict'
 
-const express = require('express')
-const compression = require('compression')
 const paratiilib = require('paratii-lib')
-const api = require('./api/v1')
 const helper = require('./helper')
+const Models = require('./models')
+const Video = Models.video
+const Transaction = Models.transaction
 
 let observer = null
 
 require('./db')
-
-const app = express()
 
 // TODO: write better startup configuration, maybe using external configuration file
 if (process.env.NODE_ENV === 'production') {
@@ -40,7 +38,7 @@ function stop (app) {
  */
 function start (registry, provider, testlib) {
   // Overlooking Blockchain obSERVER
-  helper.wellcomeLogo()
+  helper.wellcomeSyncLogo()
 
   let server
   if (process.env.NODE_ENV === 'production') {
@@ -49,21 +47,17 @@ function start (registry, provider, testlib) {
     observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
   }
 
-  // Inizializing observers
-  observer.videoObserver.init({})
-  observer.userObserver.init({})
-  observer.transactionObserver.init({})
-  observer.voucherObserver.init({})
-  observer.applicationObserver.init({})
+  Video.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.videoObserver.init({fromBlock: res})
+  })
 
-  app.use(compression())
-  app.use(express.json())
-  app.use('/api/v1', api)
+  Transaction.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.transactionObserver.init({fromBlock: res})
+  })
 
-  const port = 3000
-  server = app.listen(port)
-
-  helper.envParams(registry, provider, port)
+  helper.envParams(registry, provider)
 
   return server
 }
