@@ -3,7 +3,7 @@
 <img src="https://github.com/Paratii-Video/paratiisite/blob/master/public/svgs/paratii-logo.svg" width="200">
 
 
-# Paratii-Db
+# Paratii-Db aka Paratii-obServer
 
 **WORK IN PROGRESS**
 
