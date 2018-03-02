@@ -50,7 +50,7 @@ module.exports = function (paratii) {
           console.log('Got an error: ', e)
         })
 
-        request.setTimeout(1000, function () {
+        request.setTimeout(8000, function () {
           console.log('Time out on getting ipfsData from ' + ipfsDataUrl)
         })
       } else {
