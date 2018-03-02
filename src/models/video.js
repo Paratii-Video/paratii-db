@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
-  _id: String,
+  _id: {type: String},
   title: {type: String},
   description: {type: String},
   price: Number, // FIXME this should be bignumber.js
@@ -15,6 +15,7 @@ const VideoSchema = new Schema({
   mimetype: String,
   author: String,
   free: String,
+  blockNumber: Number,
   storageStatus: Object,
   transcodingStatus: Object,
   filesize: String,
@@ -51,9 +52,14 @@ VideoSchema.statics.upsert = function (video, cb) {
     return cb(new Error('video._id is required for upsert'))
   }
 
-  this.findByIdAndUpdate(video._id,
-  {$set: video},
-  {new: true, upsert: true}, cb)
+  // var query = { _id: video._id }
+  // delete video._id
+  // console.log(video)
+  // this.findOneAndUpdate(query, video, {new: true, upsert: true}, cb)
+  //
+
+  var query = {_id: video._id}
+  this.findOneAndUpdate(query, video, {upsert: true}, cb)
 }
 
 /**
@@ -142,6 +148,15 @@ VideoSchema.statics.search = function (query, cb) {
   }
 
    // TODO Add pagination
+}
+
+VideoSchema.statics.findLastBlockNumber = async function () {
+  let result = await this.findOne({ }).sort('-blockNumber').exec()
+  if (!result) {
+    result = {}
+    result.blockNumber = 0
+  }
+  return result.blockNumber
 }
 
 /**
