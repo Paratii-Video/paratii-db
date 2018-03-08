@@ -23,6 +23,7 @@ $ cd paratii-db
 $ npm install
 
 # for development (needs Parity node running)
+# this command will fail if you don't have previously ran yarn run build:dev on paratii-portal
 $ npm run dev
 
 # for production against Paratii Chain
@@ -33,11 +34,15 @@ $ npm run start
 
 ## Testing
 
-The tests expect a locally running parity node, so first start that:
+First start the mongoDB service:
+
+```bash
+$ sudo service mongod start
+```
+The tests expect a locally running parity node, so start that:
 
 ```bash
 $ npm run parity
-
 ```
 And now run the tests in another terminal:
 ```bash
