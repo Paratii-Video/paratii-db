@@ -5,7 +5,7 @@ const compression = require('compression')
 const paratiilib = require('paratii-lib')
 const api = require('./api/v1')
 const helper = require('./helper')
-const dbConfiguration = require('../dbconfig.json');
+const dbConfiguration = require('../dbconfig.json')
 
 let observer = null
 
@@ -21,9 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 
   start(registryAddress, 'ws://localhost:8546')
 } else {
-
   start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
-
 }
 
 /**
