@@ -1,8 +1,8 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const config = require('../../default-config.js')
 const helper = require('../helper')
+const dbConfiguration = require('../../dbconfig.json')
 
 // NOTE: options is **required** for mongoose v5
 var options = {
@@ -15,7 +15,7 @@ var options = {
   bufferMaxEntries: 0
 }
 
-mongoose.connect(config.mongodb.url, options)
+mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))

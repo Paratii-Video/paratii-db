@@ -39,7 +39,7 @@ function stop (app) {
  * @param  {Object} testlib  provided if Paratii Observer is testing
  * @return {Object}          the server instance
  */
-function start (registry, provider, testlib) {
+function start (registry, provider, testlib, mongoUrl) {
   // Overlooking Blockchain obSERVER
   helper.wellcomeLogo()
 
