@@ -23,10 +23,10 @@
     "url": "https://github.com/Paratii-Video/paratii-db/issues"
   },
   "standard": {
-  "ignore": [
-    "/docs"
-  ]
-},
+    "ignore": [
+      "/docs"
+    ]
+  },
   "homepage": "https://github.com/Paratii-Video/paratii-db#readme",
   "dependencies": {
     "async": "^2.6.0",

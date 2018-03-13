@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
+
 router.get('/', (req, res, next) => {
   res.json({test: 1})
 })

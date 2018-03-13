@@ -10,10 +10,17 @@ let observer = null
 
 require('./db')
 
+
+
+
+
 const app = express()
+
 
 // TODO: write better startup configuration, maybe using external configuration file
 if (process.env.NODE_ENV === 'production') {
+  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
+} else if (process.env.NODE_ENV === 'staging') {
   start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
 } else if (process.env.NODE_ENV === 'development') {
   //
