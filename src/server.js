@@ -10,12 +10,7 @@ let observer = null
 
 require('./db')
 
-
-
-
-
 const app = express()
-
 
 // TODO: write better startup configuration, maybe using external configuration file
 if (process.env.NODE_ENV === 'production') {
