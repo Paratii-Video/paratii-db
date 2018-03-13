@@ -48,7 +48,7 @@ describe('# Paratii-api', function () {
 
     const contract = await paratii.eth.deployContracts()
     server = require('../src/server')
-    app = server.start(contract.Registry.options.address, 'ws://localhost:8546')
+    app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
 
   after(() => {

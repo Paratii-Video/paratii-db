@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   const registryAddress = registryFilename.registryAddress
 
   start(registryAddress, 'ws://localhost:8546')
-} else {
+} else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production'){
   start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
