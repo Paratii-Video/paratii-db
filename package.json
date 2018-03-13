@@ -11,7 +11,8 @@
     "parity-dev": "parity --config parity-config-dev.toml --gasprice 0",
     "parity": "parity --config parity-config.toml --gasprice 0",
     "docs": "documentation build src/** -f html -o docs",
-    "lint": "standard"
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -23,10 +24,10 @@
     "url": "https://github.com/Paratii-Video/paratii-db/issues"
   },
   "standard": {
-  "ignore": [
-    "/docs"
-  ]
-},
+    "ignore": [
+      "/docs"
+    ]
+  },
   "homepage": "https://github.com/Paratii-Video/paratii-db#readme",
   "dependencies": {
     "async": "^2.6.0",
