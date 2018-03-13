@@ -19,5 +19,10 @@
     "mongodb": {
       "url": "mongodb://localhost/test"
     }
+  },
+  "test": {
+    "mongodb": {
+      "url": "mongodb://localhost/test"
+    }
   }
 }
