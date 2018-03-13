@@ -5,6 +5,7 @@ const compression = require('compression')
 const paratiilib = require('paratii-lib')
 const api = require('./api/v1')
 const helper = require('./helper')
+const dbConfiguration = require('../dbconfig.json');
 
 let observer = null
 
@@ -13,16 +14,16 @@ require('./db')
 const app = express()
 
 // TODO: write better startup configuration, maybe using external configuration file
-if (process.env.NODE_ENV === 'production') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'staging') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   //
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
 
   start(registryAddress, 'ws://localhost:8546')
+} else {
+
+  start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
+
 }
 
 /**
