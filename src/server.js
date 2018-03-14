@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
 
-  start(registryAddress, 'ws://localhost:8546')
+  start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
 } else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
   start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
