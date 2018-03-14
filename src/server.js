@@ -5,6 +5,7 @@ const compression = require('compression')
 const paratiilib = require('paratii-lib')
 const api = require('./api/v1')
 const helper = require('./helper')
+const dbConfiguration = require('../dbconfig.json')
 
 let observer = null
 
@@ -13,16 +14,14 @@ require('./db')
 const app = express()
 
 // TODO: write better startup configuration, maybe using external configuration file
-if (process.env.NODE_ENV === 'production') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'staging') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   //
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
 
-  start(registryAddress, 'ws://localhost:8546')
+  start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
+} else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
+  start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
 /**
@@ -40,7 +39,7 @@ function stop (app) {
  * @param  {Object} testlib  provided if Paratii Observer is testing
  * @return {Object}          the server instance
  */
-function start (registry, provider, testlib) {
+function start (registry, provider, testlib, mongoUrl) {
   // Overlooking Blockchain obSERVER
   helper.wellcomeLogo()
 

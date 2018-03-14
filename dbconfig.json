@@ -1,0 +1,28 @@
+{
+  "production": {
+    "registry": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F",
+    "provider": "ws://chainws.paratii.video",
+    "mongodb": {
+      "url": "mongodb://localhost/test"
+    }
+  },
+  "development": {
+    "registry": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F",
+    "provider": "ws://parity:8546",
+    "mongodb": {
+      "url": "mongodb://mongo/test"
+    }
+  },
+  "staging": {
+    "registry": "0xaa4A9f5FB33aD7E1a1bA77Ee536977Dd0eFE7034",
+    "provider": "ws://db-chainws-staging.paratii.video",
+    "mongodb": {
+      "url": "mongodb://localhost/test"
+    }
+  },
+  "test": {
+    "mongodb": {
+      "url": "mongodb://localhost/test"
+    }
+  }
+}
