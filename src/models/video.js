@@ -19,6 +19,7 @@ const VideoSchema = new Schema({
   createBlockNumber: Number,
   storageStatus: Object,
   transcodingStatus: Object,
+  staked: Object,
   filesize: String,
   filename: String,
   uploadStatus: Object,
@@ -48,24 +49,35 @@ VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.
  * @param  {Function} cb    (err, success)
  * @return {[type]}         [description]
  */
+
 VideoSchema.statics.upsert = async function (video, cb) {
   if (!video || !video._id) {
     return cb(new Error('video._id is required for upsert'))
   }
 
-  // var query = { _id: video._id }
-  // delete video._id
-  // console.log(video)
-  // this.findOneAndUpdate(query, video, {new: true, upsert: true}, cb)
-  //
 
   var query = {_id: video._id}
   var videos = await this.find(query)
   if (videos.length === 0) {
     video.createBlockNumber = video.blockNumber
   }
-  console.log('#####VIDEOOOOOOOOOOOOOOOOO', video)
   this.findOneAndUpdate(query, video, {upsert: true}, cb)
+}
+
+/**
+ * stake
+ * @param  {Object}   application Json objects
+ * @param  {Function} cb    (err, success)
+ * @return {[type]}         [description]
+ */
+VideoSchema.statics.stake = function (application, cb) {
+  if (!application || !application._id) {
+    return cb(new Error('application._id is required for staking'))
+  }
+  var query = {_id: application._id}
+
+  this.update(query, { $set: { staked: application }}, cb)
+
 }
 
 /**
