@@ -412,4 +412,78 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
+
+  it('subscription to Application events should set video as staked', function (done) {
+    let creator = accounts[0].publicKey
+    let amount = 5
+    amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
+    let price = 3 * 10 ** 18
+    let ipfsHash = 'xyz'
+    // let ipfsData = 'zzz'
+    let number = Math.random()
+    let videoId = number.toString(36).substr(2, 9)
+    let title = 'Just a title'
+    let description = 'and its description'
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.core.vids.create({
+        id: videoId,
+        price: price,
+        owner: creator,
+        ipfsHash: ipfsHash,
+        // ipfsData: ipfsData,
+        title,
+        description
+        // duration
+      })
+
+      waitUntil()
+      .interval(1000)
+      .times(10)
+      .condition(function (cb) {
+        let condition = false
+        Video.findOne({_id: videoId}).exec().then(function (video) {
+          if (video) {
+            condition = (video._id === videoId)
+            cb(condition)
+          } else {
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        if (result) {
+          assert.equal(true, result)
+          paratii.eth.tcr.checkEligiblityAndApply(videoId, amount).then(function (application) {
+            waitUntil()
+            .interval(1000)
+            .times(10)
+            .condition(function (cb) {
+              let condition = false
+              Video.findOne({_id: videoId}).exec().then(function (video) {
+                if (video) {
+                  condition = (video.staked !== undefined)
+                  cb(condition)
+                } else {
+                  cb(condition)
+                }
+              })
+            })
+            .done(function (result) {
+              console.log('this is the result ', result)
+              if (result) {
+                assert.equal(true, result)
+                done()
+              }
+            })
+          })
+        }
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
 })
