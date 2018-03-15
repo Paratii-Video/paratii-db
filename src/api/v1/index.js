@@ -4,6 +4,7 @@ const router = express.Router()
 const videoAPI = require('./video')
 const userAPI = require('./user')
 const transactionAPI = require('./transaction')
+const helper = require('../../helper')
 
 const cors = require('cors')
 const whitelist = require('./cors.json').whitelisted
@@ -13,12 +14,13 @@ let corsOptions = {}
 if (process.env.NODE_ENV === 'production') {
   corsOptions = {
     origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1) {
+      // if origin is undefined we are on the same domain
+      if (origin === undefined || whitelist.indexOf(origin) !== -1) {
         callback(null, true)
       } else {
         // FIXME: opening cors temporarly
-        // callback(new Error(origin + 'Not allowed by CORS'))
-        callback(null, true)
+        callback(new Error(origin + 'Not allowed by CORS'))
+        // callback(null, true)
       }
     }
   }
@@ -30,8 +32,8 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
-router.get('/', (req, res, next) => {
-  res.json({test: 1})
+router.get('/', (req, res) => {
+  res.send(helper.printWellcomeLogo())
 })
 
 // initialized REST API routes
