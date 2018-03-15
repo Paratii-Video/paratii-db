@@ -40,7 +40,7 @@ describe('# Paratii-db Observer', function (done) {
     let ipfsHash = 'xyz'
     // let ipfsData = 'zzz'
     let number = Math.random()
-    let videoId = 'a8h0fq154'
+    let videoId = number.toString(36).substr(2, 9)
     let title = 'Just a title'
     let description = 'and its description'
     // let duration = '01:45'
