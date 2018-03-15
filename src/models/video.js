@@ -55,7 +55,6 @@ VideoSchema.statics.upsert = async function (video, cb) {
     return cb(new Error('video._id is required for upsert'))
   }
 
-
   var query = {_id: video._id}
   var videos = await this.find(query)
   if (videos.length === 0) {
@@ -76,8 +75,7 @@ VideoSchema.statics.stake = function (application, cb) {
   }
   var query = {_id: application._id}
 
-  this.update(query, { $set: { staked: application }}, cb)
-
+  this.update(query, { $set: { staked: application } }, cb)
 }
 
 /**

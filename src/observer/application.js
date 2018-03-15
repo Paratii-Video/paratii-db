@@ -19,14 +19,14 @@ module.exports = function (paratii) {
      */
     await paratii.eth.events.addListener('Application', options, function (log) {
       helper.logEvents(log, '☝  Application Event at TCR contract events')
-      //saving application
+      // saving application
       Application.upsert(parser.application(log), (err, res) => {
         if (err) {
           throw err
         }
       })
 
-      //setting the video as staked
+      // setting the video as staked
       Video.stake(parser.application(log), (err, res) => {
         if (err) {
           throw err
