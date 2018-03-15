@@ -12,7 +12,8 @@ module.exports.logEvents = function (log, message) {
   console.log('|                                                     ')
   console.log('|          ####### end of the log #######             ')
 }
-module.exports.wellcomeSyncLogo = function (log, ipfsData) {
+
+module.exports.wellcomeSyncLogo = function () {
   console.log('                                                                                                                         ')
   console.log('                                                                                                                         ')
   console.log('                                                                                                                         ')
