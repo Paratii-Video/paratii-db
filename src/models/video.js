@@ -16,6 +16,7 @@ const VideoSchema = new Schema({
   author: String,
   free: String,
   blockNumber: Number,
+  createBlockNumber: Number,
   storageStatus: Object,
   transcodingStatus: Object,
   filesize: String,
@@ -47,7 +48,7 @@ VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.
  * @param  {Function} cb    (err, success)
  * @return {[type]}         [description]
  */
-VideoSchema.statics.upsert = function (video, cb) {
+VideoSchema.statics.upsert = async function (video, cb) {
   if (!video || !video._id) {
     return cb(new Error('video._id is required for upsert'))
   }
@@ -59,6 +60,11 @@ VideoSchema.statics.upsert = function (video, cb) {
   //
 
   var query = {_id: video._id}
+  var videos = await this.find(query)
+  if (videos.length === 0) {
+    video.createBlockNumber = video.blockNumber
+  }
+  console.log('#####VIDEOOOOOOOOOOOOOOOOO', video)
   this.findOneAndUpdate(query, video, {upsert: true}, cb)
 }
 
