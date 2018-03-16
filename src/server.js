@@ -16,12 +16,12 @@ const app = express()
 // TODO: write better startup configuration, maybe using external configuration file
 if (process.env.NODE_ENV === 'development') {
   //
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
+	const registryFilename = require('/tmp/registry.json')
+	const registryAddress = registryFilename.registryAddress
 
-  start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
+	start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
 } else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
-  start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
+	start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
 /**
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
  * @param  {Object} app instances of the server
  */
 function stop (app) {
-  app.close()
+	app.close()
 }
 
 /**
@@ -41,32 +41,32 @@ function stop (app) {
  */
 function start (registry, provider, testlib, mongoUrl) {
   // Overlooking Blockchain obSERVER
-  helper.wellcomeLogo()
+	helper.wellcomeLogo()
 
-  let server
-  if (process.env.NODE_ENV === 'production') {
-    observer = require('./observer')(paratiilib.Paratii, registry, provider)
-  } else {
-    observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
-  }
+	let server
+	if (process.env.NODE_ENV === 'production') {
+		observer = require('./observer')(paratiilib.Paratii, registry, provider)
+	} else {
+		observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
+	}
 
   // Inizializing observers
-  observer.videoObserver.init({})
-  observer.userObserver.init({})
-  observer.transactionObserver.init({})
-  observer.voucherObserver.init({})
-  observer.applicationObserver.init({})
+	observer.videoObserver.init({})
+	observer.userObserver.init({})
+	observer.transactionObserver.init({})
+	observer.voucherObserver.init({})
+	observer.applicationObserver.init({})
 
-  app.use(compression())
-  app.use(express.json())
-  app.use('/api/v1', api)
+	app.use(compression())
+	app.use(express.json())
+	app.use('/api/v1', api)
 
-  const port = 3000
-  server = app.listen(port)
+	const port = 3000
+	server = app.listen(port)
 
-  helper.envParams(registry, provider, port)
+	helper.envParams(registry, provider, port)
 
-  return server
+	return server
 }
 
 module.exports.start = start

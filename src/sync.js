@@ -5,20 +5,22 @@ const helper = require('./helper')
 const Models = require('./models')
 const Video = Models.video
 const Transaction = Models.transaction
+const Application = Models.application
+const dbConfiguration = require('../dbconfig.json')
 
 let observer = null
 
 require('./db')
 
 // TODO: write better startup configuration, maybe using external configuration file
-if (process.env.NODE_ENV === 'production') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   //
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
+	const registryFilename = require('/tmp/registry.json')
+	const registryAddress = registryFilename.registryAddress
 
-  start(registryAddress, 'ws://localhost:8546')
+	start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
+} else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
+	start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
 /**
@@ -26,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
  * @param  {Object} app instances of the server
  */
 function stop (app) {
-  app.close()
+	app.close()
 }
 
 /**
@@ -38,28 +40,32 @@ function stop (app) {
  */
 function start (registry, provider, testlib) {
   // Overlooking Blockchain obSERVER
-  helper.wellcomeSyncLogo()
+	helper.wellcomeSyncLogo()
 
-  let server
-  if (process.env.NODE_ENV === 'production') {
-    observer = require('./observer')(paratiilib.Paratii, registry, provider)
-  } else {
-    observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
-  }
+	let server
+	if (process.env.NODE_ENV === 'production') {
+		observer = require('./observer')(paratiilib.Paratii, registry, provider)
+	} else {
+		observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
+	}
 
-  Video.findLastBlockNumber().then(function (res) {
+	Video.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
-    observer.videoObserver.init({fromBlock: res})
-  })
+		observer.videoObserver.init({fromBlock: res})
+	})
 
-  Transaction.findLastBlockNumber().then(function (res) {
+	Transaction.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
-    observer.transactionObserver.init({fromBlock: res})
-  })
+		observer.transactionObserver.init({fromBlock: res})
+	})
+	Application.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+		observer.applicationObserver.init({fromBlock: res})
+	})
 
-  helper.envParams(registry, provider)
+	helper.envParams(registry, provider)
 
-  return server
+	return server
 }
 
 module.exports.start = start
