@@ -94,6 +94,5 @@ module.exports.application = function (log) {
   var application = {}
   application._id = log.returnValues.videoId
   application.deposit = log.returnValues.deposit
-  console.log(application)
   return application
 }

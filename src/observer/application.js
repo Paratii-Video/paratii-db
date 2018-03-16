@@ -3,6 +3,8 @@
 const Models = require('../models')
 const parser = require('../parser')
 const Application = Models.application
+const Video = Models.video
+
 const helper = require('../helper')
 
 module.exports = function (paratii) {
@@ -17,7 +19,15 @@ module.exports = function (paratii) {
      */
     await paratii.eth.events.addListener('Application', options, function (log) {
       helper.logEvents(log, '☝  Application Event at TCR contract events')
-      Application.upsert(parser.application(log), (err, user) => {
+      // saving application
+      Application.upsert(parser.application(log), (err, res) => {
+        if (err) {
+          throw err
+        }
+      })
+
+      // setting the video as staked
+      Video.stake(parser.application(log), (err, res) => {
         if (err) {
           throw err
         }
