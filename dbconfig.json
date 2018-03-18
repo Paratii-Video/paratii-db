@@ -8,9 +8,9 @@
   },
   "development": {
     "registry": "0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F",
-    "provider": "ws://172.16.238.10:8546",
+    "provider": "ws://192.168.0.102:8546",
     "mongodb": {
-      "url": "mongodb://172.16.238.9/test"
+      "url": "mongodb://192.168.0.102/test"
     }
   },
   "staging": {
