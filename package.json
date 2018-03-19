@@ -6,7 +6,9 @@
   "scripts": {
     "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 30000",
     "start": "NODE_ENV=production node src/server.js",
-    "sync": "NODE_ENV=production node src/sync.js",
+    "sync-production": "NODE_ENV=production node src/sync.js",
+    "sync-staging": "NODE_ENV=staging node src/sync.js",
+    "sync-dev": "NODE_ENV=development node src/sync.js",
     "dev": "NODE_ENV=development node src/server.js",
     "parity-dev": "parity --config parity-config-dev.toml --gasprice 0",
     "parity": "parity --config parity-config.toml --gasprice 0",

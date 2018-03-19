@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 
 const ApplicationSchema = new Schema({
   _id: String,
-  deposit: Number
+  deposit: Number,
+  blockNumber: Number
 })
 
 /**
@@ -22,6 +23,15 @@ ApplicationSchema.statics.upsert = function (tx, cb) {
   this.findByIdAndUpdate(tx._id,
    {$set: tx},
    {new: true, upsert: true}, cb)
+}
+
+ApplicationSchema.statics.findLastBlockNumber = async function () {
+  let result = await this.findOne({ }).sort('-blockNumber').exec()
+  if (!result) {
+    result = {}
+    result.blockNumber = 0
+  }
+  return result.blockNumber
 }
 
 const Application = mongoose.model('Application', ApplicationSchema)
