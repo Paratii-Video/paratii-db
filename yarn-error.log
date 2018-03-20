@@ -1,0 +1,93 @@
+Arguments: 
+  /usr/local/Cellar/node/9.8.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run lint
+
+PATH: 
+  /Applications/Parity Ethereum.app/Contents/MacOS:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.8.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "paratii-db",
+    "version": "0.0.1",
+    "description": "paratii database backend",
+    "main": "index.js",
+    "scripts": {
+      "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 30000",
+      "start": "NODE_ENV=production node src/server.js",
+      "sync": "NODE_ENV=production node src/sync.js",
+      "dev": "NODE_ENV=development node src/server.js",
+      "parity-dev": "parity --config parity-config-dev.toml --gasprice 0",
+      "parity": "parity --config parity-config.toml --gasprice 0",
+      "docs": "documentation build src/** -f html -o docs",
+      "lint": "standard",
+      "lint-fix": "standard --fix"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Paratii-Video/paratii-db.git"
+    },
+    "author": "Yahya Paratii <ya7yaz@gmail.com>, Enrico Cicconi <enrico.cicconi@gmail.com>",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Paratii-Video/paratii-db/issues"
+    },
+    "standard": {
+      "ignore": [
+        "/docs"
+      ]
+    },
+    "homepage": "https://github.com/Paratii-Video/paratii-db#readme",
+    "dependencies": {
+      "async": "^2.6.0",
+      "compression": "^1.7.1",
+      "dotenv": "^5.0.1",
+      "express": "^4.16.2",
+      "mongoose": "^5.0.0-rc2",
+      "paratii-lib": "github:Paratii-Video/paratii-lib#dev",
+      "prettyjson": "^1.2.1",
+      "web3": "^1.0.0-beta.29"
+    },
+    "devDependencies": {
+      "chai": "^4.1.2",
+      "cors": "^2.8.4",
+      "dirty-chai": "^2.0.1",
+      "eslint-config-standard": "^11.0.0-beta.0",
+      "eslint-plugin-import": "^2.8.0",
+      "eslint-plugin-node": "^5.2.1",
+      "eslint-plugin-promise": "^3.6.0",
+      "eslint-plugin-standard": "^3.0.1",
+      "isomorphic-fetch": "^2.2.1",
+      "mocha": "^4.1.0",
+      "standard": "^10.0.3",
+      "wait-until": "0.0.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c standard
+  Directory: /Users/leandro/Projects/paratii-db
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
