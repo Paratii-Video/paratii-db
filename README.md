@@ -22,7 +22,6 @@ $ npm install
 
 # for development (needs Parity node running) & .env with LOCAL_IP
 $ npm run dev
-$ .env
 
 # for production against Paratii Chain
 $ npm run start
