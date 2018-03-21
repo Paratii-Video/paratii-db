@@ -19,6 +19,10 @@ if (process.env.NODE_ENV === 'production') {
   const registryAddress = registryFilename.registryAddress
 
   start(registryAddress, 'ws://localhost:8546')
+} else if (process.env.NODE_ENV === 'docker-development') {
+  const registryFilename = require('/tmp/registry.json')
+  const registryAddress = registryFilename.registryAddress
+  start(registryAddress, 'http://' + process.env.LOCAL_IP + ':8546')
 }
 
 /**
