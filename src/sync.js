@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').load()
 const paratiilib = require('paratii-lib')
 const helper = require('./helper')
 const Models = require('./models')
