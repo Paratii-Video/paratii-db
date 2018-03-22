@@ -10,6 +10,7 @@
     "sync-staging": "NODE_ENV=staging node src/sync.js",
     "sync-dev": "NODE_ENV=development node src/sync.js",
     "dev": "NODE_ENV=development node src/server.js",
+    "docker-development": "NODE_ENV=docker-development node src/server.js",
     "parity-dev": "parity --config parity-config-dev.toml --gasprice 0",
     "parity": "parity --config parity-config.toml --gasprice 0",
     "docs": "documentation build src/** -f html -o docs",
@@ -34,6 +35,7 @@
   "dependencies": {
     "async": "^2.6.0",
     "compression": "^1.7.1",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc2",
     "paratii-lib": "github:Paratii-Video/paratii-lib#dev",
