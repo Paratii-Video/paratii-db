@@ -6,24 +6,25 @@ const helper = require('./helper')
 const Models = require('./models')
 const Video = Models.video
 const Transaction = Models.transaction
+const Application = Models.application
+const dbConfiguration = require('../dbconfig.json')
 
 let observer = null
 
 require('./db')
 
 // TODO: write better startup configuration, maybe using external configuration file
-if (process.env.NODE_ENV === 'production') {
-  start('0x0d03db78f5D0a85B1aBB3eAcF77CECe27e6F623F', 'ws://chainws.paratii.video')
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   //
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
-
   start(registryAddress, 'ws://localhost:8546')
 } else if (process.env.NODE_ENV === 'docker-development') {
   const registryFilename = require('/tmp/registry.json')
   const registryAddress = registryFilename.registryAddress
   start(registryAddress, 'ws://' + process.env.LOCAL_IP + ':8546')
+} else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
+  start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
 /**
@@ -60,6 +61,10 @@ function start (registry, provider, testlib) {
   Transaction.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
     observer.transactionObserver.init({fromBlock: res})
+  })
+  Application.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.applicationObserver.init({fromBlock: res})
   })
 
   helper.envParams(registry, provider)
