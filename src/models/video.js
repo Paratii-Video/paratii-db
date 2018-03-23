@@ -194,6 +194,20 @@ VideoSchema.statics.delete = function (videoId, cb) {
   })
 }
 
+VideoSchema.statics.exports = function(cb){
+  const query = {ipfsHash :{$ne:''}}
+  const mask = {}
+  // const mask = {title: 1, owner: 1, blockNumber:1}
+  const sort = {blockNumber: -1}
+  this.find(query, mask).sort(sort).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, result)
+  })
+
+}
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video
