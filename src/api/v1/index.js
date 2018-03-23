@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const videoAPI = require('./video')
 const userAPI = require('./user')
+const utilsAPI = require('./utils')
 const transactionAPI = require('./transaction')
 const helper = require('../../helper')
 
@@ -41,5 +42,6 @@ router.get('/', (req, res) => {
 router.use('/videos', cors(corsOptions), videoAPI)
 router.use('/users', cors(corsOptions), userAPI)
 router.use('/transactions', cors(corsOptions), transactionAPI)
+router.use('/utils', cors(corsOptions), utilsAPI)
 
 module.exports = router

@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').load()
 const mongoose = require('mongoose')
 const helper = require('../helper')
 const dbConfiguration = require('../../dbconfig.json')
@@ -15,7 +16,12 @@ var options = {
   bufferMaxEntries: 0
 }
 
-mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
+if (process.env.NODE_ENV === 'docker-development') {
+  dbConfiguration[process.env.NODE_ENV].mongodb.url = 'mongodb://' + process.env.LOCAL_IP + ':27017/test'
+  mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
+} else {
+  mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
+}
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))

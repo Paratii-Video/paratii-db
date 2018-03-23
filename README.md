@@ -22,7 +22,7 @@ $ git clone https://github.com/Paratii-Video/paratii-db.git
 $ cd paratii-db
 $ npm install
 
-# for development (needs Parity node running)
+# for development (needs Parity node running) & .env with LOCAL_IP
 # this command will fail if you don't have previously ran yarn run build:dev on paratii-portal
 $ npm run dev
 
@@ -48,7 +48,6 @@ And now run the tests in another terminal:
 ```bash
 $ npm run test
 ```
-
 
 ## Documentation
 
