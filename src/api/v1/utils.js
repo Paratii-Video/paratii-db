@@ -16,7 +16,7 @@ router.get('/exports', (req, res, next) => {
       dump += '<li>'
       dump += 'Title: ' + result[i].title
       dump += '<br>'
-      dump += 'Upload name: ' + result[i].uploader.name
+      dump += 'Upload name: ' + result[i].author
       dump += '<br>'
 
       let baseurl = ''
