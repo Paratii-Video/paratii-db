@@ -7,13 +7,13 @@ const Video = Models.video
 router.get('/:id/related', (req, res, next) => {
   // get related videoss
   // res.json({status: 'not yet implemented'})
-	Video.getRelated(req.params.id, (err, videos) => {
-		if (err) {
-			return res.send(err)
-		}
+  Video.getRelated(req.params.id, (err, videos) => {
+    if (err) {
+      return res.send(err)
+    }
 
-		return res.json(videos)
-	})
+    return res.json(videos)
+  })
 })
 
 /**
@@ -22,10 +22,10 @@ router.get('/:id/related', (req, res, next) => {
  */
 
 router.get('/:id', (req, res, next) => {
-	Video.findOne({_id: req.params.id}, (err, video) => {
-		if (err) return res.send(err)
-		res.json(video)
-	})
+  Video.findOne({_id: req.params.id}, (err, video) => {
+    if (err) return res.send(err)
+    res.json(video)
+  })
 })
 
 /**
@@ -33,15 +33,13 @@ router.get('/:id', (req, res, next) => {
  */
 
 router.get('/', (req, res, next) => {
-	Video.search(req.query, (err, result) => {
-		if (err) {
-			return res.send(err).statusCode(500)
-		}
+  Video.search(req.query, (err, result) => {
+    if (err) {
+      return res.send(err).statusCode(500)
+    }
     // TODO: add query params, total, start, limit and results
-		return res.json(result)
-	})
+    return res.json(result)
+  })
 })
-
-
 
 module.exports = router
