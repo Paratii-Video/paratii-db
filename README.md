@@ -1,7 +1,9 @@
 [![CircleCI](https://circleci.com/gh/Paratii-Video/paratii-lib.svg?style=svg)](https://circleci.com/gh/Paratii-Video/paratii-db)
 
+<img src="https://github.com/Paratii-Video/paratiisite/blob/master/public/svgs/paratii-logo.svg" width="200">
 
-# Paratii-Db
+
+# Paratii-Db aka Paratii-obServer
 
 **WORK IN PROGRESS**
 
@@ -21,6 +23,7 @@ $ cd paratii-db
 $ npm install
 
 # for development (needs Parity node running) & .env with LOCAL_IP
+# this command will fail if you don't have previously ran yarn run build:dev on paratii-portal
 $ npm run dev
 
 # for production against Paratii Chain
@@ -31,11 +34,15 @@ $ npm run start
 
 ## Testing
 
-The tests expect a locally running parity node, so first start that:
+First start the mongoDB service:
+
+```bash
+$ sudo service mongod start
+```
+The tests expect a locally running parity node, so start that:
 
 ```bash
 $ npm run parity
-
 ```
 And now run the tests in another terminal:
 ```bash
@@ -47,8 +54,8 @@ $ npm run test
 
 ### API
 
-Api are available on db.paratii.video wuith rescricted cors origin.
-You can use API also using paratii-lib nad paratii.core features, check the docs at:
+REST API are available on db.paratii.video.
+You can use API also using paratii-lib and paratii.core features, check the docs at:
 
 https://github.com/Paratii-Video/paratii-lib/blob/dev/docs/paratii-core.md
 
