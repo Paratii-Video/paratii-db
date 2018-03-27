@@ -18,9 +18,16 @@ module.exports = function (paratii) {
      * @param  {String} log the CreateVideo event
      */
 
+    const async = require('async')
+    const videoQueue = async.queue((log, cb) => {
+      Video.upsert(parser.video(log))
+      cb()
+    }, 1)
+
     await paratii.eth.events.addListener('CreateVideo', options, function (log) {
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
-
+      videoQueue.push(log)
+      return
       if (log.returnValues.ipfsData !== '') {
         // if ipfsdata is present wait for data from ipfs then upsert
 
@@ -39,7 +46,7 @@ module.exports = function (paratii) {
 
           res.on('end', function () {
             var ipfsResponse = JSON.parse(body)
-            console.log(ipfsResponse)
+            // console.log(ipfsResponse)
             Video.upsert(parser.video(log, ipfsResponse), (err, vid) => {
               if (err) {
                 throw err

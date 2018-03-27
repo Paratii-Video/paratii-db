@@ -50,17 +50,40 @@ VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.
  * @return {[type]}         [description]
  */
 
-VideoSchema.statics.upsert = async function (video, cb) {
+VideoSchema.statics.upsert = async function (video) {
   if (!video || !video._id) {
-    return cb(new Error('video._id is required for upsert'))
+    throw new Error('video._id is required for upsert')
   }
 
   var query = {_id: video._id}
-  var videos = await this.find(query)
-  if (videos.length === 0) {
-    video.createBlockNumber = video.blockNumber
+  // check if the video already exists
+  var existingVideo = await this.find(query).exec()
+  console.log(existingVideo)
+  // we do not know in what order the event logs arrive, so we need some logic
+  // to make sure we update the record with the latest block number
+  console.log(`calling findOneAndUpdate with ${query._id} and blocknumber ${video.blockNumber}`)
+  if (!existingVideo) {
+      video.createBlockNumber = video.blockNumber
+      console.log("video did not exist yet")
+      await this.insert(video).exec()
+  } else if (video.blockNumber < existingVideo.blockNumber) {
+      // we have already inserted a existingVideo  that that is more recent than "video"
+      // so we only update the createBlockNumber
+      console.log("updating only createBlocknumber")
+      existingVideo.createBlockNumber = video.blockNumber
+      await this.findOneAndUpdate(query, {$set: { createBlockNumber: video.blockNumber}}).exec()
+  } else {
+      // video.blockNumber > = existingVideo.blockNumber
+      console.log('updating with more recent version')
+      // const cb =  (err, vid) => {
+      //   if (err) {
+      //     console.log(err)
+      //     console.log('RETRYING')
+      //     this.findOneAndUpdate(query, video, {upsert: true}, cb)
+      //   }
+      // }
+      await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   }
-  this.findOneAndUpdate(query, video, {upsert: true}, cb)
 }
 
 /**
