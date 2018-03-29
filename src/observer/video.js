@@ -40,18 +40,15 @@ module.exports = function (paratii) {
         })
 
         res.on('end', function () {
-          var ipfsResponse = ''
+          var data = helper.ifIsJsonGetIt(body)
+          if(data){
+            Video.upsert(parser.video(log, data), cb)
+          } else {
+            cb()
+          }
 
-          try {
-              ipfsResponse = JSON.parse(body)
-          }
-          catch(err) {
-            cb(new Error('Got an error: ', err))
-          }
-          Video.upsert(parser.video(log, ipfsResponse), cb)
+
         })
-      }).on('error', function (e) {
-        cb(new Error('Got an error: ', e))
       })
 
     }, 1)

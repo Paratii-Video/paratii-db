@@ -134,3 +134,12 @@ module.exports.envParams = function (registry, provider, port) {
 		console.log('|      API rest interface available at ' + port)
 	}
 }
+
+module.exports.ifIsJsonGetIt = function(str) {
+	try {
+		JSON.parse(str)
+	} catch (e) {
+		return false
+	}
+	return JSON.parse(str)
+}

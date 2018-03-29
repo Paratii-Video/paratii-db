@@ -62,10 +62,10 @@ function start (registry, provider, testlib) {
   //   // Inizializing observers for sync
   //   observer.transactionObserver.init({fromBlock: res})
   // })
-  // Application.findLastBlockNumber().then(function (res) {
-  //   // Inizializing observers for sync
-  //   observer.applicationObserver.init({fromBlock: res})
-  // })
+	Application.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+		observer.applicationObserver.init({fromBlock: res})
+	})
 
 	helper.envParams(registry, provider)
 
