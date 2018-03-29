@@ -18,47 +18,43 @@ module.exports = function (paratii) {
      * @param  {String} log the CreateVideo event
      */
 
-    await paratii.eth.events.addListener('CreateVideo', options, function (log) {
-      helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
+    const async = require('async')
 
-      if (log.returnValues.ipfsData !== '') {
-        // if ipfsdata is present wait for data from ipfs then upsert
+    // manage queue for creating video
+    const creatingVideoQueue = async.queue((log, cb) => {
+      Video.upsert(parser.video(log), cb)
+    }, 1)
 
-        // temporary fix for getting data from ipfs
-        let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
-        console.log('getting data from ipfs gateway ' + ipfsDataUrl)
+    // manage queue for getting video meta
+    const gettingVideoMetaQueue = async.queue((log, cb) => {
+      let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
+      console.log('getting data from ipfs gateway ' + ipfsDataUrl)
 
-        let request = https.get(ipfsDataUrl, function (res) {
-          // console.log(res)
+      https.get(ipfsDataUrl, function (res) {
+        // console.log(res)
 
-          var body = ''
+        var body = ''
 
-          res.on('data', function (chunk) {
-            body += chunk
-          })
-
-          res.on('end', function () {
-            var ipfsResponse = JSON.parse(body)
-            console.log(ipfsResponse)
-            Video.upsert(parser.video(log, ipfsResponse), (err, vid) => {
-              if (err) {
-                throw err
-              }
-            })
-          })
-        }).on('error', function (e) {
-          console.log('Got an error: ', e)
+        res.on('data', function (chunk) {
+          body += chunk
         })
 
-        request.setTimeout(8000, function () {
-          console.log('Time out on getting ipfsData from ' + ipfsDataUrl)
-        })
-      } else {
-        Video.upsert(parser.video(log), (err, vid) => {
-          if (err) {
-            throw err
+        res.on('end', function () {
+          var data = helper.ifIsJsonGetIt(body)
+          if (data) {
+            Video.upsert(parser.video(log, data), cb)
+          } else {
+            cb()
           }
         })
+      })
+    }, 1)
+
+    await paratii.eth.events.addListener('CreateVideo', options, function (log) {
+      helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
+      creatingVideoQueue.push(log)
+      if (log.returnValues.ipfsData && log.returnValues.ipfsData !== '') {
+        gettingVideoMetaQueue.push(log)
       }
     })
 
