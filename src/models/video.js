@@ -63,19 +63,18 @@ VideoSchema.statics.upsert = async function (video, cb) {
   // we do not know in what order the event logs arrive, so we need some logic
   // to make sure we update the record with the latest block number
   if (!existingVideo) {
-      video.createBlockNumber = video.blockNumber
-      console.log(`Importing new video ${video._id}`)
-      await this.findOneAndUpdate(query, video, {upsert: true}).exec()
+    video.createBlockNumber = video.blockNumber
+    console.log(`Importing new video ${video._id}`)
+    await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   } else if (video.blockNumber < existingVideo.createBlockNumber) {
       // we have already inserted a existingVideo  that that is more recent than "video"
       // so we only update the createBlockNumber
-      console.log(`updating only createBlocknumber for ${video._id}`)
-      await this.findOneAndUpdate(query, {$set: { createBlockNumber: video.blockNumber}}).exec()
+    console.log(`updating only createBlocknumber for ${video._id}`)
+    await this.findOneAndUpdate(query, { $set: { createBlockNumber: video.blockNumber } }).exec()
   } else {
-
-      console.log(`updating ${video._id} with more recent version`)
-      delete video.createBlockNumber
-      await this.findOneAndUpdate(query, video, {upsert: true}).exec()
+    console.log(`updating ${video._id} with more recent version`)
+    delete video.createBlockNumber
+    await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   }
 
   cb()
@@ -93,7 +92,7 @@ VideoSchema.statics.stake = function (application, cb) {
   }
   var query = {_id: application._id}
 
-  this.findOneAndUpdate(query, { staked: application } ,{upsert: true}, cb)
+  this.findOneAndUpdate(query, { staked: application }, {upsert: true}, cb)
 }
 
 /**

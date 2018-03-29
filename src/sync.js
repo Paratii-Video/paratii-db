@@ -16,15 +16,15 @@ require('./db')
 // TODO: write better startup configuration, maybe using external configuration file
 if (process.env.NODE_ENV === 'development') {
   //
-	const registryFilename = require('/tmp/registry.json')
-	const registryAddress = registryFilename.registryAddress
-	start(registryAddress, 'ws://localhost:8546')
+  const registryFilename = require('/tmp/registry.json')
+  const registryAddress = registryFilename.registryAddress
+  start(registryAddress, 'ws://localhost:8546')
 } else if (process.env.NODE_ENV === 'docker-development') {
-	const registryFilename = require('/tmp/registry.json')
-	const registryAddress = registryFilename.registryAddress
-	start(registryAddress, 'ws://' + process.env.LOCAL_IP + ':8546')
+  const registryFilename = require('/tmp/registry.json')
+  const registryAddress = registryFilename.registryAddress
+  start(registryAddress, 'ws://' + process.env.LOCAL_IP + ':8546')
 } else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
-	start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
+  start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 }
 
 /**
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
  * @param  {Object} app instances of the server
  */
 function stop (app) {
-	app.close()
+  app.close()
 }
 
 /**
@@ -44,32 +44,32 @@ function stop (app) {
  */
 function start (registry, provider, testlib) {
   // Overlooking Blockchain obSERVER
-	helper.wellcomeSyncLogo()
+  helper.wellcomeSyncLogo()
 
-	let server
-	if (process.env.NODE_ENV === 'production') {
-		observer = require('./observer')(paratiilib.Paratii, registry, provider)
-	} else {
-		observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
-	}
+  let server
+  if (process.env.NODE_ENV === 'production') {
+    observer = require('./observer')(paratiilib.Paratii, registry, provider)
+  } else {
+    observer = require('./observer')(paratiilib.Paratii, registry, provider, testlib)
+  }
 
-	Video.findLastBlockNumber().then(function (res) {
+  Video.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
-		observer.videoObserver.init({fromBlock: res})
-	})
+    observer.videoObserver.init({fromBlock: res})
+  })
 
-  // Transaction.findLastBlockNumber().then(function (res) {
-  //   // Inizializing observers for sync
-  //   observer.transactionObserver.init({fromBlock: res})
-  // })
-	Application.findLastBlockNumber().then(function (res) {
+  Transaction.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
-		observer.applicationObserver.init({fromBlock: res})
-	})
+    observer.transactionObserver.init({fromBlock: res})
+  })
+  Application.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.applicationObserver.init({fromBlock: res})
+  })
 
-	helper.envParams(registry, provider)
+  helper.envParams(registry, provider)
 
-	return server
+  return server
 }
 
 module.exports.start = start
