@@ -1,4 +1,4 @@
-var prettyjson = require('prettyjson')
+// var prettyjson = require('prettyjson')
 
 module.exports.log = function (args) {
   console.log(args)
@@ -6,11 +6,11 @@ module.exports.log = function (args) {
 
 module.exports.logEvents = function (log, message) {
   console.log('|      ' + message)
-  console.log('|          ####### here the log: #######              ')
-  console.log('|                                                     ')
-  console.log(prettyjson.render(log))
-  console.log('|                                                     ')
-  console.log('|          ####### end of the log #######             ')
+  // console.log('|          ####### here the log: #######              ')
+  // console.log('|                                                     ')
+  // console.log(prettyjson.render(log))
+  // console.log('|                                                     ')
+  // console.log('|          ####### end of the log #######             ')
 }
 
 module.exports.wellcomeSyncLogo = function () {
@@ -133,4 +133,13 @@ module.exports.envParams = function (registry, provider, port) {
   if (port) {
     console.log('|      API rest interface available at ' + port)
   }
+}
+
+module.exports.ifIsJsonGetIt = function (str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return JSON.parse(str)
 }
