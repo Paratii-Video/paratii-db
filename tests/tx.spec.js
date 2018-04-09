@@ -69,4 +69,13 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
+  it('search transactions by address and get results back, but just one', (done) => {
+    Transaction.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7', limit: 1, offset: 0}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
 })

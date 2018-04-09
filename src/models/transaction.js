@@ -92,6 +92,8 @@ TransactionSchema.statics.search = function (query, cb) {
     // GET ALL THE VIDEOS
     search = {}
   }
+  delete search['offset']
+  delete search['limit']
 
   let find = this.find(search)
 

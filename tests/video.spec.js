@@ -19,7 +19,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
   before(async () => {
     await Video.remove({})
     paratii = await new paratiilib.Paratii({
-      eth: {provider: 'http://localhost:8545/rpc/'},
+      eth: {
+        provider: 'http://localhost:8545/rpc/'
+      },
       account: {
         address: accounts[0].publicKey,
         privateKey: accounts[0].privateKey
@@ -60,7 +62,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
   })
 
   it('search videos by owner and get results back', (done) => {
-    Video.search({keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'}, (err, result) => {
+    Video.search({
+      keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
@@ -69,7 +73,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search videos by "tagtarget" and get results back', (done) => {
-    Video.search({keyword: 'tagtarget'}, (err, result) => {
+    Video.search({
+      keyword: 'tagtarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
@@ -78,7 +84,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search videos by "titletarget" and get results back', (done) => {
-    Video.search({keyword: 'titletarget'}, (err, result) => {
+    Video.search({
+      keyword: 'titletarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
@@ -87,7 +95,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search videos by "descriptiontarget" and get results back', (done) => {
-    Video.search({keyword: 'descriptiontarget'}, (err, result) => {
+    Video.search({
+      keyword: 'descriptiontarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(2)
@@ -96,7 +106,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search videos by uploader address and get results back', (done) => {
-    Video.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'}, (err, result) => {
+    Video.search({
+      keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
@@ -105,7 +117,9 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search videos by uploader name and get results back', (done) => {
-    Video.search({keyword: 'uploadernametarget'}, (err, result) => {
+    Video.search({
+      keyword: 'uploadernametarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(2)
@@ -113,8 +127,24 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
+  it('search videos by uploader name and get results back, but just one', (done) => {
+    Video.search({
+      keyword: 'uploadernametarget',
+      limit: 1,
+      offset: 1
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
   it('search videos by owner address and a title and get results back', (done) => {
-    Video.search({keyword: 'uploadernametarget', owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'}, (err, result) => {
+    Video.search({
+      keyword: 'uploadernametarget',
+      owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)

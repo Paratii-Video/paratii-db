@@ -68,4 +68,13 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
+  it('search users by email and get results back, but just one', (done) => {
+    User.search({keyword: '/emailtarget/', limit: 1, offset: 1}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
 })

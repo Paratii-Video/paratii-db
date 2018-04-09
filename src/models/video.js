@@ -145,7 +145,6 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
-  // TODO: keep it simple and readable
   let search
   let baseSearch = { $text: { $search: query.keyword } }
 
@@ -166,6 +165,8 @@ VideoSchema.statics.search = function (query, cb) {
     // GET ALL THE VIDEOS
     search = {}
   }
+  delete search['offset']
+  delete search['limit']
 
   let find = this.find(search)
 
