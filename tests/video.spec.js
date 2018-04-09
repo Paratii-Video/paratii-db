@@ -17,7 +17,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
-    await Video.remove({})
+    await Video.collection.drop()
     paratii = await new paratiilib.Paratii({
       eth: {
         provider: 'http://localhost:8545/rpc/'
@@ -48,7 +48,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.bulkUpsert(fixtures, (err, success) => {
       if (err) return done(err)
       assert.isOk(success)
-      done()
+      Video.ensureIndexes(done)
     })
   })
 
@@ -57,6 +57,34 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result).to.have.lengthOf(6)
+      done()
+    })
+  })
+
+  it('search staked videos', (done) => {
+    Video.search( { staked:true }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(3)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search not staked videos', (done) => {
+    Video.search( { staked:false }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(51)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search any videos', (done) => {
+    Video.search( {}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(54)
+      // console.log('found related videos', result)
       done()
     })
   })

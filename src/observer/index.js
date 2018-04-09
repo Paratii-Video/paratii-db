@@ -9,7 +9,7 @@ module.exports = function (Paratii, registry, provider, testlib) {
     paratii = testlib
   } else {
     paratii = new Paratii({
-      provider
+      eth: {provider : provider}
     })
   }
 

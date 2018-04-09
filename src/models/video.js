@@ -153,6 +153,9 @@ VideoSchema.statics.search = function (query, cb) {
   let limit = parseInt(query.limit)
   let areInt = (offset === parseInt(offset, 10)) === (limit === parseInt(limit, 10))
 
+  //Staking FILTER
+  let staked = query.staked !== undefined ? query.staked : undefined
+
   // Setting the query parameters
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // A SIMPLE SEARCH
@@ -161,12 +164,28 @@ VideoSchema.statics.search = function (query, cb) {
     // A SIMPLE SEARCH WITH EXTRA FILTER
     search = Object.assign(baseSearch, query)
     delete search['keyword']
+
   } else {
     // GET ALL THE VIDEOS
     search = {}
   }
+
+  //Cleaning up search query
   delete search['offset']
   delete search['limit']
+  delete search['staked']
+
+
+  // Setting Staked FILTER
+  if(staked !== undefined){
+    if(staked === true){
+      let stakedQuery = {'staked': {'$ne': null}}
+      search = Object.assign(search, stakedQuery)
+    } else {
+      let stakedQuery = {'staked': null}
+      search = Object.assign(search, stakedQuery)
+    }
+  }
 
   let find = this.find(search)
 
@@ -178,6 +197,8 @@ VideoSchema.statics.search = function (query, cb) {
   if (limit && areInt) {
     find = find.limit(limit)
   }
+
+
 
   find.exec((err, result) => {
     if (err) {

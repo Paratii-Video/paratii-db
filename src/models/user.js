@@ -124,7 +124,6 @@ UserSchema.statics.search = function (query, cb) {
     return cb(null, parseResult)
   })
 
-  // TODO Add pagination
 }
 
 const User = mongoose.model('User', UserSchema)
