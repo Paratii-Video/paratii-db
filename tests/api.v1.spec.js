@@ -89,7 +89,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data.length > 1
+      check = data.results.length > 1
       assert.equal(check, true)
       done()
     })
@@ -104,7 +104,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data[0]._id === matchId
+      check = data.results[0]._id === matchId
       assert.equal(check, true)
       done()
     })

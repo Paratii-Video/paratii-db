@@ -61,7 +61,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(3)
+      expect(result.results).to.have.lengthOf(3)
       // console.log('found related videos', result)
       done()
     })
@@ -70,7 +70,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: 'tagtarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
@@ -79,7 +79,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: 'titletarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
@@ -88,7 +88,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: 'descriptiontarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })
@@ -97,7 +97,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
@@ -106,7 +106,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: 'uploadernametarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })
@@ -115,7 +115,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.search({keyword: 'uploadernametarget', owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
