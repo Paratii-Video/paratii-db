@@ -67,6 +67,18 @@ Get all videos collection:
 ```bash
 GET /api/v1/videos
 ```
+Get all staked videos collection:
+
+
+```bash
+GET /api/v1/videos/?staked=true
+```
+Get all non staked videos collection:
+
+
+```bash
+GET /api/v1/videos?staked=false
+```
 
 Search in videos collections:
 
