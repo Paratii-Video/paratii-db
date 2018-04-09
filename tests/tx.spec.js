@@ -55,7 +55,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     Transaction.search({keyword: 'descriptiontarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
@@ -64,7 +64,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     Transaction.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })

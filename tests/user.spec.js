@@ -54,7 +54,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     User.search({keyword: 'Gino'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })
@@ -63,7 +63,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     User.search({keyword: '/emailtarget/'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })

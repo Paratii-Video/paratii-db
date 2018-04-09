@@ -78,30 +78,49 @@ UserSchema.statics.bulkUpsert = function (users, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 UserSchema.statics.search = function (query, cb) {
-  // TODO: keep it simple and readable
-
+  let search
   let baseSearch = { $text: { $search: query.keyword } }
+
+  // Pagination variable
+  let offset = parseInt(query.offset)
+  let limit = parseInt(query.limit)
+  let areInt = (offset === parseInt(offset, 10)) === (limit === parseInt(limit, 10))
+
+  // Setting the query parameters
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
-    // this is a full text search on video
-    this.find(baseSearch).exec((err, result) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return cb(null, result)
-    })
-  } else {
-    let search = Object.assign(baseSearch, query)
+    // A SIMPLE SEARCH
+    search = baseSearch
+  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+    // A SIMPLE SEARCH WITH EXTRA FILTER
+    search = Object.assign(baseSearch, query)
     delete search['keyword']
-
-    this.find(search).exec((err, result) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return cb(null, result)
-    })
+  } else {
+    // GET ALL THE VIDEOS
+    search = {}
   }
+
+  let find = this.find(search)
+
+  // Setting Pagination
+  if (offset && offset !== 0 && areInt) {
+    find = find.skip(offset)
+  }
+  // Setting Pagination
+  if (limit && areInt) {
+    find = find.limit(limit)
+  }
+
+  find.exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    var parseResult = {}
+    parseResult.results = result
+    parseResult.query = query
+    parseResult.total = result.length
+    return cb(null, parseResult)
+  })
 
   // TODO Add pagination
 }
