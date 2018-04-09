@@ -151,31 +151,30 @@ VideoSchema.statics.search = function (query, cb) {
 
   // Pagination variable
   let offset = parseInt(query.offset)
-  let limit  = parseInt(query.limit)
+  let limit = parseInt(query.limit)
   let areInt = (offset === parseInt(offset, 10)) === (limit === parseInt(limit, 10))
 
   // Setting the query parameters
-  if (Object.keys(query).length === 1 && query.keyword !== undefined){
-    //A SIMPLE SEARCH
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+    // A SIMPLE SEARCH
     search = baseSearch
-  } else if (Object.keys(query).length > 1 && query.keyword !== undefined){
-    //A SIMPLE SEARCH WITH EXTRA FILTER
+  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+    // A SIMPLE SEARCH WITH EXTRA FILTER
     search = Object.assign(baseSearch, query)
     delete search['keyword']
   } else {
-    //GET ALL THE VIDEOS
+    // GET ALL THE VIDEOS
     search = {}
   }
 
   let find = this.find(search)
 
-  //Setting Pagination
-  if(offset && offset !== 0 && areInt){
+  // Setting Pagination
+  if (offset && offset !== 0 && areInt) {
     find = find.skip(offset)
   }
-  //Setting Pagination
-  if(limit && areInt){
-
+  // Setting Pagination
+  if (limit && areInt) {
     find = find.limit(limit)
   }
 
