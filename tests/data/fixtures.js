@@ -15,7 +15,7 @@ module.exports = [{
     'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     'name': 'TED'
   },
-  'staked':{
+  'staked': {
     'something': true
   },
   'tags': [
@@ -207,7 +207,7 @@ module.exports = [{
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmevuGixcmVJg8FB2y6i1GvBSNWTaTNFpbxwgKnhUf2RAd/thumbnail-1280x720_2.png',
   'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-  'staked':{
+  'staked': {
     'something': true
   },
   'stats': {
@@ -309,7 +309,7 @@ module.exports = [{
     'likes': 0,
     'dislikes': 0
   },
-  'staked':{
+  'staked': {
     'something': true
   },
   'uploader': {

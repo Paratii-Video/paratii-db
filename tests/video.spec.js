@@ -62,7 +62,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
   })
 
   it('search staked videos', (done) => {
-    Video.search( { staked:true }, (err, result) => {
+    Video.search({ staked: true }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
@@ -71,7 +71,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search not staked videos', (done) => {
-    Video.search( { staked:false }, (err, result) => {
+    Video.search({ staked: false }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(51)
@@ -80,7 +80,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
   it('search any videos', (done) => {
-    Video.search( {}, (err, result) => {
+    Video.search({}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(54)

@@ -123,7 +123,6 @@ UserSchema.statics.search = function (query, cb) {
     parseResult.total = result.length
     return cb(null, parseResult)
   })
-
 }
 
 const User = mongoose.model('User', UserSchema)

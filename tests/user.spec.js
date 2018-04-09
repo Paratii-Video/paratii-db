@@ -42,7 +42,7 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
-  
+
   it('should be able to insert multiple users.', (done) => {
     User.bulkUpsert(users, (err, vid) => {
       if (err) return done(err)
