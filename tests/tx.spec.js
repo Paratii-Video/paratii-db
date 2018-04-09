@@ -2,7 +2,7 @@
 'use strict'
 
 const chai = require('chai')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
 const expect = chai.expect
@@ -19,9 +19,13 @@ describe('# Paratii-db User Model Spec', function (done) {
   before(async () => {
     Transaction.remove({})
     paratii = await new paratiilib.Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      eth: {
+        provider: 'http://localhost:8545/rpc/'
+      },
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')

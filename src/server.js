@@ -3,7 +3,7 @@
 require('dotenv').load()
 const express = require('express')
 const compression = require('compression')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const api = require('./api/v1')
 const helper = require('./helper')
 const dbConfiguration = require('../dbconfig.json')
