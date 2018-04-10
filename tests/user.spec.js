@@ -2,7 +2,7 @@
 'use strict'
 
 const chai = require('chai')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
 const expect = chai.expect
@@ -19,9 +19,13 @@ describe('# Paratii-db User Model Spec', function (done) {
   before(async () => {
     User.remove({})
     paratii = await new paratiilib.Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      eth: {
+        provider: 'http://localhost:8545/rpc/'
+      },
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
@@ -38,6 +42,7 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
+
   it('should be able to insert multiple users.', (done) => {
     User.bulkUpsert(users, (err, vid) => {
       if (err) return done(err)
@@ -50,7 +55,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     User.search({keyword: 'Gino'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })
@@ -59,7 +64,16 @@ describe('# Paratii-db User Model Spec', function (done) {
     User.search({keyword: '/emailtarget/'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search users by email and get results back, but just one', (done) => {
+    User.search({keyword: '/emailtarget/', limit: 1, offset: 1}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })

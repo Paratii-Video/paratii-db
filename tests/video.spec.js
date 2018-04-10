@@ -2,7 +2,7 @@
 'use strict'
 
 const chai = require('chai')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
 
@@ -17,11 +17,15 @@ describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
 
   before(async () => {
-    await Video.remove({})
+    await Video.collection.drop()
     paratii = await new paratiilib.Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      eth: {
+        provider: 'http://localhost:8545/rpc/'
+      },
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
@@ -44,7 +48,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     Video.bulkUpsert(fixtures, (err, success) => {
       if (err) return done(err)
       assert.isOk(success)
-      done()
+      Video.ensureIndexes(done)
     })
   })
 
@@ -57,65 +61,121 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search videos by owner and get results back', (done) => {
-    Video.search({keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'}, (err, result) => {
+  it('search staked videos', (done) => {
+    Video.search({ staked: true }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(3)
+      expect(result.results).to.have.lengthOf(3)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search not staked videos', (done) => {
+    Video.search({ staked: false }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(51)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search any videos', (done) => {
+    Video.search({}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(54)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+
+  it('search videos by owner and get results back', (done) => {
+    Video.search({
+      keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(3)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by "tagtarget" and get results back', (done) => {
-    Video.search({keyword: 'tagtarget'}, (err, result) => {
+    Video.search({
+      keyword: 'tagtarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by "titletarget" and get results back', (done) => {
-    Video.search({keyword: 'titletarget'}, (err, result) => {
+    Video.search({
+      keyword: 'titletarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by "descriptiontarget" and get results back', (done) => {
-    Video.search({keyword: 'descriptiontarget'}, (err, result) => {
+    Video.search({
+      keyword: 'descriptiontarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by uploader address and get results back', (done) => {
-    Video.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'}, (err, result) => {
+    Video.search({
+      keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by uploader name and get results back', (done) => {
-    Video.search({keyword: 'uploadernametarget'}, (err, result) => {
+    Video.search({
+      keyword: 'uploadernametarget'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search videos by uploader name and get results back, but just one', (done) => {
+    Video.search({
+      keyword: 'uploadernametarget',
+      limit: 1,
+      offset: 1
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
   })
   it('search videos by owner address and a title and get results back', (done) => {
-    Video.search({keyword: 'uploadernametarget', owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'}, (err, result) => {
+    Video.search({
+      keyword: 'uploadernametarget',
+      owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'
+    }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })

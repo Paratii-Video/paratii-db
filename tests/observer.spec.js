@@ -3,7 +3,7 @@
 
 const chai = require('chai')
 const dirtyChai = require('dirty-chai')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const accounts = require('./data/accounts')
 const assert = chai.assert
 const Video = require('../src/models').video
@@ -18,8 +18,10 @@ describe('# Paratii-db Observer', function (done) {
   let paratii
   before(async () => {
     paratii = await new paratiilib.Paratii({
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')

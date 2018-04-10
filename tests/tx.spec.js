@@ -2,7 +2,7 @@
 'use strict'
 
 const chai = require('chai')
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
 const expect = chai.expect
@@ -19,9 +19,13 @@ describe('# Paratii-db User Model Spec', function (done) {
   before(async () => {
     Transaction.remove({})
     paratii = await new paratiilib.Paratii({
-      provider: 'http://localhost:8545/rpc/',
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      eth: {
+        provider: 'http://localhost:8545/rpc/'
+      },
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
     })
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
@@ -51,7 +55,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     Transaction.search({keyword: 'descriptiontarget'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(1)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })
@@ -60,7 +64,16 @@ describe('# Paratii-db User Model Spec', function (done) {
     Transaction.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
-      expect(result).to.have.lengthOf(2)
+      expect(result.results).to.have.lengthOf(2)
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+  it('search transactions by address and get results back, but just one', (done) => {
+    Transaction.search({keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7', limit: 1, offset: 0}, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(1)
       // console.log('found related videos', result)
       done()
     })

@@ -145,40 +145,68 @@ VideoSchema.statics.getRelated = function (videoId, cb) {
  * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 VideoSchema.statics.search = function (query, cb) {
-  // TODO: keep it simple and readable
-
+  let search
   let baseSearch = { $text: { $search: query.keyword } }
+
+  // Pagination variable
+  let offset = parseInt(query.offset)
+  let limit = parseInt(query.limit)
+  let areInt = (offset === parseInt(offset, 10)) === (limit === parseInt(limit, 10))
+
+  // Staking FILTER
+  let staked = query.staked !== undefined ? query.staked : undefined
+
+  // Setting the query parameters
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
-     // this is a full text search on video
-    this.find(baseSearch).exec((err, result) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return cb(null, result)
-    })
+    // A SIMPLE SEARCH
+    search = baseSearch
   } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
-     // this is a full text search on video with other fields
-    let search = Object.assign(baseSearch, query)
+    // A SIMPLE SEARCH WITH EXTRA FILTER
+    search = Object.assign(baseSearch, query)
     delete search['keyword']
-
-    this.find(search).exec((err, result) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return cb(null, result)
-    })
   } else {
-     // this is a full list of videos
-    this.find(query).exec((err, result) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return cb(null, result)
-    })
+    // GET ALL THE VIDEOS
+    search = {}
   }
+
+  // Cleaning up search query
+  delete search['offset']
+  delete search['limit']
+  delete search['staked']
+
+  // Setting Staked FILTER
+  if (staked !== undefined) {
+    if (staked === true) {
+      let stakedQuery = {'staked': {'$ne': null}}
+      search = Object.assign(search, stakedQuery)
+    } else {
+      let stakedQuery = {'staked': null}
+      search = Object.assign(search, stakedQuery)
+    }
+  }
+
+  let find = this.find(search)
+
+  // Setting Pagination
+  if (offset && offset !== 0 && areInt) {
+    find = find.skip(offset)
+  }
+  // Setting Pagination
+  if (limit && areInt) {
+    find = find.limit(limit)
+  }
+
+  find.exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    var parseResult = {}
+    parseResult.results = result
+    parseResult.query = query
+    parseResult.total = result.length
+    return cb(null, parseResult)
+  })
 
    // TODO Add pagination
 }

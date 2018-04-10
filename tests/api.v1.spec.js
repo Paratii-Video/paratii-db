@@ -21,7 +21,7 @@ const apiVersion = 'api/v1/'
 const videoApi = 'videos/'
 const userApi = 'users/'
 const txApi = 'transactions/'
-const paratiilib = require('paratii-lib')
+const paratiilib = require('paratii-js')
 
 describe('# Paratii-api', function () {
   let paratii
@@ -42,8 +42,11 @@ describe('# Paratii-api', function () {
     })
 
     paratii = await new paratiilib.Paratii({
-      address: accounts[0].publicKey,
-      privateKey: accounts[0].privateKey
+      account: {
+        address: accounts[0].publicKey,
+        privateKey: accounts[0].privateKey
+      }
+
     })
 
     const contract = await paratii.eth.deployContracts()
@@ -89,7 +92,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data.length > 1
+      check = data.results.length > 1
       assert.equal(check, true)
       done()
     })
@@ -104,7 +107,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data[0]._id === matchId
+      check = data.results[0]._id === matchId
       assert.equal(check, true)
       done()
     })
