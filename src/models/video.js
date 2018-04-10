@@ -43,6 +43,15 @@ const VideoSchema = new Schema({
 // definition of compound indexes
 VideoSchema.index({title: 'text', description: 'text', owner: 'text', 'uploader.name': 'text', 'uploader.address': 'text', tags: 'text', author: 'text'})
 
+// schema transformation for videoschema
+if (!VideoSchema.options.toObject) VideoSchema.options.toObject = {}
+VideoSchema.options.toObject.transform = function (doc, ret, options) {
+  // remove the _id of every document before returning the result
+  ret.id = ret._id
+  delete ret._id
+  return ret
+}
+
 /**
  * upsert
  * @param  {Object}   video Json objects
@@ -252,6 +261,7 @@ VideoSchema.statics.exports = function (cb) {
     return cb(null, result)
   })
 }
+
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video

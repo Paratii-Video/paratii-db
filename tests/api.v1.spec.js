@@ -80,7 +80,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data._id === videoId
+      check = data.id === videoId
       assert.equal(check, true)
       done()
     })
@@ -107,7 +107,7 @@ describe('# Paratii-api', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
-      check = data.results[0]._id === matchId
+      check = data.results[0].id === matchId
       assert.equal(check, true)
       done()
     })
