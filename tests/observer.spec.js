@@ -48,7 +48,7 @@ describe('# Paratii-db Observer', function (done) {
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
-      paratii.core.vids.create({
+      paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
@@ -429,7 +429,7 @@ describe('# Paratii-db Observer', function (done) {
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
-      paratii.core.vids.create({
+      paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
