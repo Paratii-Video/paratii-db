@@ -49,6 +49,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(success)
       Video.ensureIndexes(done)
+      done()
     })
   })
 
