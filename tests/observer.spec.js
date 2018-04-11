@@ -66,7 +66,7 @@ describe('# Paratii-db Observer', function (done) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
           if (video) {
-            condition = (video._id === videoId)
+            condition = (video.id === videoId)
             cb(condition)
           } else {
             cb(condition)
@@ -447,7 +447,7 @@ describe('# Paratii-db Observer', function (done) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
           if (video) {
-            condition = (video._id === videoId)
+            condition = (video.id === videoId)
             cb(condition)
           } else {
             cb(condition)
