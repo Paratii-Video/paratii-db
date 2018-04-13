@@ -37,6 +37,7 @@
     "compression": "^1.7.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
+    "json2csv": "^4.0.4",
     "mongoose": "^5.0.0-rc2",
     "paratii-js": "github:Paratii-Video/paratii-js#dev",
     "prettyjson": "^1.2.1",
