@@ -111,6 +111,18 @@ Get related videos collection (TBD):
 ```bash
 GET /api/v1/videos/<id>/related
 ```
+
+Get in csv
+
+```bash
+GET /api/v1/videos/?format=csv
+```
+
+Get in csv and download
+
+```bash
+GET /api/v1/videos/?format=csv&download=true
+```
 #### Users
 
 
