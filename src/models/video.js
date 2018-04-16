@@ -168,12 +168,23 @@ VideoSchema.statics.search = function (query, cb) {
   // Setting the query parameters
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // A SIMPLE SEARCH
+    console.log('sigle key that is keyword')
+
     search = baseSearch
-  } else if (Object.keys(query).length > 1 && query.keyword !== undefined) {
+  } else if (Object.keys(query).length >= 1 && query.keyword !== undefined) {
+    console.log('multiple key and keyword')
     // A SIMPLE SEARCH WITH EXTRA FILTER
     search = Object.assign(baseSearch, query)
     delete search['keyword']
+    console.log(search)
+  } else if (Object.keys(query).length >= 1 && query.keyword === undefined) {
+    console.log('multiple key and not keyword')
+    // A SIMPLE SEARCH WITH EXTRA FILTER
+    search = Object.assign(query)
+    delete search['keyword']
   } else {
+    console.log('all videos')
+
     // GET ALL THE VIDEOS
     search = {}
   }
