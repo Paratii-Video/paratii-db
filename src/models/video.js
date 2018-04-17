@@ -157,10 +157,14 @@ VideoSchema.statics.search = function (query, cb) {
   let search
   let baseSearch = { $text: { $search: query.keyword } }
 
+  // this is due query is an referenced object
+  const originalQuery = JSON.parse(JSON.stringify(query))
   // Pagination variable
   let offset = parseInt(query.offset)
   let limit = parseInt(query.limit)
-  let areInt = (offset === parseInt(offset, 10)) === (limit === parseInt(limit, 10))
+
+  let isOffsetInt = (offset === parseInt(offset, 10))
+  let isLimitInt = (limit === parseInt(limit, 10))
 
   // Staking FILTER
   let staked = query.staked !== undefined ? query.staked : undefined
@@ -190,9 +194,11 @@ VideoSchema.statics.search = function (query, cb) {
   }
 
   // Cleaning up search query
+  console.log(originalQuery)
   delete search['offset']
   delete search['limit']
   delete search['staked']
+  console.log(originalQuery)
 
   // Setting Staked FILTER
   if (staked !== undefined) {
@@ -208,12 +214,14 @@ VideoSchema.statics.search = function (query, cb) {
   let find = this.find(search)
 
   // Setting Pagination
-  if (offset && offset !== 0 && areInt) {
+  if (offset && offset !== 0 && isOffsetInt) {
     find = find.skip(offset)
   }
   // Setting Pagination
-  if (limit && areInt) {
-    find = find.limit(limit)
+
+  if (limit && isLimitInt) {
+    // increment limit by one in order to know if could be a new page
+    find = find.limit(limit + 1)
   }
 
   find.exec((err, result) => {
@@ -223,8 +231,10 @@ VideoSchema.statics.search = function (query, cb) {
 
     var parseResult = {}
     parseResult.results = result
-    parseResult.query = query
-    parseResult.total = result.length
+    parseResult.hasNext = result.length > limit
+    parseResult.query = originalQuery
+    // compensate hasNext increment
+    parseResult.total = result.length - 1
     return cb(null, parseResult)
   })
 
