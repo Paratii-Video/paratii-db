@@ -80,6 +80,13 @@ Get all non staked videos collection:
 GET /api/v1/videos?staked=false
 ```
 
+Get a paginated videos collection, for example 10 videos with an offset of 20 (a third page):
+
+
+```bash
+GET /api/v1/videos?limit=10&offset=20
+```
+
 Search in videos collections:
 
 ```bash
