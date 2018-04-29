@@ -234,7 +234,7 @@ VideoSchema.statics.search = function (query, cb) {
     parseResult.hasNext = result.length > limit
     parseResult.query = originalQuery
     // compensate hasNext increment
-    parseResult.total = result.length - 1
+    parseResult.total = result.length - 2
     return cb(null, parseResult)
   })
 
