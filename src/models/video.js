@@ -233,7 +233,7 @@ VideoSchema.statics.search = function (query, cb) {
     // compensate for hasNext increment
     const hasNext = result.length > limit
     parseResult.total = result.length - 1
-    parseResult.results = hasNext  ? result.slice(0, result.length - 1) : result
+    parseResult.results = hasNext ? result.slice(0, result.length - 1) : result
     parseResult.hasNext = hasNext
     parseResult.query = originalQuery
     return cb(null, parseResult)
