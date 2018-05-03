@@ -21,8 +21,13 @@ describe('# Paratii-db Observer', function (done) {
       account: {
         address: accounts[0].publicKey,
         privateKey: accounts[0].privateKey
+      },
+      eth:{
+        provider: 'ws://localhost:8546'
       }
     })
+
+    console.log(paratii.config.eth)
     const contract = await paratii.eth.deployContracts()
     const server = require('../src/server')
     let token = await paratii.eth.getContract('ParatiiToken')
@@ -47,8 +52,9 @@ describe('# Paratii-db Observer', function (done) {
     let description = 'and its description'
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    sleep(1000).then(function () {
-      paratii.vids.create({
+    sleep(3000).then(async function () {
+      console.log("creating video")
+      let video  = await paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
@@ -58,6 +64,8 @@ describe('# Paratii-db Observer', function (done) {
         description
         // duration
       })
+
+      console.log(video)
 
       waitUntil()
       .interval(1000)
