@@ -40,8 +40,7 @@
     "json2csv": "^4.0.4",
     "mongoose": "^5.0.0-rc2",
     "paratii-js": "github:Paratii-Video/paratii-js#fc8d81be396237593ec0f2c98e5d1e8e99a50a5f",
-    "prettyjson": "^1.2.1",
-    "web3": "^1.0.0-beta.34"
+    "prettyjson": "^1.2.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
