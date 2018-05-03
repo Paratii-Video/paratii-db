@@ -49,7 +49,7 @@ module.exports = function (paratii) {
         })
       })
     }, 1)
-    console.log("attaching event", options)
+    console.log('attaching event', options)
     await paratii.eth.events.addListener('CreateVideo', options, function (log) {
       console.log(log)
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')

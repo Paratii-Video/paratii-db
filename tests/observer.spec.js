@@ -22,7 +22,7 @@ describe('# Paratii-db Observer', function (done) {
         address: accounts[0].publicKey,
         privateKey: accounts[0].privateKey
       },
-      eth:{
+      eth: {
         provider: 'ws://localhost:8546'
       }
     })
@@ -53,8 +53,8 @@ describe('# Paratii-db Observer', function (done) {
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(3000).then(async function () {
-      console.log("creating video")
-      let video  = await paratii.vids.create({
+      console.log('creating video')
+      let video = await paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
