@@ -31,7 +31,6 @@ describe('# Paratii-db User Model Spec', function (done) {
     const server = require('../src/server')
     setTimeout(() => {
       server.start(contract.Registry.options.address)
-      done()
     }, 1000)
   })
 
