@@ -32,7 +32,10 @@ describe('# Paratii-db Video Model Spec', function (done) {
     const contract = await paratii.eth.deployContracts()
     server = require('../src/server')
     app = server.start(contract.Registry.options.address)
+  })
 
+  after(() => {
+    server.stop(app)
   })
 
   it('should be able to insert 1 video and get it back.', (done) => {
@@ -180,7 +183,4 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  function sleep (ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
 })
