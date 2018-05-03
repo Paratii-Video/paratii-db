@@ -15,6 +15,8 @@ const transactions = require('./data/transactions')
 
 describe('# Paratii-db User Model Spec', function (done) {
   let paratii
+  let server
+  let app
 
   before(async () => {
     Transaction.remove({})
@@ -28,10 +30,12 @@ describe('# Paratii-db User Model Spec', function (done) {
       }
     })
     const contract = await paratii.eth.deployContracts()
-    const server = require('../src/server')
-    setTimeout(() => {
-      server.start(contract.Registry.options.address)
-    }, 1000)
+    server = require('../src/server')
+    app = server.start(contract.Registry.options.address)
+  })
+
+  after(() => {
+    server.stop(app)
   })
 
   it('should be able to insert 1 tx and get it back.', (done) => {

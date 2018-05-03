@@ -16,6 +16,9 @@ chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function (done) {
   let paratii
+  let server
+  let app
+
   before(async () => {
     paratii = await new paratiilib.Paratii({
       account: {
@@ -29,11 +32,15 @@ describe('# Paratii-db Observer', function (done) {
 
     console.log(paratii.config.eth)
     const contract = await paratii.eth.deployContracts()
-    const server = require('../src/server')
+    server = require('../src/server')
     let token = await paratii.eth.getContract('ParatiiToken')
     let vouchers = await paratii.eth.getContract('Vouchers')
     await token.methods.transfer(vouchers.options.address, 2 * 10 ** 18).send()
-    server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
+    app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
+  })
+
+  after(() => {
+    server.stop(app)
   })
 
   it('paratii lib okness', async function (done) {
