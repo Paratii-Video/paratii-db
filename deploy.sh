@@ -3,25 +3,19 @@
 # Usage:
 #   ./deploy.sh production
 #   ./deploy.sh staging
-#   ./deploy.sh production verbose
 
-
-
+echo "deploying to $1"
 if [[ $1 == staging ]]; then
-    # ok
-    echo "deploying to $1"
-    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && sh deploy_db.sh staging </dev/null"
+    host=db-staging.paratii.video
+    branch=dev
 elif [[ $1 == production ]]; then
-    # ok
-    echo "deploying to $1"
-    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && sh deploy_db.sh production </dev/null"
+    host=db.paratii.video
+    branch=master
 else
     echo "unknown parameter - please specify one of 'staging' or 'production'"
     exit
 fi
-
-if [[ $2 == verbose ]]; then
-    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_db:$1 </dev/null"
-else
-    ssh -o StrictHostKeyChecking=no paratii@build.paratii.video "cd ~/devops && fab deploy_db:$1 </dev/null >ldeploy_db.log 2>&1 &"
-fi
+ssh -o StrictHostKeyChecking=no paratii@$host << EOF
+  cd paratii-db/ && git checkout ${branch} && npm i
+  pm2 restart run.json --env $1
+EOF
