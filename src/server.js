@@ -23,10 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
   start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 } else if (process.env.NODE_ENV === 'docker-development') {
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
-  dbConfiguration[process.env.NODE_ENV].provider = 'ws://' + process.env.LOCAL_IP + ':8546'
-  start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
+  start(dbConfiguration['production'].registry, dbConfiguration['production'].provider)
 }
 
 /**
