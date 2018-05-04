@@ -15,6 +15,8 @@ const fixtures = require('./data/fixtures')
 
 describe('# Paratii-db Video Model Spec', function (done) {
   let paratii
+  let server
+  let app
 
   before(async () => {
     await Video.collection.drop()
@@ -28,11 +30,12 @@ describe('# Paratii-db Video Model Spec', function (done) {
       }
     })
     const contract = await paratii.eth.deployContracts()
-    const server = require('../src/server')
-    setTimeout(() => {
-      server.start(contract.Registry.options.address)
-      done()
-    }, 1000)
+    server = require('../src/server')
+    app = server.start(contract.Registry.options.address)
+  })
+
+  after(() => {
+    server.stop(app)
   })
 
   it('should be able to insert 1 video and get it back.', (done) => {
