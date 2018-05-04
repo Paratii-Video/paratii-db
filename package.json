@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 30000",
     "start": "NODE_ENV=production node src/server.js",
+    "docker": "NODE_ENV=docker-development node src/server.js",
     "sync-production": "NODE_ENV=production node src/sync.js",
     "sync-staging": "NODE_ENV=staging node src/sync.js",
     "sync-dev": "NODE_ENV=development node src/sync.js",

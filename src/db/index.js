@@ -17,7 +17,7 @@ var options = {
 }
 
 if (process.env.NODE_ENV === 'docker-development') {
-  dbConfiguration[process.env.NODE_ENV].mongodb.url = 'mongodb://' + process.env.LOCAL_IP + ':27017/test'
+  dbConfiguration[process.env.NODE_ENV].mongodb.url = 'mongodb://mongo:27017/test'
   mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
 } else {
   mongoose.connect(dbConfiguration[process.env.NODE_ENV].mongodb.url, options)
