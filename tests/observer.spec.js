@@ -12,7 +12,6 @@ const Transaction = require('../src/models').transaction
 const Voucher = require('../src/models').voucher
 const Application = require('../src/models').application
 const waitUntil = require('wait-until')
-const users = require('./data/users')
 
 chai.use(dirtyChai)
 
@@ -38,7 +37,7 @@ describe('# Paratii-db Observer', function (done) {
     let distributor = await paratii.eth.getContract('PTIDistributor')
     let vouchers = await paratii.eth.getContract('Vouchers')
     await token.methods.transfer(vouchers.options.address, 2 * 10 ** 18).send()
-    await token.methods.transfer(distributor.options.address,  2 * 10 ** 18).send()
+    await token.methods.transfer(distributor.options.address, 2 * 10 ** 18).send()
 
     app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
@@ -441,11 +440,8 @@ describe('# Paratii-db Observer', function (done) {
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
-    let ipfsData = 'zzz'
     let number = Math.random()
     let videoId = number.toString(36).substr(2, 9)
-    let title = 'Just a title'
-    let description = 'and its description'
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
@@ -453,7 +449,7 @@ describe('# Paratii-db Observer', function (done) {
         id: videoId,
         price: price,
         owner: creator,
-        ipfsHash: ipfsHash,
+        ipfsHash: ipfsHash
         // ipfsData: ipfsData
         // duration
       })
@@ -477,7 +473,6 @@ describe('# Paratii-db Observer', function (done) {
           assert.equal(true, result)
 
           paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
-
             waitUntil()
             .interval(1000)
             .times(10)
@@ -515,7 +510,6 @@ describe('# Paratii-db Observer', function (done) {
     const owner = accounts[0].publicKey
     const address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
 
-
     let userData = {
       id: address1,
       name: 'Humbert Humbert',
@@ -526,12 +520,11 @@ describe('# Paratii-db Observer', function (done) {
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
       paratii.eth.distributor.generateSignature(amount, salt, reason, owner).then(function (signature) {
-
         let v = signature.v
         let r = signature.r
         let s = signature.s
 
-        paratii.eth.users.create(userData).then(function(user){
+        paratii.eth.users.create(userData).then(function (user) {
           paratii.eth.distributor.distribute({address: address1, amount, salt, reason, v, r, s}).then(function (distribute) {
             waitUntil()
             .interval(1000)
@@ -555,7 +548,6 @@ describe('# Paratii-db Observer', function (done) {
               }
             })
           })
-
         })
       })
     })

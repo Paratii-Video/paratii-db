@@ -61,7 +61,7 @@ UserSchema.statics.delete = function (userId, cb) {
  */
 
 UserSchema.statics.verify = function (distribution, cb) {
-  if (!distribution || !distribution.reason || distribution.reason  != 'email_verification') {
+  if (!distribution || !distribution.reason || distribution.reason !== 'email_verification') {
     return cb(new Error('distribution._reason must be email_verification'))
   }
   if (!distribution || !distribution.toAddress) {

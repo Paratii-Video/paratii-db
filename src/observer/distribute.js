@@ -24,7 +24,6 @@ module.exports = function (paratii) {
       })
     })
 
-
     if (options.fromBlock !== undefined) {
       helper.log('|      👓  syncing 💰 Distributor contract events since the block ' + options.fromBlock)
     } else {
