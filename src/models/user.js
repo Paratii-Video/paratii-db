@@ -8,12 +8,15 @@ const UserSchema = new Schema({
 
   _id: {type: String},
   name: {type: String},
-  email: {type: String},
+  email: {
+    value: {type: String},
+    isVerified: {type: Boolean}
+  },
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
 
-UserSchema.index({name: 'text', email: 'text'})
+UserSchema.index({name: 'text', 'email.value': 'text'})
 
 /**
  * Upsert parsed transaction event
@@ -48,6 +51,26 @@ UserSchema.statics.delete = function (userId, cb) {
 
     return cb(null, true)
   })
+}
+
+/**
+ * verifyemail
+ * @param  {Object}   distribution Json objects
+ * @param  {Function} cb    (err, success)
+ * @return {[type]}         [description]
+ */
+
+UserSchema.statics.verify = function (distribution, cb) {
+  if (!distribution || !distribution.reason || distribution.reason  != 'email_verification') {
+    return cb(new Error('distribution._reason must be email_verification'))
+  }
+  if (!distribution || !distribution.toAddress) {
+    return cb(new Error('distribution._toAddress is required for verify something'))
+  }
+
+  var query = {_id: distribution.toAddress}
+
+  this.findOneAndUpdate(query, { 'email.isVerified': true }, {upsert: true}, cb)
 }
 
 /**

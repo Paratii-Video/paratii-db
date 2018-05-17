@@ -44,7 +44,8 @@ module.exports.user = function (log) {
   var user = {}
   user._id = log.returnValues._address
   user.name = log.returnValues._name
-  user.email = log.returnValues._email
+  user.email = {}
+  user.email.value = log.returnValues._email
   user.ipfsData = log.returnValues._ipfsData
 
   return user
@@ -87,8 +88,8 @@ module.exports.voucher = function (log) {
 
 /**
  * Parse the voucher logs as the model require
- * @param  {Object} log the Vouchers contract event
- * @return {Object}     a voucher object acceptable for Vouchers collection
+ * @param  {Object} log the TCR contract event
+ * @return {Object}     a tcr object acceptable for Application collection
  */
 module.exports.application = function (log) {
   // TODO: add data validator
@@ -97,4 +98,18 @@ module.exports.application = function (log) {
   application.deposit = log.returnValues.deposit
   application.blockNumber = log.blockNumber
   return application
+}
+
+/**
+ * Parse the distribute logs as the model require
+ * @param  {Object} log the Distribute contract event
+ * @return {Object}     a distribute object acceptable for some reason
+ */
+module.exports.distribute = function (log) {
+  // TODO: add data validator
+  var distribute = {}
+
+  distribute.toAddress = log.returnValues._toAddress
+  distribute.reason = log.returnValues._reason
+  return distribute
 }

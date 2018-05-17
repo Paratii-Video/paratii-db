@@ -25,6 +25,7 @@ module.exports = function (Paratii, registry, provider, testlib) {
   module.transactionObserver = require('./transaction')(paratii)
   module.voucherObserver = require('./voucher')(paratii)
   module.applicationObserver = require('./application')(paratii)
+  module.distributorObserver = require('./distribute')(paratii)
 
   return module
 }

@@ -12,6 +12,8 @@ const Transaction = require('../src/models').transaction
 const Voucher = require('../src/models').voucher
 const Application = require('../src/models').application
 const waitUntil = require('wait-until')
+const users = require('./data/users')
+
 chai.use(dirtyChai)
 
 describe('# Paratii-db Observer', function (done) {
@@ -30,12 +32,14 @@ describe('# Paratii-db Observer', function (done) {
       }
     })
 
-    console.log(paratii.config.eth)
     const contract = await paratii.eth.deployContracts()
     server = require('../src/server')
     let token = await paratii.eth.getContract('ParatiiToken')
+    let distributor = await paratii.eth.getContract('PTIDistributor')
     let vouchers = await paratii.eth.getContract('Vouchers')
     await token.methods.transfer(vouchers.options.address, 2 * 10 ** 18).send()
+    await token.methods.transfer(distributor.options.address,  2 * 10 ** 18).send()
+
     app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
   })
 
@@ -43,12 +47,12 @@ describe('# Paratii-db Observer', function (done) {
     server.stop(app)
   })
 
-  it('paratii lib okness', async function (done) {
+  it.skip('paratii lib okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it('subscription to Create Video events should work as expected', function (done) {
+  it.skip('subscription to Create Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -101,7 +105,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it('subscription to Remove Video events should work as expected', function (done) {
+  it.skip('subscription to Remove Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -154,7 +158,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it('subscription to Create User events should work as expected', function (done) {
+  it.skip('subscription to Create User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -193,7 +197,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it('subscription to Remove User events should work as expected', function (done) {
+  it.skip('subscription to Remove User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -240,7 +244,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('subscription to Tranfer PTI events should work as expected', function (done) {
+  it.skip('subscription to Tranfer PTI events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -278,7 +282,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('subscription to Tranfer ETH events should work as expected', function (done) {
+  it.skip('subscription to Tranfer ETH events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -318,7 +322,7 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it('subscription to Create Voucher events should work as expected', function (done) {
+  it.skip('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -355,7 +359,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('subscription to Create Voucher events should work as expected', function (done) {
+  it.skip('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -392,7 +396,7 @@ describe('# Paratii-db Observer', function (done) {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
   })
-  it('subscription to Application events should work as expected', function (done) {
+  it.skip('subscription to Application events should work as expected', function (done) {
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
@@ -400,7 +404,8 @@ describe('# Paratii-db Observer', function (done) {
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(2000).then(function () {
-      paratii.eth.tcr.checkEligiblityAndApply(videoId, amount).then(function (application) {
+      paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
+        console.log(application)
         waitUntil()
         .interval(1000)
         .times(10)
@@ -430,13 +435,13 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-  it('subscription to Application events should set video as staked', function (done) {
+  it.skip('subscription to Application events should set video as staked', function (done) {
     let creator = accounts[0].publicKey
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
-    // let ipfsData = 'zzz'
+    let ipfsData = 'zzz'
     let number = Math.random()
     let videoId = number.toString(36).substr(2, 9)
     let title = 'Just a title'
@@ -449,17 +454,15 @@ describe('# Paratii-db Observer', function (done) {
         price: price,
         owner: creator,
         ipfsHash: ipfsHash,
-        // ipfsData: ipfsData,
-        title,
-        description
+        // ipfsData: ipfsData
         // duration
       })
-
       waitUntil()
       .interval(1000)
       .times(10)
       .condition(function (cb) {
         let condition = false
+
         Video.findOne({_id: videoId}).exec().then(function (video) {
           if (video) {
             condition = (video.id === videoId)
@@ -472,7 +475,9 @@ describe('# Paratii-db Observer', function (done) {
       .done(function (result) {
         if (result) {
           assert.equal(true, result)
-          paratii.eth.tcr.checkEligiblityAndApply(videoId, amount).then(function (application) {
+
+          paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
+
             waitUntil()
             .interval(1000)
             .times(10)
@@ -496,6 +501,62 @@ describe('# Paratii-db Observer', function (done) {
             })
           })
         }
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Disitribute events for email_verification reason should work as expected', function (done) {
+    const amount = 5 ** 18
+    const reason = 'email_verification'
+    const salt = paratii.eth.web3.utils.sha3('' + Date.now())
+    const owner = accounts[0].publicKey
+    const address1 = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
+
+
+    let userData = {
+      id: address1,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsData: 'some-hash'
+    }
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.distributor.generateSignature(amount, salt, reason, owner).then(function (signature) {
+
+        let v = signature.v
+        let r = signature.r
+        let s = signature.s
+
+        paratii.eth.users.create(userData).then(function(user){
+          paratii.eth.distributor.distribute({address: address1, amount, salt, reason, v, r, s}).then(function (distribute) {
+            waitUntil()
+            .interval(1000)
+            .times(10)
+            .condition(function (cb) {
+              let condition = false
+              User.findOne({_id: address1}).exec().then(function (user) {
+                if (user) {
+                  condition = (user.email.isVerified !== undefined)
+                  cb(condition)
+                } else {
+                  cb(condition)
+                }
+              })
+            })
+            .done(function (result) {
+              console.log('this is the result ', result)
+              if (result) {
+                assert.equal(true, result)
+                done()
+              }
+            })
+          })
+
+        })
       })
     })
 
