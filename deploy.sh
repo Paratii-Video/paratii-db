@@ -16,6 +16,6 @@ else
     exit
 fi
 ssh -o StrictHostKeyChecking=no paratii@$host << EOF
-  cd paratii-db/ && git checkout ${branch} && npm i
+  cd paratii-db/ && git checkout ${branch} && git pull && npm i
   pm2 restart run.json --env $1
 EOF
