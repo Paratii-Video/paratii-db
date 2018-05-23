@@ -200,7 +200,7 @@ VideoSchema.statics.search = function (query, cb) {
 
   // Setting Staked FILTER
   if (staked !== undefined) {
-    console.log('assign staked',staked)
+    console.log('assign staked', staked)
     if (staked === 'true') {
       let stakedQuery = {'staked': {'$ne': null}}
       search = Object.assign(search, stakedQuery)
