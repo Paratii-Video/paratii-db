@@ -61,6 +61,7 @@ function start (registry, provider, testlib, mongoUrl) {
   observer.transactionObserver.init({})
   observer.voucherObserver.init({})
   observer.applicationObserver.init({})
+  observer.distributorObserver.init({})
 
   app.use(compression())
   app.use(express.json())

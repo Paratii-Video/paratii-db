@@ -13,13 +13,13 @@ const Transaction = require('../src/models').transaction
 
 const transactions = require('./data/transactions')
 
-describe('# Paratii-db User Model Spec', function (done) {
+describe('# Paratii-db TX Model Spec', function (done) {
   let paratii
   let server
   let app
 
   before(async () => {
-    Transaction.remove({})
+    await Transaction.collection.drop()
     paratii = await new paratiilib.Paratii({
       eth: {
         provider: 'http://localhost:8545/rpc/'
@@ -50,7 +50,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     Transaction.bulkUpsert(transactions, (err, success) => {
       if (err) return done(err)
       assert.isOk(success)
-      done()
+      Transaction.ensureIndexes(done)
     })
   })
 

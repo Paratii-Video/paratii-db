@@ -194,15 +194,14 @@ VideoSchema.statics.search = function (query, cb) {
   }
 
   // Cleaning up search query
-  console.log(originalQuery)
   delete search['offset']
   delete search['limit']
   delete search['staked']
-  console.log(originalQuery)
 
   // Setting Staked FILTER
   if (staked !== undefined) {
-    if (staked === true) {
+    console.log('assign staked', staked)
+    if (staked === 'true') {
       let stakedQuery = {'staked': {'$ne': null}}
       search = Object.assign(search, stakedQuery)
     } else {
@@ -212,6 +211,7 @@ VideoSchema.statics.search = function (query, cb) {
   }
 
   let find = this.find(search)
+  console.log(search)
 
   // Setting Pagination
   if (offset && offset !== 0 && isOffsetInt) {
