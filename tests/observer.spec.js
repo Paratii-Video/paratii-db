@@ -533,7 +533,7 @@ describe('# Paratii-db Observer', function (done) {
               let condition = false
               User.findOne({_id: address1}).exec().then(function (user) {
                 if (user) {
-                  condition = (user.email.isVerified !== undefined)
+                  condition = (user.emailIsVerified !== undefined)
                   cb(condition)
                 } else {
                   cb(condition)

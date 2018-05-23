@@ -44,8 +44,7 @@ module.exports.user = function (log) {
   var user = {}
   user._id = log.returnValues._address
   user.name = log.returnValues._name
-  user.email = {}
-  user.email.value = log.returnValues._email
+  user.email = log.returnValues._email
   user.ipfsData = log.returnValues._ipfsData
 
   return user

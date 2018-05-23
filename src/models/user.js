@@ -8,15 +8,13 @@ const UserSchema = new Schema({
 
   _id: {type: String},
   name: {type: String},
-  email: {
-    value: {type: String},
-    isVerified: {type: Boolean}
-  },
+  email: {type: String},
+  emailIsVerified: {type: Boolean},
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
 
-UserSchema.index({name: 'text', 'email.value': 'text'})
+UserSchema.index({name: 'text', email: 'text'})
 
 /**
  * Upsert parsed transaction event
@@ -70,7 +68,7 @@ UserSchema.statics.verify = function (distribution, cb) {
 
   var query = {_id: distribution.toAddress}
 
-  this.findOneAndUpdate(query, { 'email.isVerified': true }, {upsert: true}, cb)
+  this.findOneAndUpdate(query, { 'emailIsVerified': true }, {upsert: true}, cb)
 }
 
 /**
