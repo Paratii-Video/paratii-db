@@ -72,7 +72,7 @@ describe('# Paratii-db Observer', function (done) {
 
       waitUntil()
       .interval(1000)
-      .times(20)
+      .times(40)
       .condition(function (cb) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
@@ -119,7 +119,7 @@ describe('# Paratii-db Observer', function (done) {
 
           waitUntil()
           .interval(500)
-          .times(20)
+          .times(40)
           .condition(function (cb) {
             let condition = false
             Video.findOne({_id: videoId}, function (err, video) {
@@ -165,7 +165,7 @@ describe('# Paratii-db Observer', function (done) {
 
       waitUntil()
       .interval(500)
-      .times(20)
+      .times(40)
       .condition(function (cb) {
         let condition = false
         User.findOne({_id: userId}).exec().then(function (user) {
@@ -206,7 +206,7 @@ describe('# Paratii-db Observer', function (done) {
 
           waitUntil()
           .interval(500)
-          .times(20)
+          .times(40)
           .condition(function (cb) {
             let condition = false
             User.findOne({_id: userId}, function (err, user) {
@@ -246,7 +246,7 @@ describe('# Paratii-db Observer', function (done) {
 
         waitUntil()
         .interval(500)
-        .times(20)
+        .times(40)
         .condition(function (cb) {
           let condition = false
           Transaction.findOne({_id: txHash}).exec().then(function (tx) {
@@ -285,7 +285,7 @@ describe('# Paratii-db Observer', function (done) {
 
         waitUntil()
         .interval(500)
-        .times(20)
+        .times(40)
         .condition(function (cb) {
           let condition = false
           Transaction.findOne({_id: txHash}).exec().then(function (tx) {
@@ -326,7 +326,7 @@ describe('# Paratii-db Observer', function (done) {
       paratii.eth.vouchers.create(voucher).then(function (hashedVoucher) {
         waitUntil()
         .interval(1000)
-        .times(20)
+        .times(40)
         .condition(function (cb) {
           let condition = false
           Voucher.findOne({_id: hashedVoucher}).exec().then(function (vou) {
@@ -363,7 +363,7 @@ describe('# Paratii-db Observer', function (done) {
       paratii.eth.vouchers.redeem(voucher.voucherCode).then(function (hashedVoucher) {
         waitUntil()
         .interval(1000)
-        .times(20)
+        .times(40)
         .condition(function (cb) {
           let condition = false
           Voucher.findOne({voucherCode: voucher.voucherCode}).exec().then(function (vou) {
@@ -400,7 +400,7 @@ describe('# Paratii-db Observer', function (done) {
         console.log(application)
         waitUntil()
         .interval(2000)
-        .times(20)
+        .times(40)
         .condition(function (cb) {
           let condition = false
           Application.findOne({_id: videoId}).exec().then(function (app) {
@@ -448,7 +448,7 @@ describe('# Paratii-db Observer', function (done) {
       })
       waitUntil()
       .interval(1000)
-      .times(20)
+      .times(40)
       .condition(function (cb) {
         let condition = false
 
@@ -468,7 +468,7 @@ describe('# Paratii-db Observer', function (done) {
           paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
             waitUntil()
             .interval(1000)
-            .times(20)
+            .times(40)
             .condition(function (cb) {
               let condition = false
               Video.findOne({_id: videoId}).exec().then(function (video) {
@@ -521,7 +521,7 @@ describe('# Paratii-db Observer', function (done) {
           paratii.eth.distributor.distribute({address: address1, amount, salt, reason, v, r, s}).then(function (distribute) {
             waitUntil()
             .interval(1000)
-            .times(20)
+            .times(40)
             .condition(function (cb) {
               let condition = false
               User.findOne({_id: address1}).exec().then(function (user) {
