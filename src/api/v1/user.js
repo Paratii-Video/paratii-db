@@ -36,9 +36,6 @@ router.get('/create/:id/:email', (req, res, next) => {
   var origin = req.get('origin')
   var address = req.params.id
   var email = req.params.email
-  console.log(origin)
-  console.log(address)
-  console.log(email)
   if(origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video')) {
     User.upsert({_id: address, email}, (err, user) => {
       if (err) {
