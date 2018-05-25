@@ -58,10 +58,7 @@ describe('# Paratii-db Observer', function (done) {
     // let ipfsData = 'zzz'
     let number = Math.random()
     let videoId = number.toString(36).substr(2, 9)
-    // let title = 'Just a title'
-    // let description = 'and its description'
-    // let duration = '01:45'
-    // not so elegant, it would be better to wait for server, observer, api ecc.
+    
     sleep(3000).then(async function () {
       console.log('creating video')
       let video = await paratii.vids.create({
