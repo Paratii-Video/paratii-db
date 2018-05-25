@@ -27,7 +27,6 @@ router.get('/:id/videos', (req, res, next) => {
   })
 })
 
-
 /**
  * create user email by _id
  * @param {String}  id  user _id
@@ -36,7 +35,7 @@ router.get('/create/:id/:email', (req, res, next) => {
   var origin = req.get('origin')
   var address = req.params.id
   var email = req.params.email
-  if(origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video')) {
+  if (origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video')) {
     User.upsert({_id: address, email}, (err, user) => {
       if (err) {
         throw err
