@@ -58,7 +58,7 @@ describe('# Paratii-db Observer', function (done) {
     // let ipfsData = 'zzz'
     let number = Math.random()
     let videoId = number.toString(36).substr(2, 9)
-    
+
     sleep(3000).then(async function () {
       console.log('creating video')
       let video = await paratii.vids.create({
