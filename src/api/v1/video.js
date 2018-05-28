@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
     // TODO: add query params, total, start, limit and results
 
     if (req.query.format === 'csv') {
-      const fields = ['_id', 'title', 'description', 'price', 'duration', 'author', 'createBlockNumber', 'filesize']
+      const fields = ['id', 'title', 'description', 'price', 'duration', 'author', 'createBlockNumber', 'filesize']
       const json2csvParser = new Json2csvParser({fields})
       const csv = json2csvParser.parse(result.results)
       if (req.query.download) {
