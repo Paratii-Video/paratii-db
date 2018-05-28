@@ -34,7 +34,12 @@ router.get('/:id', (req, res, next) => {
  */
 
 router.get('/', (req, res, next) => {
-  Video.search(req.query, (err, result) => {
+  const cleanReq = JSON.parse(JSON.stringify(req.query))
+
+  delete cleanReq.format
+  delete cleanReq.download
+
+  Video.search(cleanReq, (err, result) => {
     if (err) {
       return res.send(err).statusCode(500)
     }
@@ -43,6 +48,7 @@ router.get('/', (req, res, next) => {
     if (req.query.format === 'csv') {
       const fields = ['id', 'title', 'description', 'price', 'duration', 'author', 'createBlockNumber', 'filesize']
       const json2csvParser = new Json2csvParser({fields})
+
       const csv = json2csvParser.parse(result.results)
       if (req.query.download) {
         res.setHeader('Content-disposition', 'attachment; filename=data.csv')
