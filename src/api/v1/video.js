@@ -39,7 +39,6 @@ router.get('/', (req, res, next) => {
   delete cleanReq.format
   delete cleanReq.download
 
-
   Video.search(cleanReq, (err, result) => {
     if (err) {
       return res.send(err).statusCode(500)
@@ -47,7 +46,6 @@ router.get('/', (req, res, next) => {
     // TODO: add query params, total, start, limit and results
 
     if (req.query.format === 'csv') {
-
       const fields = ['id', 'title', 'description', 'price', 'duration', 'author', 'createBlockNumber', 'filesize']
       const json2csvParser = new Json2csvParser({fields})
 
