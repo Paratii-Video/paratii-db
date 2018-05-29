@@ -15,7 +15,7 @@ module.exports.logEvents = function (log, message) {
 }
 
 module.exports.wellcomeSyncLogo = function () {
-  if(!hasSayHello){
+  if (!hasSayHello) {
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')
@@ -51,11 +51,10 @@ module.exports.wellcomeSyncLogo = function () {
     console.log('                                                                                                                         ')
     hasSayHello = true
   }
-
 }
 
 module.exports.wellcomeLogo = function () {
-  if(!hasSayHello){
+  if (!hasSayHello) {
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')

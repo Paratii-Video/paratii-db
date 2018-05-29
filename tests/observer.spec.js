@@ -543,7 +543,6 @@ describe('# Paratii-db Observer', function (done) {
     }
   })
 
-
   it('subscription to Create User events should update with a fresh username all related video', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
