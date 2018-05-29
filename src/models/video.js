@@ -66,22 +66,18 @@ VideoSchema.statics.upsert = async function (video, cb) {
 
   var query = {_id: video._id}
   // check if the video already exists
-  console.log(`searching for ${query._id} and blocknumber ${video.blockNumber}`)
   var existingVideo = await this.findOne(query).exec()
 
   // we do not know in what order the event logs arrive, so we need some logic
   // to make sure we update the record with the latest block number
   if (!existingVideo) {
     video.createBlockNumber = video.blockNumber
-    console.log(`Importing new video ${video._id}`)
     await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   } else if (video.blockNumber < existingVideo.createBlockNumber) {
       // we have already inserted a existingVideo  that that is more recent than "video"
       // so we only update the createBlockNumber
-    console.log(`updating only createBlocknumber for ${video._id}`)
     await this.findOneAndUpdate(query, { $set: { createBlockNumber: video.blockNumber } }).exec()
   } else {
-    console.log(`updating ${video._id} with more recent version`)
     delete video.createBlockNumber
     await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   }
@@ -172,23 +168,17 @@ VideoSchema.statics.search = function (query, cb) {
   // Setting the query parameters
   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
     // A SIMPLE SEARCH
-    console.log('sigle key that is keyword')
 
     search = baseSearch
   } else if (Object.keys(query).length >= 1 && query.keyword !== undefined) {
-    console.log('multiple key and keyword')
     // A SIMPLE SEARCH WITH EXTRA FILTER
     search = Object.assign(baseSearch, query)
     delete search['keyword']
-    console.log(search)
   } else if (Object.keys(query).length >= 1 && query.keyword === undefined) {
-    console.log('multiple key and not keyword')
     // A SIMPLE SEARCH WITH EXTRA FILTER
     search = Object.assign(query)
     delete search['keyword']
   } else {
-    console.log('all videos')
-
     // GET ALL THE VIDEOS
     search = {}
   }
@@ -200,7 +190,6 @@ VideoSchema.statics.search = function (query, cb) {
 
   // Setting Staked FILTER
   if (staked !== undefined) {
-    console.log('assign staked', staked)
     if (staked === 'true') {
       let stakedQuery = {'staked': {'$ne': null}}
       search = Object.assign(search, stakedQuery)
@@ -211,7 +200,6 @@ VideoSchema.statics.search = function (query, cb) {
   }
 
   let find = this.find(search)
-  console.log(search)
 
   // Setting Pagination
   if (offset && offset !== 0 && isOffsetInt) {
@@ -232,7 +220,7 @@ VideoSchema.statics.search = function (query, cb) {
     var parseResult = {}
     // compensate for hasNext increment
     const hasNext = result.length > limit
-    parseResult.total = result.length - 1
+    parseResult.total = result.length === 0 ? 0 : result.length
     parseResult.results = hasNext ? result.slice(0, result.length - 1) : result
     parseResult.hasNext = hasNext
     parseResult.query = originalQuery

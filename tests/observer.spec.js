@@ -60,15 +60,12 @@ describe('# Paratii-db Observer', function (done) {
     let videoId = number.toString(36).substr(2, 9)
 
     sleep(3000).then(async function () {
-      console.log('creating video')
-      let video = await paratii.vids.create({
+      await paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
         ipfsHash: ipfsHash
       })
-
-      console.log(video)
 
       waitUntil()
       .interval(1000)
@@ -397,7 +394,6 @@ describe('# Paratii-db Observer', function (done) {
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(2000).then(function () {
       paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
-        console.log(application)
         waitUntil()
         .interval(2000)
         .times(40)
@@ -413,7 +409,6 @@ describe('# Paratii-db Observer', function (done) {
           })
         })
         .done(function (result) {
-          console.log('this is the result ', result)
           if (result) {
             assert.equal(true, result)
             done()
