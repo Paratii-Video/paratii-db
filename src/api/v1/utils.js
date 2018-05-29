@@ -5,7 +5,6 @@ const Models = require('../../models')
 const Video = Models.video
 
 router.get('/exports', (req, res, next) => {
-  console.log('exports')
   Video.exports((err, result) => {
     if (err) {
       return res.send(err).statusCode(500)
@@ -21,16 +20,16 @@ router.get('/exports', (req, res, next) => {
 
       let baseurl = ''
       switch (process.env.NODE_ENV) {
-        case 'staging':
-          baseurl = 'https://staging.paratii.video/play/'
-          break
-        case 'production':
-          baseurl = 'https://portal.paratii.video/play/'
+      case 'staging':
+        baseurl = 'https://staging.paratii.video/play/'
+        break
+      case 'production':
+        baseurl = 'https://portal.paratii.video/play/'
 
-          break
-        case 'development':
-          baseurl = 'http://localhost:8080/play/'
-          break
+        break
+      case 'development':
+        baseurl = 'http://localhost:8080/play/'
+        break
       }
       dump += 'Url: '
       dump += '<a href=' + baseurl + result[i]._id + '>'
