@@ -99,10 +99,25 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
+      expect(result.total).to.equal(3);
       // console.log('found related videos', result)
       done()
     })
   })
+
+  it('search videos by no results keyword and get no results back', (done) => {
+    Video.search({
+      keyword: 'sanappa'
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(0)
+      expect(result.total).to.equal(0);
+      // console.log('found related videos', result)
+      done()
+    })
+  })
+
   it('search videos by "tagtarget" and get results back', (done) => {
     Video.search({
       keyword: 'tagtarget'
@@ -114,6 +129,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
+
   it('search videos by "titletarget" and get results back', (done) => {
     Video.search({
       keyword: 'titletarget'
