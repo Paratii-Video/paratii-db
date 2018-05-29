@@ -179,7 +179,6 @@ VideoSchema.statics.search = function (query, cb) {
     search = Object.assign(query)
     delete search['keyword']
   } else {
-
     // GET ALL THE VIDEOS
     search = {}
   }
@@ -221,7 +220,7 @@ VideoSchema.statics.search = function (query, cb) {
     var parseResult = {}
     // compensate for hasNext increment
     const hasNext = result.length > limit
-    parseResult.total = result.length == 0 ? 0 : result.length
+    parseResult.total = result.length === 0 ? 0 : result.length
     parseResult.results = hasNext ? result.slice(0, result.length - 1) : result
     parseResult.hasNext = hasNext
     parseResult.query = originalQuery

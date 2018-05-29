@@ -99,7 +99,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
-      expect(result.total).to.equal(3);
+      expect(result.total).to.equal(3)
       // console.log('found related videos', result)
       done()
     })
@@ -112,7 +112,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(0)
-      expect(result.total).to.equal(0);
+      expect(result.total).to.equal(0)
       // console.log('found related videos', result)
       done()
     })

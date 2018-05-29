@@ -30,7 +30,6 @@ module.exports = function (paratii) {
       let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
 
       https.get(ipfsDataUrl, function (res) {
-
         var body = ''
 
         res.on('data', function (chunk) {

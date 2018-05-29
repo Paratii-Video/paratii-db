@@ -60,13 +60,12 @@ describe('# Paratii-db Observer', function (done) {
     let videoId = number.toString(36).substr(2, 9)
 
     sleep(3000).then(async function () {
-      let video = await paratii.vids.create({
+      await paratii.vids.create({
         id: videoId,
         price: price,
         owner: creator,
         ipfsHash: ipfsHash
       })
-
 
       waitUntil()
       .interval(1000)
