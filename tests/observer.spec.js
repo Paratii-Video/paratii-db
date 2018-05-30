@@ -476,7 +476,6 @@ describe('# Paratii-db Observer', function (done) {
               })
             })
             .done(function (result) {
-              console.log('this is the result ', result)
               if (result) {
                 assert.equal(true, result)
                 done()
@@ -529,7 +528,6 @@ describe('# Paratii-db Observer', function (done) {
               })
             })
             .done(function (result) {
-              console.log('this is the result ', result)
               if (result) {
                 assert.equal(true, result)
                 done()
@@ -537,6 +535,45 @@ describe('# Paratii-db Observer', function (done) {
             })
           })
         })
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+
+  it('subscription to Create User events should update with a fresh username all related video', function (done) {
+    let userId = accounts[0].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsData: 'some-hash'
+    }
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.users.create(userData)
+
+      waitUntil()
+      .interval(500)
+      .times(40)
+      .condition(function (cb) {
+        let condition = false
+        User.findOne({_id: userId}).exec().then(function (user) {
+          if (user) {
+            condition = (user._id === userId)
+            cb(condition)
+          } else {
+            condition = false
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        assert.equal(true, result)
+        done()
       })
     })
 
