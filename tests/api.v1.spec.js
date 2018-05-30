@@ -22,7 +22,7 @@ const videoApi = 'videos/'
 const userApi = 'users/'
 const txApi = 'transactions/'
 const paratiilib = require('paratii-js')
-const request = require('request');
+const request = require('request')
 
 describe('# Paratii-api', function () {
   let paratii
@@ -133,16 +133,19 @@ describe('# Paratii-api', function () {
     const email = 'sanappa@strallo.lasca'
     const body = {email}
     request({
-        url: baseurl + apiVersion + userApi + userId,
-        method: "POST",
-        json: true,
-        body:body,
-    }, function (error, response, body){
+      url: baseurl + apiVersion + userApi + userId,
+      method: 'POST',
+      json: true,
+      body: body
+    }, function (error, response, body) {
+      if (error) {
+        throw error
+      } else {
         assert.equal(body._id, userId)
         assert.equal(body.email, email)
         done()
-    });
-
+      }
+    })
   })
 
   it('GET users/:id/videos should work as expected', (done) => {

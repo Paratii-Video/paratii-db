@@ -78,5 +78,4 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
-  
 })
