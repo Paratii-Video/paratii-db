@@ -83,7 +83,7 @@ module.exports = [{
   'src': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG/thumbnail-1280x720_1.png',
-  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  'owner': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be8',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -112,7 +112,7 @@ module.exports = [{
     'dislikes': 0
   },
   'uploader': {
-    'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+    'address': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be8',
     'name': 'Ethereum'
   },
   'tags': [
@@ -133,7 +133,7 @@ module.exports = [{
   'src': '/ipfs/QmWVYEZKE1E4U8Xgh88Td5iqhFgnHq4giTM7JoaDu89WMw',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmWVYEZKE1E4U8Xgh88Td5iqhFgnHq4giTM7JoaDu89WMw/thumbnail-1280x720_1.png',
-  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  'owner': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be8',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -165,7 +165,7 @@ module.exports = [{
   'src': '/ipfs/QmTJ6eCzaK2rzVr4hcbyxu8ZjSdSLDoHUn7ddgndeTXCa7',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmTJ6eCzaK2rzVr4hcbyxu8ZjSdSLDoHUn7ddgndeTXCa7/thumbnail-1280x720_1.png',
-  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
+  'owner': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be8',
   'stats': {
     'likes': 0,
     'dislikes': 0
@@ -749,6 +749,7 @@ module.exports = [{
   'title': 'How the blockchain is changing money and business | Don Tapscott',
   'description': 'What is the blockchain? If you don\'t know, you should; if you do, chances are you still need some clarification on how it actually works. Don Tapscott is here to help, demystifying this world-changing, trust-building technology which, he says, represents nothing less than the second generation of the internet and holds the potential to transform money, business, government and society.\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference, where the world\'s leading thinkers and doers give the talk of their lives in 18 minutes (or less). Look for talks on Technology, Entertainment and Design -- plus science, business, global issues, the arts and much more.\nFind closed captions and translated subtitles in many languages at http://www.ted.com/translate\n\nFollow TED news on Twitter: http://www.twitter.com/tednews\nLike TED on Facebook: https://www.facebook.com/TED\n\nSubscribe to our channel: http://www.youtube.com/user/TEDtalksD...',
   'price': 0,
+  'author': '',
   'src': '/ipfs/QmP7UrJauwsnsguuQsjpXw6SzSWTU8KaSnjzfF57SDz5Nj',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmP7UrJauwsnsguuQsjpXw6SzSWTU8KaSnjzfF57SDz5Nj/thumbnail-1280x720_3.png',

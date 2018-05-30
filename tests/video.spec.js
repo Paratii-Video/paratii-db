@@ -186,4 +186,15 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
+
+  it.skip('search videos by target_username should get results back', (done) => {
+    Video.search({
+      keyword: 'target_username'
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(4)
+      done()
+    })
+  })
 })
