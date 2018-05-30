@@ -83,7 +83,7 @@ module.exports = [{
   'src': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG',
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmYWbuJZiDYA5RdUEBo9SXfVZWKbM4Y93Swu9ftezwkMjG/thumbnail-1280x720_1.png',
-  'owner': '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be8',
+  'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
   'stats': {
     'likes': 0,
     'dislikes': 0
