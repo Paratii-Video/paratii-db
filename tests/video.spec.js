@@ -188,16 +188,21 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('update/create username should update related video',(done) => {
-    const username = users[4].name
-    Video.find({owner: users[4]}, function(err, result){
-        const videosToUpdate = result.length
-        const newUser = 'newusername'
-        Video.updateUsername(users[4], function(err, videosUpdated){
-          assert(videosToUpdate, videosUpdated.n)
-          done()
-        })
+  it('update/create username should update related video', (done) => {
+    Video.find({owner: users[4]}, function (err, result) {
+      if (err) {
+        throw err
+      }
+      const videosToUpdate = result.length
+      const newUser = 'newusername'
+      users[4].name = newUser
+      Video.updateUsername(users[4], function (err, videosUpdated) {
+        if (err) {
+          throw err
+        }
+        assert(videosToUpdate, videosUpdated.n)
+        done()
+      })
     })
-
   })
 })

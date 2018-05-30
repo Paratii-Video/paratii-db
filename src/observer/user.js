@@ -3,6 +3,7 @@
 const Models = require('../models')
 const parser = require('../parser')
 const User = Models.user
+const Video = Models.video
 const helper = require('../helper')
 
 module.exports = function (paratii) {
@@ -19,6 +20,12 @@ module.exports = function (paratii) {
       helper.logEvents(log, '🙌  CreateUser Event at Users contract events')
 
       User.upsert(parser.user(log), (err, user) => {
+        if (err) {
+          throw err
+        }
+      })
+
+      Video.updateUsername(parser.user(log), (err, user) => {
         if (err) {
           throw err
         }

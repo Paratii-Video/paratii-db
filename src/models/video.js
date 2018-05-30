@@ -278,9 +278,9 @@ VideoSchema.statics.updateUsername = async function (user, cb) {
   }
 
   var query = {owner: user._id}
-  var updateData = {author: 'ginitrinco'}
+  var updateData = {author: user.name}
   // check if the video already exists
-  this.update(query, updateData, {upsert: false, multi: true}, function(err, result) {
+  this.update(query, updateData, {upsert: false, multi: true}, function (err, result) {
     if (err) {
       return cb(err)
     }
