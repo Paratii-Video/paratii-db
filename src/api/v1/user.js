@@ -36,16 +36,16 @@ router.post('/:id/', (req, res, next) => {
   var address = req.params.id
   var email = req.body.email
   // TODO: in a second iteration user need to sign the email, here we will check the signature.
-  // if (origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video')) {
-  User.upsert({_id: address, email}, (err, user) => {
-    if (err) {
-      throw err
-    }
-    res.json(user)
-  })
-  // } else {
-  //   res.send('Missing origin')
-  // }
+  if (process.env.NODE_ENV === 'test' ||( origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video'))) {
+    User.upsert({_id: address, email}, (err, user) => {
+      if (err) {
+        throw err
+      }
+      res.json(user)
+    })
+  } else {
+    res.send('Missing origin')
+  }
 })
 
 module.exports = router
