@@ -31,12 +31,12 @@ router.get('/:id/videos', (req, res, next) => {
  * create user email by _id
  * @param {String}  id  user _id
  */
-router.post('/:id/:email', (req, res, next) => {
+router.post('/:id/', (req, res, next) => {
   var origin = req.get('origin')
   var address = req.params.id
-  var email = req.params.email
+  var email = req.body.email
   // TODO: in a second iteration user need to sign the email, here we will check the signature.
-  if (origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video')) {
+  if (process.env.NODE_ENV === 'test' || (origin && (origin === 'https://portal.paratii.video' || origin === 'https://staging.paratii.video'))) {
     User.upsert({_id: address, email}, (err, user) => {
       if (err) {
         throw err

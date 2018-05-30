@@ -22,6 +22,7 @@ const videoApi = 'videos/'
 const userApi = 'users/'
 const txApi = 'transactions/'
 const paratiilib = require('paratii-js')
+const request = require('request')
 
 describe('# Paratii-api', function () {
   let paratii
@@ -58,7 +59,7 @@ describe('# Paratii-api', function () {
     server.stop(app)
   })
 
-  it('api videos/:id/related should work as expected', (done) => {
+  it('GET videos/:id/related should work as expected', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
     fetch(baseurl + apiVersion + videoApi + videoId + '/related', {
@@ -71,7 +72,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api videos/:id should work as expected', (done) => {
+  it('GET videos/:id should work as expected', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
 
@@ -85,7 +86,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api videos/ should work as expected', (done) => {
+  it('GET videos/ should work as expected', (done) => {
     let check = false
     fetch(baseurl + apiVersion + videoApi, {
       method: 'get'
@@ -97,7 +98,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api videos/?keyword=keyword should work as expected', (done) => {
+  it('GET videos/?keyword=keyword should work as expected', (done) => {
     let check = false
     let keyword = 'The mathematician who cracked'
     const matchId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
@@ -113,7 +114,7 @@ describe('# Paratii-api', function () {
     })
   })
 
-  it('api users/:id should work as expected', (done) => {
+  it('GET users/:id should work as expected', (done) => {
     const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
     let check = false
 
@@ -127,8 +128,27 @@ describe('# Paratii-api', function () {
       done()
     })
   })
+  it('POST users/:id should work as expected', (done) => {
+    const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be6'
+    const email = 'sanappa@strallo.lasca'
+    const body = {email}
+    request({
+      url: baseurl + apiVersion + userApi + userId,
+      method: 'POST',
+      json: true,
+      body: body
+    }, function (error, response, body) {
+      if (error) {
+        throw error
+      } else {
+        assert.equal(body._id, userId)
+        assert.equal(body.email, email)
+        done()
+      }
+    })
+  })
 
-  it('api users/:id/videos should work as expected', (done) => {
+  it('GET users/:id/videos should work as expected', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
@@ -142,7 +162,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api transactions/:id should work as expected', (done) => {
+  it('GET transactions/:id should work as expected', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
@@ -156,7 +176,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('api transactions/ should work as expected', (done) => {
+  it('GET transactions/ should work as expected', (done) => {
     let check = false
 
     fetch(baseurl + apiVersion + txApi, {
