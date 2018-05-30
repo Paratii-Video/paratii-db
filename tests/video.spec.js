@@ -5,6 +5,7 @@ const chai = require('chai')
 const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
+const users = require('./data/users')
 
 const assert = chai.assert
 const expect = chai.expect
@@ -187,14 +188,21 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it.skip('search videos by target_username should get results back', (done) => {
-    Video.search({
-      keyword: 'target_username'
-    }, (err, result) => {
-      if (err) return done(err)
-      assert.isOk(result)
-      expect(result.results).to.have.lengthOf(4)
-      done()
+  it('update/create username should update related video', (done) => {
+    Video.find({owner: users[4]}, function (err, result) {
+      if (err) {
+        throw err
+      }
+      const videosToUpdate = result.length
+      const newUser = 'newusername'
+      users[4].name = newUser
+      Video.updateUsername(users[4], function (err, videosUpdated) {
+        if (err) {
+          throw err
+        }
+        assert(videosToUpdate, videosUpdated.n)
+        done()
+      })
     })
   })
 })

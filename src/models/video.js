@@ -272,6 +272,23 @@ VideoSchema.statics.exports = function (cb) {
   })
 }
 
+VideoSchema.statics.updateUsername = async function (user, cb) {
+  if (!user || !user._id) {
+    throw new Error('user._id is required for updateUsername')
+  }
+
+  var query = {owner: user._id}
+  var updateData = {author: user.name}
+  // check if the video already exists
+  this.update(query, updateData, {upsert: false, multi: true}, function (err, result) {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, result)
+  })
+}
+
 const Video = mongoose.model('Video', VideoSchema)
 
 module.exports = Video
