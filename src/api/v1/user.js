@@ -32,7 +32,7 @@ router.get('/:id/videos', (req, res, next) => {
  * create user email by _id
  * @param {String}  id  user _id
  */
-router.post('/:id/', (req, res, next) => {
+router.post('/:id/', async (req, res, next) => {
   var address = req.params.id
   var email = req.body.email
   var hashedEmail = req.body.hashedEmail
@@ -40,11 +40,9 @@ router.post('/:id/', (req, res, next) => {
   var whoSigned = req.body.whoSigned
   let paratii = new paratiilib.Paratii()
 
-  console.log('checking signature', paratii.eth.distributor.checkSignedmessage(hashedEmail, signedEmail, whoSigned) ? 'valid': 'invalid')
-
 
   // TODO: in a second iteration user need to sign the email, here we will check the signature.
-  if (paratii.eth.distributor.checkSignedmessage(hashedEmail, signedEmail, whoSigned)) {
+  if (await paratii.eth.distributor.checkSignedmessage(hashedEmail, signedEmail, whoSigned)) {
     User.upsert({_id: address, email}, (err, user) => {
       if (err) {
         throw err
