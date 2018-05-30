@@ -40,7 +40,6 @@ router.post('/:id/', async (req, res, next) => {
   var whoSigned = req.body.whoSigned
   let paratii = new paratiilib.Paratii()
 
-
   // TODO: in a second iteration user need to sign the email, here we will check the signature.
   if (await paratii.eth.distributor.checkSignedmessage(hashedEmail, signedEmail, whoSigned)) {
     User.upsert({_id: address, email}, (err, user) => {
