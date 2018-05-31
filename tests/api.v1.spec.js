@@ -129,22 +129,31 @@ describe('# Paratii-api', function () {
     })
   })
   it('POST users/:id should work as expected', (done) => {
-    const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be6'
+    const userId = accounts[0].publicKey
     const email = 'sanappa@strallo.lasca'
-    const body = {email}
-    request({
-      url: baseurl + apiVersion + userApi + userId,
-      method: 'POST',
-      json: true,
-      body: body
-    }, function (error, response, body) {
-      if (error) {
-        throw error
-      } else {
-        assert.equal(body._id, userId)
-        assert.equal(body.email, email)
-        done()
+    const hashedEmail = paratii.eth.web3.utils.soliditySha3(email)
+
+    paratii.eth.distributor.signMessage(email).then(function (signedMessage) {
+      const body = {
+        email: email,
+        hashedEmail: hashedEmail,
+        signedEmail: signedMessage,
+        whoSigned: accounts[0].publicKey
       }
+
+      request({
+        url: baseurl + apiVersion + userApi + userId,
+        method: 'POST',
+        json: true,
+        body: body
+      }, function (error, response, body) {
+        if (error) {
+          throw error
+        } else {
+          assert.equal(response.body.email, email)
+          done()
+        }
+      })
     })
   })
 
