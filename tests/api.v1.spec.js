@@ -138,7 +138,7 @@ describe('# Paratii-api', function () {
         email: email,
         hashedEmail: hashedEmail,
         signedEmail: signedMessage,
-        whoSigned: accounts[0].publicKey
+        whosigned: accounts[0].publicKey
       }
 
       request({
