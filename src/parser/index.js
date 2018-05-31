@@ -44,7 +44,8 @@ module.exports.user = function (log) {
   var user = {}
   user._id = log.returnValues._address
   user.name = log.returnValues._name
-  user.email = log.returnValues._email
+  // TODO: ignored becouse is setted directly from the POST
+  // user.email = log.returnValues._email
   user.ipfsData = log.returnValues._ipfsData
 
   return user
