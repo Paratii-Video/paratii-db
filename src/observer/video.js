@@ -28,11 +28,8 @@ module.exports = function (paratii) {
     // manage queue for getting video meta
     const gettingVideoMetaQueue = async.queue((log, cb) => {
       let ipfsDataUrl = 'https://gateway.paratii.video/ipfs/' + log.returnValues.ipfsData
-      console.log('getting data from ipfs gateway ' + ipfsDataUrl)
 
       https.get(ipfsDataUrl, function (res) {
-        // console.log(res)
-
         var body = ''
 
         res.on('data', function (chunk) {
@@ -49,9 +46,7 @@ module.exports = function (paratii) {
         })
       })
     }, 1)
-    console.log('attaching event', options)
     await paratii.eth.events.addListener('CreateVideo', options, function (log) {
-      console.log(log)
       helper.logEvents(log, '📼  CreateVideo Event at Videos contract events')
       creatingVideoQueue.push(log)
       if (log.returnValues.ipfsData && log.returnValues.ipfsData !== '') {

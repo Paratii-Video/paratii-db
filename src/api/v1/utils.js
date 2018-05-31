@@ -5,7 +5,6 @@ const Models = require('../../models')
 const Video = Models.video
 
 router.get('/exports', (req, res, next) => {
-  console.log('exports')
   Video.exports((err, result) => {
     if (err) {
       return res.send(err).statusCode(500)

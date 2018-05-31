@@ -39,7 +39,7 @@
     "express": "^4.16.2",
     "json2csv": "^4.0.4",
     "mongoose": "^5.0.0-rc2",
-    "paratii-js": "github:Paratii-Video/paratii-js#e6af434a91bb3305aab4311992f47163bbbc4725",
+    "paratii-js": "github:Paratii-Video/paratii-js#ad8d36d3426a0bafa81e910add40a3cff575a2c2",
     "prettyjson": "^1.2.1"
   },
   "devDependencies": {

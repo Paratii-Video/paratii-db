@@ -5,6 +5,7 @@ const chai = require('chai')
 const paratiilib = require('paratii-js')
 const dirtyChai = require('dirty-chai')
 const accounts = require('./data/accounts')
+const users = require('./data/users')
 
 const assert = chai.assert
 const expect = chai.expect
@@ -39,7 +40,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
   })
 
   it('should be able to insert 1 video and get it back.', (done) => {
-    console.log('run 4')
     Video.upsert(fixtures[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)
@@ -69,7 +69,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -78,7 +77,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(51)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -87,7 +85,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(54)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -99,10 +96,23 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(3)
-      // console.log('found related videos', result)
+      expect(result.total).to.equal(3)
       done()
     })
   })
+
+  it('search videos by no results keyword and get no results back', (done) => {
+    Video.search({
+      keyword: 'sanappa'
+    }, (err, result) => {
+      if (err) return done(err)
+      assert.isOk(result)
+      expect(result.results).to.have.lengthOf(0)
+      expect(result.total).to.equal(0)
+      done()
+    })
+  })
+
   it('search videos by "tagtarget" and get results back', (done) => {
     Video.search({
       keyword: 'tagtarget'
@@ -110,10 +120,10 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
-      // console.log('found related videos', result)
       done()
     })
   })
+
   it('search videos by "titletarget" and get results back', (done) => {
     Video.search({
       keyword: 'titletarget'
@@ -121,7 +131,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -132,7 +141,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(2)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -143,7 +151,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -154,7 +161,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(2)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -167,7 +173,6 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
-      // console.log('found related videos', result)
       done()
     })
   })
@@ -179,8 +184,25 @@ describe('# Paratii-db Video Model Spec', function (done) {
       if (err) return done(err)
       assert.isOk(result)
       expect(result.results).to.have.lengthOf(1)
-      // console.log('found related videos', result)
       done()
+    })
+  })
+
+  it('update/create username should update related video', (done) => {
+    Video.find({owner: users[4]}, function (err, result) {
+      if (err) {
+        throw err
+      }
+      const videosToUpdate = result.length
+      const newUser = 'newusername'
+      users[4].name = newUser
+      Video.updateUsername(users[4], function (err, videosUpdated) {
+        if (err) {
+          throw err
+        }
+        assert(videosToUpdate, videosUpdated.n)
+        done()
+      })
     })
   })
 })
