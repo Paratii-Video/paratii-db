@@ -132,6 +132,7 @@ describe('# Paratii-api', function () {
     const userId = accounts[0].publicKey
     const email = 'sanappa@strallo.lasca'
     const hashedEmail = paratii.eth.web3.utils.soliditySha3(email)
+    
     paratii.eth.distributor.signMessage(email).then(function (signedMessage) {
       const body = {
         email: email,

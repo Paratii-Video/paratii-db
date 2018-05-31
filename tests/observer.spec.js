@@ -321,6 +321,7 @@ describe('# Paratii-db Observer', function (done) {
     // not so elegant, it would be better to wait for server, observer, api ecc.
     sleep(1000).then(function () {
       paratii.eth.vouchers.create(voucher).then(function (hashedVoucher) {
+        console.log(hashedVoucher)
         waitUntil()
         .interval(1000)
         .times(40)
