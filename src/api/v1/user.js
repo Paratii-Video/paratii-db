@@ -36,7 +36,7 @@ router.post('/:id/', async (req, res, next) => {
   var address = req.params.id
   var email = req.body.email
   var signedEmail = req.body.signedEmail
-  var whoSigned = req.body.whoSigned
+  var whoSigned = req.body.whosigned
   let paratii = new paratiilib.Paratii()
 
   // TODO: in a second iteration user need to sign the email, here we will check the signature.
