@@ -128,7 +128,6 @@ describe('👀 Paratii-db Observer', function (done) {
                 cb(condition)
               }
             })
-
           })
           .done(function (result) {
             assert.equal(true, result)
@@ -137,7 +136,6 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
-
   })
 
   it('Subscription to CreateUser event should create a user', function (done) {
@@ -172,7 +170,6 @@ describe('👀 Paratii-db Observer', function (done) {
         done()
       })
     })
-
   })
 
   it('Subscription to RemoveUser event should remove a user', function (done) {
@@ -208,7 +205,6 @@ describe('👀 Paratii-db Observer', function (done) {
                 cb(condition)
               }
             })
-
           })
           .done(function (result) {
             assert.equal(true, result)
@@ -241,7 +237,6 @@ describe('👀 Paratii-db Observer', function (done) {
               cb(condition)
             }
           })
-
         })
         .done(function (result) {
           assert.equal(true, result)
@@ -274,7 +269,6 @@ describe('👀 Paratii-db Observer', function (done) {
               cb(condition)
             }
           })
-
         })
         .done(function (result) {
           assert.equal(true, result)

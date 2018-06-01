@@ -56,7 +56,6 @@ module.exports.wellcomeSyncLogo = function () {
 }
 
 module.exports.wellcomeLogo = function () {
-
   if (process.env.NODE_ENV === 'test') return
 
   if (!hasSayHello) {
