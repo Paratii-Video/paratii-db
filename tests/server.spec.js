@@ -7,6 +7,6 @@ const dirtyChai = require('dirty-chai')
 // const expect = chai.expect
 chai.use(dirtyChai)
 
-describe('# Paratii-db Server', function () {
+describe('💻 Paratii-db Server', function () {
   // TODO add tests
 })

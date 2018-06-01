@@ -69,9 +69,9 @@ module.exports = function (paratii) {
     })
 
     if (options.fromBlock !== undefined) {
-      helper.log('|      👓  syncing 📼 Videos contract events since the block ' + options.fromBlock)
+      helper.log('    👓  syncing 📼 Videos contract events since the block ' + options.fromBlock)
     } else {
-      helper.log('|      👓  observing at 📼 Videos contract events')
+      helper.log('    👓  observing at 📼 Videos contract events')
     }
   }
 
