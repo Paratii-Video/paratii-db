@@ -1,0 +1,35 @@
+version: "2"
+services:
+  paratii-db:
+    container_name: paratii
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile-paratii-db
+    command: bash -c "yarn && yarn docker-development"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - parity
+      - mongo
+    volumes:
+      - .:/root/paratii-db
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./db:/data/db
+    ports:
+      - "27017:27017"
+  parity:
+    container_name: parity
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile-parity
+    command: parity --config /root/parity/parity-config-docker.toml --gasprice 0 --unsafe-expose
+    volumes:
+      - ./parity:/root/.local/share/io.parity.ethereum
+    ports:
+      - "8545:8545"
+      - "8180:8180"
+      - "8546:8546"
+      - "30303:30303"

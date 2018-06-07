@@ -1,0 +1,17 @@
+# https://github.com/paritytech/parity/wiki/Configuring-Parity
+[parity]
+chain = "chain.json"
+[mining]
+reseal_min_period = 0
+reseal_max_period = 0
+reseal_on_uncle = true
+force_sealing = true
+[rpc]
+cors = ["*"]
+hosts = ["parity", "paratii-db"]
+[websockets]
+origins = ["*"]
+hosts = ["parity", "paratii-db"]
+[network]
+min_peers = 0
+max_peers = 0

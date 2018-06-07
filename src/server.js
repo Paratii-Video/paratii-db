@@ -7,6 +7,7 @@ const paratiilib = require('paratii-js')
 const api = require('./api/v1')
 const helper = require('./helper')
 const dbConfiguration = require('../dbconfig.json')
+const accounts = require('../tests/data/accounts')
 
 let observer = null
 
@@ -23,10 +24,24 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
   start(dbConfiguration[process.env.NODE_ENV].registry, dbConfiguration[process.env.NODE_ENV].provider)
 } else if (process.env.NODE_ENV === 'docker-development') {
-  const registryFilename = require('/tmp/registry.json')
-  const registryAddress = registryFilename.registryAddress
-  dbConfiguration[process.env.NODE_ENV].provider = 'ws://' + process.env.LOCAL_IP + ':8546'
-  start(registryAddress, dbConfiguration[process.env.NODE_ENV].provider)
+  startDocker()
+}
+
+
+async function startDocker(){
+  var paratiilib = require('paratii-js')
+  var paratii = await new paratiilib.Paratii({
+    account: {
+      address: accounts[0].publicKey,
+      privateKey: accounts[0].privateKey
+    },
+    eth: {
+      provider: 'ws://parity:8546'
+    }
+  })
+
+  var contract = await paratii.eth.deployContracts()
+  app = start(contract.Registry.options.address, 'ws://parity:8546', paratii)
 }
 
 /**
