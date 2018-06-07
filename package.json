@@ -28,7 +28,9 @@
   },
   "standard": {
     "ignore": [
-      "/docs"
+      "docs",
+      "db",
+      "parity"
     ]
   },
   "homepage": "https://github.com/Paratii-Video/paratii-db#readme",

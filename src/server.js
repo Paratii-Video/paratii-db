@@ -27,8 +27,7 @@ if (process.env.NODE_ENV === 'development') {
   startDocker()
 }
 
-
-async function startDocker(){
+async function startDocker () {
   var paratiilib = require('paratii-js')
   var paratii = await new paratiilib.Paratii({
     account: {
@@ -41,7 +40,7 @@ async function startDocker(){
   })
 
   var contract = await paratii.eth.deployContracts()
-  app = start(contract.Registry.options.address, 'ws://parity:8546', paratii)
+  start(contract.Registry.options.address, 'ws://parity:8546', paratii)
 }
 
 /**
