@@ -19,6 +19,7 @@ chai.use(dirtyChai)
 describe('🚑 Paratii-db server', function (done) {
   let paratii
   let server
+  let app
   let contract
 
   before(async () => {
@@ -78,10 +79,12 @@ describe('🚑 Paratii-db server', function (done) {
                 ipfsHash: ipfsHash
               }).then(
                 function () {
-                  server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
+                  app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
                   utils.sleep(3000).then(function () {
                     Video.findLastBlockNumber().then(function (newBlock) {
                       assert.notEqual(newBlock, cBlock)
+                      server.stop(app)
+
                       done()
                     })
                   })
