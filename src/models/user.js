@@ -17,7 +17,6 @@ const UserSchema = new Schema({
 
 UserSchema.index({name: 'text', email: 'text'})
 
-
 UserSchema.statics.findLastBlockNumber = async function () {
   let result = await this.findOne({ }).sort('-blockNumber').exec()
   if (!result) {
