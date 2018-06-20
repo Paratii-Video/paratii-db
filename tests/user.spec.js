@@ -20,6 +20,7 @@ describe('🙌 Paratii-db User Model Spec', function (done) {
 
   before(async () => {
     User.remove({})
+
     paratii = await new paratiilib.Paratii({
       eth: {
         provider: 'http://localhost:8545/rpc/'
@@ -47,10 +48,10 @@ describe('🙌 Paratii-db User Model Spec', function (done) {
   })
 
   it('Should be able to insert multiple users.', (done) => {
-    User.bulkUpsert(users, (err, vid) => {
+    User.bulkUpsert(users, (err, user) => {
       if (err) return done(err)
-      assert.isOk(vid)
-      done()
+      assert.isOk(user)
+      User.ensureIndexes(done)
     })
   })
 
