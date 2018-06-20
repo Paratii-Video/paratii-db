@@ -10,11 +10,22 @@ const UserSchema = new Schema({
   name: {type: String},
   email: {type: String},
   emailIsVerified: {type: Boolean},
+  blockNumber: Number,
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
 
 UserSchema.index({name: 'text', email: 'text'})
+
+
+UserSchema.statics.findLastBlockNumber = async function () {
+  let result = await this.findOne({ }).sort('-blockNumber').exec()
+  if (!result) {
+    result = {}
+    result.blockNumber = 0
+  }
+  return result.blockNumber
+}
 
 /**
  * Upsert parsed transaction event

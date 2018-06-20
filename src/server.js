@@ -12,6 +12,7 @@ const Models = require('./models')
 const Video = Models.video
 const Transaction = Models.transaction
 const Application = Models.application
+const User = Models.user
 
 let observer = null
 
@@ -72,7 +73,12 @@ function start (registry, provider, testlib, mongoUrl) {
     // Inizializing observers for sync
     observer.applicationObserver.init({fromBlock: res})
   })
-  observer.userObserver.init({})
+
+  User.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.userObserver.init({fromBlock: res})
+  })
+
   observer.voucherObserver.init({})
   observer.distributorObserver.init({})
 
