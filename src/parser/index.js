@@ -49,7 +49,7 @@ module.exports.user = function (log) {
   // TODO: ignored becouse is setted directly from the POST
   // user.email = log.returnValues._email
   user.ipfsData = log.returnValues._ipfsData
-
+  console.log(log)
   return user
 }
 
