@@ -11,6 +11,7 @@ const UserSchema = new Schema({
   email: {type: String},
   emailIsVerified: {type: Boolean},
   blockNumber: Number,
+  createBlockNumber: Number,
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
@@ -32,14 +33,30 @@ UserSchema.statics.findLastBlockNumber = async function () {
  * @param  {Function} cb      (err, result)
  * @return {Object | Error}        the upsert user document or an error
  */
-UserSchema.statics.upsert = function (user, cb) {
+UserSchema.statics.upsert = async function (user, cb) {
   if (!user || !user._id) {
-    return cb(new Error('user._id is required for upsert'))
+    throw new Error('user._id is required for upsert')
   }
 
-  this.findByIdAndUpdate(user._id,
-  {$set: user},
-  {new: true, upsert: true}, cb)
+  var query = {_id: user._id}
+  // check if the user already exists
+  var existingUser = await this.findOne(query).exec()
+
+  // we do not know in what order the event logs arrive, so we need some logic
+  // to make sure we update the record with the latest block number
+  if (!existingUser) {
+    user.createBlockNumber = user.blockNumber
+    await this.findOneAndUpdate(query, user, {upsert: true}).exec()
+  } else if (user.blockNumber < existingUser.createBlockNumber) {
+      // we have already inserted a existingUser  that that is more recent than "user"
+      // so we only update the createBlockNumber
+    await this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber } }).exec()
+  } else {
+    delete user.createBlockNumber
+    await this.findOneAndUpdate(query, user, {upsert: true}).exec()
+  }
+
+  cb()
 }
 
 /**
@@ -106,7 +123,7 @@ UserSchema.statics.bulkUpsert = function (users, cb) {
  * find user based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
- * @return {Array}           returns an array of videos matching keyword. limited to 6
+ * @return {Array}           returns an array of users matching keyword. limited to 6
  */
 UserSchema.statics.search = function (query, cb) {
   let search
