@@ -185,15 +185,12 @@ describe('👀 Paratii-db Observer', function (done) {
       paratii.eth.users.create(userData).then(function () {
         userData.name = 'Updated name of beloved Humbert'
         paratii.eth.users.create(userData)
-        console.log(userData)
-
         waitUntil()
         .interval(500)
         .times(40)
         .condition(function (cb) {
           let condition = false
           User.findOne({_id: userId}).exec().then(function (user) {
-            console.log(user)
             if (user) {
               condition = (user.blockNumber > user.createBlockNumber)
               cb(condition)
