@@ -46,14 +46,14 @@ UserSchema.statics.upsert = async function (user, cb) {
   // to make sure we update the record with the latest block number
   if (!existingUser) {
     user.createBlockNumber = user.blockNumber
-    this.findOneAndUpdate(query, user, {upsert: true}, cb)
+    this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
   } else if (user.blockNumber < existingUser.createBlockNumber) {
       // we have already inserted a existingUser  that that is more recent than "user"
       // so we only update the createBlockNumber
     this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber } }, cb)
   } else {
     delete user.createBlockNumber
-    this.findOneAndUpdate(query, user, {upsert: true}, cb)
+    this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
   }
 }
 
