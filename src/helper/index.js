@@ -1,17 +1,22 @@
 // var prettyjson = require('prettyjson')
 
 let hasSayHello = false
+
 module.exports.log = function (args) {
   console.log(args)
 }
 
+
 module.exports.logEvents = function (log, message) {
-  console.log('    ' + message)
+  let returnValues = JSON.parse(JSON.stringify(log.returnValues))
+
+  // console.log('    ' + message + ' ' + Object.values(returnValues))
   // console.log('|          ####### here the log: #######              ')
   // console.log('|                                                     ')
   // console.log(prettyjson.render(log))
   // console.log('|                                                     ')
   // console.log('|          ####### end of the log #######             ')
+
 }
 
 module.exports.wellcomeSyncLogo = function () {

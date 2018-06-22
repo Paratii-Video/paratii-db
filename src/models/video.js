@@ -2,6 +2,7 @@
 const { eachLimit } = require('async')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const paratiilib = require('paratii-js')
 
 const VideoSchema = new Schema({
   _id: {type: String},
@@ -17,6 +18,7 @@ const VideoSchema = new Schema({
   free: String,
   blockNumber: Number,
   createBlockNumber: Number,
+  createBlockTimestamp: Number,
   storageStatus: Object,
   transcodingStatus: Object,
   staked: Object,
@@ -272,7 +274,8 @@ VideoSchema.statics.exports = function (cb) {
   })
 }
 
-VideoSchema.statics.updateUsername = async function (user, cb) {
+VideoSchema.statics.updateUsername = async function (userPromise, cb) {
+  let user = await userPromise
   if (!user || !user._id) {
     throw new Error('user._id is required for updateUsername')
   }

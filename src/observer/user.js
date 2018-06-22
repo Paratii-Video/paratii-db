@@ -19,12 +19,12 @@ module.exports = function (paratii) {
     const async = require('async')
     // manage queue for creating video
     const creatingUserQueue = async.queue((log, cb) => {
-      User.upsert(parser.user(log), cb)
+      User.upsert(parser.user(log, paratii), cb)
     }, 1)
 
     // manage queue for creating video
     const updatingUsernameQueue = async.queue((log, cb) => {
-      Video.updateUsername(parser.user(log), cb)
+      Video.updateUsername(parser.user(log, paratii), cb)
     }, 1)
 
     await paratii.eth.events.addListener('CreateUser', options, function (log) {
