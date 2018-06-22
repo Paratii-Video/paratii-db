@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const paratiilib = require('paratii-js')
 
 const { eachLimit } = require('async')
 
@@ -50,8 +49,6 @@ UserSchema.statics.upsert = async function (userPromise, cb) {
   // we do not know in what order the event logs arrive, so we need some logic
   // to make sure we update the record with the latest block number
   if (!existingUser) {
-    console.log('############# creating user createBlock',user)
-
     user.createBlockNumber = user.blockNumber
     user.createBlockTimestamp = user.blockTimestamp
 
@@ -59,8 +56,6 @@ UserSchema.statics.upsert = async function (userPromise, cb) {
   } else if (user.blockNumber < existingUser.createBlockNumber) {
     // we have already inserted a existingUser  that that is more recent than "user"
     // so we only update the createBlockNumber
-    console.log('############# updating createBlock',user)
-
     this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber, createBlockTimestamp: user.blockTimestamp } }, cb)
   } else {
     delete user.createBlockNumber

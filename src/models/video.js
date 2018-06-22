@@ -2,7 +2,6 @@
 const { eachLimit } = require('async')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const paratiilib = require('paratii-js')
 
 const VideoSchema = new Schema({
   _id: {type: String},
