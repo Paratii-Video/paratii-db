@@ -11,7 +11,6 @@ module.exports = function (paratii) {
 
   module.init = async function (options) {
     // events hook
-
     /**
      * Observer and upserter for created user event
      * @param  {String} log the CreateUser event

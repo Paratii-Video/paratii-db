@@ -172,6 +172,42 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
+  it('Subscription to CreateUser event should update a user and set createBlockNumber properly', function (done) {
+    let userId = accounts[0].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      ipfsData: 'some-hash'
+    }
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    utils.sleep(1000).then(function () {
+      paratii.eth.users.create(userData).then(function () {
+        userData.name = 'Updated name of beloved Humbert'
+        paratii.eth.users.create(userData)
+        waitUntil()
+        .interval(500)
+        .times(40)
+        .condition(function (cb) {
+          let condition = false
+          User.findOne({_id: userId}).exec().then(function (user) {
+            if (user) {
+              condition = (user.blockNumber > user.createBlockNumber)
+              cb(condition)
+            } else {
+              condition = false
+              cb(condition)
+            }
+          })
+        })
+        .done(function (result) {
+          assert.equal(true, result)
+          done()
+        })
+      })
+    })
+  })
+
   it('Subscription to RemoveUser event should remove a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
