@@ -1,15 +1,12 @@
 // var prettyjson = require('prettyjson')
 
 let hasSayHello = false
-
 module.exports.log = function (args) {
   console.log(args)
 }
 
 module.exports.logEvents = function (log, message) {
-  let returnValues = JSON.parse(JSON.stringify(log.returnValues))
-
-  console.log('    ' + message + ' ' + Object.values(returnValues))
+  console.log('|      ' + message)
   // console.log('|          ####### here the log: #######              ')
   // console.log('|                                                     ')
   // console.log(prettyjson.render(log))
@@ -18,8 +15,6 @@ module.exports.logEvents = function (log, message) {
 }
 
 module.exports.wellcomeSyncLogo = function () {
-  if (process.env.NODE_ENV === 'test') return
-
   if (!hasSayHello) {
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')
@@ -59,8 +54,6 @@ module.exports.wellcomeSyncLogo = function () {
 }
 
 module.exports.wellcomeLogo = function () {
-  if (process.env.NODE_ENV === 'test') return
-
   if (!hasSayHello) {
     console.log('                                                                                                                         ')
     console.log('                                                                                                                         ')
@@ -141,11 +134,11 @@ module.exports.printWellcomeLogo = function () {
 }
 
 module.exports.envParams = function (registry, provider, port) {
-  console.log('    Paratii obSERVER running in ' + process.env.NODE_ENV + ' mode')
-  console.log('    is obSERVING the current provider: ' + provider)
-  console.log('    and the Paratii Registry at: ' + registry)
+  console.log('|      Paratii obSERVER running in ' + process.env.NODE_ENV + ' mode')
+  console.log('|      is obSERVING the current provider: ' + provider)
+  console.log('|      and the Paratii Registry at: ' + registry)
   if (port) {
-    console.log('    API rest interface available at ' + port)
+    console.log('|      API rest interface available at ' + port)
   }
 }
 

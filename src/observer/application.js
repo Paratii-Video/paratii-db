@@ -35,9 +35,9 @@ module.exports = function (paratii) {
     })
 
     if (options.fromBlock !== undefined) {
-      helper.log('    👓  syncing ☝ TCR contract events since the block ' + options.fromBlock)
+      helper.log('|      👓  syncing ☝ TCR contract events since the block ' + options.fromBlock)
     } else {
-      helper.log('    👓  observing at ☝ TCR contract events')
+      helper.log('|      👓  observing at ☝ TCR contract events')
     }
   }
 

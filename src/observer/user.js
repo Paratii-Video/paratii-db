@@ -11,27 +11,25 @@ module.exports = function (paratii) {
 
   module.init = async function (options) {
     // events hook
+
     /**
      * Observer and upserter for created user event
      * @param  {String} log the CreateUser event
      */
-
-    const async = require('async')
-    // manage queue for creating video
-    const creatingUserQueue = async.queue((log, cb) => {
-      User.upsert(parser.user(log, paratii), cb)
-    }, 1)
-
-    // manage queue for creating video
-    const updatingUsernameQueue = async.queue((log, cb) => {
-      Video.updateUsername(parser.user(log, paratii), cb)
-    }, 1)
-
     await paratii.eth.events.addListener('CreateUser', options, function (log) {
       helper.logEvents(log, '🙌  CreateUser Event at Users contract events')
 
-      creatingUserQueue.push(log)
-      updatingUsernameQueue.push(log)
+      User.upsert(parser.user(log), (err, user) => {
+        if (err) {
+          throw err
+        }
+      })
+
+      Video.updateUsername(parser.user(log), (err, user) => {
+        if (err) {
+          throw err
+        }
+      })
     })
 
     /**
@@ -49,9 +47,9 @@ module.exports = function (paratii) {
     })
 
     if (options.fromBlock !== undefined) {
-      helper.log('    👓  syncing 🙌 User contract events since the block ' + options.fromBlock)
+      helper.log('|      👓  syncing 🙌 User contract events since the block ' + options.fromBlock)
     } else {
-      helper.log('    👓  observing at 🙌 User contract events')
+      helper.log('|      👓  observing at 🙌 User contract events')
     }
   }
 

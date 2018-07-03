@@ -12,15 +12,13 @@ const Transaction = require('../src/models').transaction
 const Voucher = require('../src/models').voucher
 const Application = require('../src/models').application
 const waitUntil = require('wait-until')
-const utils = require('./utils.js')
 
 chai.use(dirtyChai)
 
-describe('👀 Paratii-db Observer', function (done) {
+describe('# Paratii-db Observer', function (done) {
   let paratii
   let server
   let app
-  let videoId
 
   before(async () => {
     paratii = await new paratiilib.Paratii({
@@ -48,19 +46,20 @@ describe('👀 Paratii-db Observer', function (done) {
     server.stop(app)
   })
 
-  it('Paratii-js okness', async function (done) {
+  it('paratii lib okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it('Subscription to CreateVideo event should save a video', function (done) {
+  it('subscription to Create Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
+    // let ipfsData = 'zzz'
     let number = Math.random()
-    videoId = number.toString(36).substr(2, 9)
+    let videoId = number.toString(36).substr(2, 9)
 
-    utils.sleep(3000).then(async function () {
+    sleep(3000).then(async function () {
       await paratii.vids.create({
         id: videoId,
         price: price,
@@ -89,54 +88,13 @@ describe('👀 Paratii-db Observer', function (done) {
         }
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 
-  it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
-    let creator = accounts[0].publicKey
-    let price = 3 * 10 ** 18
-    let price2 = 2 * 10 ** 18
-    let ipfsHash = 'xyz'
-
-    // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(async function () {
-      await paratii.vids.create({
-        id: videoId,
-        price: price,
-        owner: creator,
-        ipfsHash: ipfsHash
-      }).then(async function () {
-        await paratii.vids.create({
-          id: videoId,
-          price: price2,
-          owner: creator,
-          ipfsHash: ipfsHash
-        })
-        waitUntil()
-        .interval(500)
-        .times(40)
-        .condition(function (cb) {
-          let condition = false
-
-          Video.findOne({_id: videoId}).exec().then(function (video) {
-            console.log(video)
-            if (video) {
-              condition = (video.blockNumber > video.createBlockNumber && video.blockTimestamp > video.createBlockTimestamp)
-              cb(condition)
-            } else {
-              condition = false
-              cb(condition)
-            }
-          })
-        })
-        .done(function (result) {
-          assert.equal(true, result)
-          done()
-        })
-      })
-    })
-  })
-
-  it('Subscription to RemoveVideo events should remove a video', function (done) {
+  it('subscription to Remove Video events should work as expected', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -145,7 +103,7 @@ describe('👀 Paratii-db Observer', function (done) {
     let videoId = number.toString(36).substr(2, 9)
     // not so elegant, it would be better to wait for server, observer, api ecc.
 
-    utils.sleep(3000).then(function () {
+    sleep(3000).then(function () {
       paratii.eth.vids.create({
         id: videoId,
         price: price,
@@ -153,7 +111,7 @@ describe('👀 Paratii-db Observer', function (done) {
         ipfsHash: ipfsHash,
         ipfsData: ipfsData
       }).then(function () {
-        utils.sleep(3000).then(function () {
+        sleep(3000).then(function () {
           paratii.eth.vids.delete(videoId)
 
           waitUntil()
@@ -174,6 +132,7 @@ describe('👀 Paratii-db Observer', function (done) {
                 cb(condition)
               }
             })
+            // cb(condition)
           })
           .done(function (result) {
             assert.equal(true, result)
@@ -182,18 +141,23 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 
-  it('Subscription to CreateUser event should create a user', function (done) {
+  it('subscription to Create User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
       name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
       ipfsData: 'some-hash'
     }
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.users.create(userData)
 
       waitUntil()
@@ -216,45 +180,13 @@ describe('👀 Paratii-db Observer', function (done) {
         done()
       })
     })
-  })
 
-  it('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
-    let userId = accounts[0].publicKey
-    let userData = {
-      id: userId,
-      name: 'Humbert Humbert',
-      ipfsData: 'some-hash'
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
     }
-
-    // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
-      paratii.eth.users.create(userData).then(function () {
-        userData.name = 'Updated name of beloved Humbert'
-        paratii.eth.users.create(userData)
-        waitUntil()
-        .interval(500)
-        .times(40)
-        .condition(function (cb) {
-          let condition = false
-          User.findOne({_id: userId}).exec().then(function (user) {
-            if (user) {
-              condition = (user.blockNumber > user.createBlockNumber && user.blockTimestamp > user.createBlockTimestamp)
-              cb(condition)
-            } else {
-              condition = false
-              cb(condition)
-            }
-          })
-        })
-        .done(function (result) {
-          assert.equal(true, result)
-          done()
-        })
-      })
-    })
   })
 
-  it('Subscription to RemoveUser event should remove a user', function (done) {
+  it('subscription to Remove User events should work as expected', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -264,9 +196,9 @@ describe('👀 Paratii-db Observer', function (done) {
     }
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.users.create(userData).then(function (user) {
-        utils.sleep(1000).then(function () {
+        sleep(1000).then(function () {
           paratii.eth.users.delete(userId)
 
           waitUntil()
@@ -287,6 +219,7 @@ describe('👀 Paratii-db Observer', function (done) {
                 cb(condition)
               }
             })
+            // cb(condition)
           })
           .done(function (result) {
             assert.equal(true, result)
@@ -295,15 +228,18 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
-  })
 
-  it('Subscription to TranferPTI event should create a new transaction', function (done) {
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Tranfer PTI events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.transfer(beneficiary, amount, 'PTI').then(function (tx) {
-        let txHash = tx.transactionHash
+        let txHash = tx.transactfindOneionHash
 
         waitUntil()
         .interval(500)
@@ -311,7 +247,7 @@ describe('👀 Paratii-db Observer', function (done) {
         .condition(function (cb) {
           let condition = false
           Transaction.findOne({_id: txHash}).exec().then(function (tx) {
-            if (tx.to === beneficiary) {
+            if (tx) {
               condition = true
               cb(condition)
             } else {
@@ -319,21 +255,28 @@ describe('👀 Paratii-db Observer', function (done) {
               cb(condition)
             }
           })
+          // cb(condition)
         })
         .done(function (result) {
           assert.equal(true, result)
           done()
         })
       })
+      sleep(1000).then(function () {
+        done()
+      })
     })
-  })
 
-  it('Subscription to TranferETH event should create a new transaction', function (done) {
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Tranfer ETH events should work as expected', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
 
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.transfer(beneficiary, amount, 'ETH', description).then(function (tx) {
         let txHash = tx.transactfindOneionHash
 
@@ -351,26 +294,34 @@ describe('👀 Paratii-db Observer', function (done) {
               cb(condition)
             }
           })
+          // cb(condition)
         })
         .done(function (result) {
           assert.equal(true, result)
           done()
         })
       })
-      utils.sleep(1000).then(function () {
+      sleep(1000).then(function () {
         done()
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 
-  it('Subscription to CreateVoucher event should create a new voucher', function (done) {
+  it('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
     }
 
-    utils.sleep(1000).then(function () {
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
       paratii.eth.vouchers.create(voucher).then(function (hashedVoucher) {
+        console.log(hashedVoucher)
         waitUntil()
         .interval(1000)
         .times(40)
@@ -393,14 +344,20 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
-  it('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
+  it('subscription to Create Voucher events should work as expected', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
     }
 
-    utils.sleep(2000).then(function () {
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(2000).then(function () {
       paratii.eth.vouchers.redeem(voucher.voucherCode).then(function (hashedVoucher) {
         waitUntil()
         .interval(1000)
@@ -424,16 +381,19 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
-  })
 
-  it('Subscription to PHApplication event should set deposit in a video', function (done) {
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Application events should work as expected', function (done) {
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
 
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(2000).then(function () {
+    sleep(2000).then(function () {
       paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
         waitUntil()
         .interval(2000)
@@ -457,9 +417,13 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 
-  it('Subscription to PHApplication event should set a video as staked', function (done) {
+  it('subscription to Application events should set video as staked', function (done) {
     let creator = accounts[0].publicKey
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
@@ -469,7 +433,7 @@ describe('👀 Paratii-db Observer', function (done) {
     let videoId = number.toString(36).substr(2, 9)
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.vids.create({
         id: videoId,
         price: price,
@@ -522,9 +486,12 @@ describe('👀 Paratii-db Observer', function (done) {
         }
       })
     })
-  })
 
-  it('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+  it('subscription to Disitribute events for email_verification reason should work as expected', function (done) {
     const amount = 5 ** 18
     const reason = 'email_verification'
     const salt = paratii.eth.web3.utils.sha3('' + Date.now())
@@ -539,7 +506,7 @@ describe('👀 Paratii-db Observer', function (done) {
     }
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.distributor.generateSignature(address1, amount, salt, reason, owner).then(function (signature) {
         let v = signature.v
         let r = signature.r
@@ -571,9 +538,52 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 
-  it('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
+  it('subscription to Create User events should update with a fresh username all related video', function (done) {
+    let userId = accounts[0].publicKey
+    let userData = {
+      id: userId,
+      name: 'Humbert Humbert',
+      email: 'humbert@humbert.ru',
+      ipfsData: 'some-hash'
+    }
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    sleep(1000).then(function () {
+      paratii.eth.users.create(userData)
+
+      waitUntil()
+      .interval(500)
+      .times(40)
+      .condition(function (cb) {
+        let condition = false
+        User.findOne({_id: userId}).exec().then(function (user) {
+          if (user) {
+            condition = (user._id === userId)
+            cb(condition)
+          } else {
+            condition = false
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        assert.equal(true, result)
+        done()
+      })
+    })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
+  })
+
+  it('subscription to Create User should update all user videos with the new username', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -583,7 +593,7 @@ describe('👀 Paratii-db Observer', function (done) {
     }
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    sleep(1000).then(function () {
       paratii.eth.users.create(userData)
 
       waitUntil()
@@ -606,5 +616,9 @@ describe('👀 Paratii-db Observer', function (done) {
         done()
       })
     })
+
+    function sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    }
   })
 })
