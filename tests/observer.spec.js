@@ -96,8 +96,6 @@ describe('👀 Paratii-db Observer', function (done) {
     let price = 3 * 10 ** 20
     let price2 = 3 * 10 ** 30
     let ipfsHash = 'xyz'
-    let number = Math.random()
-
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
     utils.sleep(1000).then(async function () {
@@ -107,10 +105,9 @@ describe('👀 Paratii-db Observer', function (done) {
         owner: creator,
         ipfsHash: ipfsHash
       }).then(async function () {
-
         await paratii.vids.create({
           id: videoId,
-          price: price,
+          price: price2,
           owner: creator,
           ipfsHash: ipfsHash
         })
@@ -187,8 +184,6 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-
-
   it('Subscription to CreateUser event should create a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
@@ -258,8 +253,6 @@ describe('👀 Paratii-db Observer', function (done) {
       })
     })
   })
-
-
 
   it('Subscription to RemoveUser event should remove a user', function (done) {
     let userId = accounts[0].publicKey
