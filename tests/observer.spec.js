@@ -93,8 +93,8 @@ describe('👀 Paratii-db Observer', function (done) {
 
   it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let creator = accounts[0].publicKey
-    let price = 3 * 10 ** 20
-    let price2 = 3 * 10 ** 30
+    let price = 3 * 10 ** 18
+    let price2 = 2 * 10 ** 18
     let ipfsHash = 'xyz'
 
     // not so elegant, it would be better to wait for server, observer, api ecc.
