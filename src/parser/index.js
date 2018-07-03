@@ -5,7 +5,7 @@
  * @param  {Object} ipfsData json containing video meta data
  * @return {Object}          a video object acceptable for Videos collection
  */
-module.exports.video = function (log, ipfsData) {
+module.exports.video = async function (log, ipfsData, paratii) {
   var video = {}
   // TODO: add data validator -> JOY
   video._id = log.returnValues.videoId
@@ -27,6 +27,8 @@ module.exports.video = function (log, ipfsData) {
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
   video.blockNumber = log.blockNumber
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  video.blockTimestamp = block.timestamp
   video.ipfsHashOrig = log.returnValues.ipfsHashOrig
   video.owner = log.returnValues.owner
   video.uploader = {}
