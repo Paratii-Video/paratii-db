@@ -1,5 +1,5 @@
 'use strict'
-
+require('./db')
 require('dotenv').load()
 const express = require('express')
 const compression = require('compression')
@@ -7,10 +7,14 @@ const paratiilib = require('paratii-js')
 const api = require('./api/v1')
 const helper = require('./helper')
 const dbConfiguration = require('../dbconfig.json')
+const Models = require('./models')
+
+const Video = Models.video
+const Transaction = Models.transaction
+const Application = Models.application
+const User = Models.user
 
 let observer = null
-
-require('./db')
 
 const app = express()
 
@@ -56,11 +60,26 @@ function start (registry, provider, testlib, mongoUrl) {
   }
 
   // Inizializing observers
-  observer.videoObserver.init({})
-  observer.userObserver.init({})
-  observer.transactionObserver.init({})
+  Video.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.videoObserver.init({fromBlock: res})
+  })
+
+  Transaction.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.transactionObserver.init({fromBlock: res})
+  })
+  Application.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.applicationObserver.init({fromBlock: res})
+  })
+
+  User.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.userObserver.init({fromBlock: res})
+  })
+
   observer.voucherObserver.init({})
-  observer.applicationObserver.init({})
   observer.distributorObserver.init({})
 
   app.use(compression())

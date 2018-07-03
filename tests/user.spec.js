@@ -13,13 +13,14 @@ const User = require('../src/models').user
 
 const users = require('./data/users')
 
-describe('# Paratii-db User Model Spec', function (done) {
+describe('🙌 Paratii-db User Model Spec', function (done) {
   let paratii
   let server
   let app
 
   before(async () => {
     User.remove({})
+
     paratii = await new paratiilib.Paratii({
       eth: {
         provider: 'http://localhost:8545/rpc/'
@@ -38,7 +39,7 @@ describe('# Paratii-db User Model Spec', function (done) {
     server.stop(app)
   })
 
-  it('should be able to insert 1 user and get it back.', (done) => {
+  it('Should be able to insert 1 user and get it back.', (done) => {
     User.upsert(users[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)
@@ -46,15 +47,15 @@ describe('# Paratii-db User Model Spec', function (done) {
     })
   })
 
-  it('should be able to insert multiple users.', (done) => {
-    User.bulkUpsert(users, (err, vid) => {
+  it('Should be able to insert multiple users.', (done) => {
+    User.bulkUpsert(users, (err, user) => {
       if (err) return done(err)
-      assert.isOk(vid)
-      done()
+      assert.isOk(user)
+      User.ensureIndexes(done)
     })
   })
 
-  it('search users by name and get results back', (done) => {
+  it('Search users by name and get results back', (done) => {
     User.search({keyword: 'Gino'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -62,7 +63,7 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
-  it('search users by email and get results back', (done) => {
+  it('Search users by email and get results back', (done) => {
     User.search({keyword: '/emailtarget/'}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -70,7 +71,7 @@ describe('# Paratii-db User Model Spec', function (done) {
       done()
     })
   })
-  it('search users by email and get results back, but just one', (done) => {
+  it('Search users by email and get results back, but just one', (done) => {
     User.search({keyword: '/emailtarget/', limit: 1, offset: 1}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)

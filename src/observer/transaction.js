@@ -39,9 +39,9 @@ module.exports = function (paratii) {
     })
 
     if (options.fromBlock !== undefined) {
-      helper.log('|      👓  syncing ⛵ Transactions contract events since the block ' + options.fromBlock)
+      helper.log('    👓  syncing ⛵ Transactions contract events since the block ' + options.fromBlock)
     } else {
-      helper.log('|      👓  observing at ⛵ Transactions contract events')
+      helper.log('    👓  observing at ⛵ Transactions contract events')
     }
   }
 
