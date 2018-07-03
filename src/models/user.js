@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
 const { eachLimit } = require('async')
 
 const UserSchema = new Schema({
@@ -11,24 +10,11 @@ const UserSchema = new Schema({
   name: {type: String},
   email: {type: String},
   emailIsVerified: {type: Boolean},
-  blockNumber: Number,
-  blockTimestamp: Number,
-  createBlockNumber: Number,
-  createBlockTimestamp: Number,
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
 
 UserSchema.index({name: 'text', email: 'text'})
-
-UserSchema.statics.findLastBlockNumber = async function () {
-  let result = await this.findOne({ }).sort('-blockNumber').exec()
-  if (!result) {
-    result = {}
-    result.blockNumber = 0
-  }
-  return result.blockNumber
-}
 
 /**
  * Upsert parsed transaction event
@@ -36,31 +22,14 @@ UserSchema.statics.findLastBlockNumber = async function () {
  * @param  {Function} cb      (err, result)
  * @return {Object | Error}        the upsert user document or an error
  */
-UserSchema.statics.upsert = async function (userPromise, cb) {
-  let user = await userPromise
+UserSchema.statics.upsert = function (user, cb) {
   if (!user || !user._id) {
-    throw new Error('user._id is required for upsert')
+    return cb(new Error('user._id is required for upsert'))
   }
 
-  var query = {_id: user._id}
-  // check if the user already exists
-  var existingUser = await this.findOne(query).exec()
-
-  // we do not know in what order the event logs arrive, so we need some logic
-  // to make sure we update the record with the latest block number
-  if (!existingUser) {
-    user.createBlockNumber = user.blockNumber
-    user.createBlockTimestamp = user.blockTimestamp
-
-    this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
-  } else if (user.blockNumber < existingUser.createBlockNumber) {
-    // we have already inserted a existingUser  that that is more recent than "user"
-    // so we only update the createBlockNumber
-    this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber, createBlockTimestamp: user.blockTimestamp } }, cb)
-  } else {
-    delete user.createBlockNumber
-    this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
-  }
+  this.findByIdAndUpdate(user._id,
+  {$set: user},
+  {new: true, upsert: true}, cb)
 }
 
 /**
@@ -127,7 +96,7 @@ UserSchema.statics.bulkUpsert = function (users, cb) {
  * find user based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
- * @return {Array}           returns an array of users matching keyword. limited to 6
+ * @return {Array}           returns an array of videos matching keyword. limited to 6
  */
 UserSchema.statics.search = function (query, cb) {
   let search

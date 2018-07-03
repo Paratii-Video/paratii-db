@@ -22,7 +22,7 @@ module.exports = function (paratii) {
 
     // manage queue for creating video
     const creatingVideoQueue = async.queue((log, cb) => {
-      Video.upsert(parser.video(log, null, paratii), cb)
+      Video.upsert(parser.video(log), cb)
     }, 1)
 
     // manage queue for getting video meta
@@ -39,7 +39,7 @@ module.exports = function (paratii) {
         res.on('end', function () {
           var data = helper.ifIsJsonGetIt(body)
           if (data) {
-            Video.upsert(parser.video(log, data, paratii), cb)
+            Video.upsert(parser.video(log, data), cb)
           } else {
             cb()
           }
@@ -69,9 +69,9 @@ module.exports = function (paratii) {
     })
 
     if (options.fromBlock !== undefined) {
-      helper.log('    👓  syncing 📼 Videos contract events since the block ' + options.fromBlock)
+      helper.log('|      👓  syncing 📼 Videos contract events since the block ' + options.fromBlock)
     } else {
-      helper.log('    👓  observing at 📼 Videos contract events')
+      helper.log('|      👓  observing at 📼 Videos contract events')
     }
   }
 

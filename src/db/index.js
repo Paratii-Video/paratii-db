@@ -26,5 +26,5 @@ if (process.env.NODE_ENV === 'docker-development') {
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
-  helper.log('    MONGO ready for saving incoming events')
+  helper.log('|      MONGO ready for saving incoming events')
 })
