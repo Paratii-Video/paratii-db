@@ -5,7 +5,7 @@
  * @param  {Object} ipfsData json containing video meta data
  * @return {Object}          a video object acceptable for Videos collection
  */
-module.exports.video = function (log, ipfsData) {
+module.exports.video = async function (log, ipfsData, paratii) {
   var video = {}
   // TODO: add data validator -> JOY
   video._id = log.returnValues.videoId
@@ -27,6 +27,8 @@ module.exports.video = function (log, ipfsData) {
   video.ipfsHash = log.returnValues.ipfsHash
   video.ipfsData = log.returnValues.ipfsData
   video.blockNumber = log.blockNumber
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  video.blockTimestamp = block.timestamp
   video.ipfsHashOrig = log.returnValues.ipfsHashOrig
   video.owner = log.returnValues.owner
   video.uploader = {}
@@ -39,16 +41,19 @@ module.exports.video = function (log, ipfsData) {
  * @param  {Object} log the Users contract event
  * @return {Object}     a user object acceptable for Users collection
  */
-module.exports.user = function (log) {
+module.exports.user = async function (log, paratii) {
   // TODO: add data validator
   var user = {}
   user._id = log.returnValues._address
   user.name = log.returnValues._name
   user.blockNumber = log.blockNumber
-
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  user.blockTimestamp = block.timestamp
   // TODO: ignored becouse is setted directly from the POST
   // user.email = log.returnValues._email
   user.ipfsData = log.returnValues._ipfsData
+  // console.log(user)
+
   return user
 }
 

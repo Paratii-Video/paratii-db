@@ -20,6 +20,7 @@ describe('👀 Paratii-db Observer', function (done) {
   let paratii
   let server
   let app
+  let videoId
 
   before(async () => {
     paratii = await new paratiilib.Paratii({
@@ -57,7 +58,7 @@ describe('👀 Paratii-db Observer', function (done) {
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
     let number = Math.random()
-    let videoId = number.toString(36).substr(2, 9)
+    videoId = number.toString(36).substr(2, 9)
 
     utils.sleep(3000).then(async function () {
       await paratii.vids.create({
@@ -86,6 +87,51 @@ describe('👀 Paratii-db Observer', function (done) {
           assert.equal(true, result)
           done()
         }
+      })
+    })
+  })
+
+  it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+    let creator = accounts[0].publicKey
+    let price = 3 * 10 ** 18
+    let price2 = 2 * 10 ** 18
+    let ipfsHash = 'xyz'
+
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    utils.sleep(1000).then(async function () {
+      await paratii.vids.create({
+        id: videoId,
+        price: price,
+        owner: creator,
+        ipfsHash: ipfsHash
+      }).then(async function () {
+        await paratii.vids.create({
+          id: videoId,
+          price: price2,
+          owner: creator,
+          ipfsHash: ipfsHash
+        })
+        waitUntil()
+        .interval(500)
+        .times(40)
+        .condition(function (cb) {
+          let condition = false
+
+          Video.findOne({_id: videoId}).exec().then(function (video) {
+            console.log(video)
+            if (video) {
+              condition = (video.blockNumber > video.createBlockNumber && video.blockTimestamp > video.createBlockTimestamp)
+              cb(condition)
+            } else {
+              condition = false
+              cb(condition)
+            }
+          })
+        })
+        .done(function (result) {
+          assert.equal(true, result)
+          done()
+        })
       })
     })
   })
@@ -172,7 +218,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should update a user and set createBlockNumber properly', function (done) {
+  it('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -192,7 +238,7 @@ describe('👀 Paratii-db Observer', function (done) {
           let condition = false
           User.findOne({_id: userId}).exec().then(function (user) {
             if (user) {
-              condition = (user.blockNumber > user.createBlockNumber)
+              condition = (user.blockNumber > user.createBlockNumber && user.blockTimestamp > user.createBlockTimestamp)
               cb(condition)
             } else {
               condition = false

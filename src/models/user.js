@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+
 const { eachLimit } = require('async')
 
 const UserSchema = new Schema({
@@ -11,7 +12,9 @@ const UserSchema = new Schema({
   email: {type: String},
   emailIsVerified: {type: Boolean},
   blockNumber: Number,
+  blockTimestamp: Number,
   createBlockNumber: Number,
+  createBlockTimestamp: Number,
   ipfsData: String
 },
 { emitIndexErrors: true, autoIndex: true })
@@ -33,7 +36,8 @@ UserSchema.statics.findLastBlockNumber = async function () {
  * @param  {Function} cb      (err, result)
  * @return {Object | Error}        the upsert user document or an error
  */
-UserSchema.statics.upsert = async function (user, cb) {
+UserSchema.statics.upsert = async function (userPromise, cb) {
+  let user = await userPromise
   if (!user || !user._id) {
     throw new Error('user._id is required for upsert')
   }
@@ -46,11 +50,13 @@ UserSchema.statics.upsert = async function (user, cb) {
   // to make sure we update the record with the latest block number
   if (!existingUser) {
     user.createBlockNumber = user.blockNumber
+    user.createBlockTimestamp = user.blockTimestamp
+
     this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
   } else if (user.blockNumber < existingUser.createBlockNumber) {
-      // we have already inserted a existingUser  that that is more recent than "user"
-      // so we only update the createBlockNumber
-    this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber } }, cb)
+    // we have already inserted a existingUser  that that is more recent than "user"
+    // so we only update the createBlockNumber
+    this.findOneAndUpdate(query, { $set: { createBlockNumber: user.blockNumber, createBlockTimestamp: user.blockTimestamp } }, cb)
   } else {
     delete user.createBlockNumber
     this.findOneAndUpdate(query, user, {upsert: true, new: true}, cb)
