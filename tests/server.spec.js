@@ -78,7 +78,8 @@ describe('🚑 Paratii-db server', function (done) {
                 owner: creator,
                 ipfsHash: ipfsHash
               }).then(
-                function () {
+                function (vid) {
+                  console.log('restarting server')
                   app = server.start(contract.Registry.options.address, 'ws://localhost:8546', paratii)
                   utils.sleep(3000).then(function () {
                     Video.findLastBlockNumber().then(function (newBlock) {
