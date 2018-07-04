@@ -28,13 +28,16 @@
   },
   "standard": {
     "ignore": [
-      "/docs"
+      "/docs",
+      "/migrations"
     ]
   },
   "homepage": "https://github.com/Paratii-Video/paratii-db#readme",
   "dependencies": {
     "async": "^2.6.0",
     "compression": "^1.7.1",
+    "db-migrate": "^0.11.1",
+    "db-migrate-mongodb": "^1.4.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "json2csv": "^4.0.4",

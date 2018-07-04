@@ -335,7 +335,8 @@ describe('👀 Paratii-db Observer', function (done) {
 
     utils.sleep(1000).then(function () {
       paratii.eth.transfer(beneficiary, amount, 'ETH', description).then(function (tx) {
-        let txHash = tx.transactfindOneionHash
+        console.log(tx)
+        let txHash = tx.transactionHash
 
         waitUntil()
         .interval(500)
@@ -356,9 +357,6 @@ describe('👀 Paratii-db Observer', function (done) {
           assert.equal(true, result)
           done()
         })
-      })
-      utils.sleep(1000).then(function () {
-        done()
       })
     })
   })
