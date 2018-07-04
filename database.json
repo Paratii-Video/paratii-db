@@ -1,0 +1,17 @@
+{
+  "dev": {
+    "driver": "mongodb",
+    "database": "test",
+    "host": "localhost"
+  },
+  "test": {
+    "driver": "mongodb",
+    "database": "test",
+    "host": "localhost"
+  },
+  "prod": {
+    "driver": "mongodb",
+    "database": "test",
+    "host": "localhost"
+  }
+}
