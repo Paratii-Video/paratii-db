@@ -24,7 +24,7 @@ const txApi = 'transactions/'
 const paratiilib = require('paratii-js')
 const request = require('request')
 
-describe('# Paratii-api', function () {
+describe('🐝 Paratii-db API', function () {
   let paratii
   let app
   let server
@@ -59,7 +59,7 @@ describe('# Paratii-api', function () {
     server.stop(app)
   })
 
-  it('GET videos/:id/related should work as expected', (done) => {
+  it('GET videos/:id/related should return related videos', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
     fetch(baseurl + apiVersion + videoApi + videoId + '/related', {
@@ -72,7 +72,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('GET videos/:id should work as expected', (done) => {
+  it('GET videos/:id should return a video', (done) => {
     const videoId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
     let check = false
 
@@ -86,7 +86,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('GET videos/ should work as expected', (done) => {
+  it('GET videos/ should return some videos', (done) => {
     let check = false
     fetch(baseurl + apiVersion + videoApi, {
       method: 'get'
@@ -98,7 +98,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('GET videos/?keyword=keyword should work as expected', (done) => {
+  it('GET videos/?keyword=keyword should search for videos indexed with "keyword"', (done) => {
     let check = false
     let keyword = 'The mathematician who cracked'
     const matchId = 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ'
@@ -114,7 +114,7 @@ describe('# Paratii-api', function () {
     })
   })
 
-  it('GET users/:id should work as expected', (done) => {
+  it('GET users/:id should return a user', (done) => {
     const userId = '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
     let check = false
 
@@ -128,7 +128,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('POST users/:id should work as expected', (done) => {
+  it('POST users/:id should save a user', (done) => {
     const userId = accounts[0].publicKey
     const email = 'sanappa@strallo.lasca'
     const hashedEmail = paratii.eth.web3.utils.soliditySha3(email)
@@ -157,7 +157,7 @@ describe('# Paratii-api', function () {
     })
   })
 
-  it('GET users/:id/videos should work as expected', (done) => {
+  it('GET users/:id/videos should return user\'s videos', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
@@ -171,7 +171,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('GET transactions/:id should work as expected', (done) => {
+  it('GET transactions/:id should return a transaction', (done) => {
     const userId = '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     let check = false
 
@@ -185,7 +185,7 @@ describe('# Paratii-api', function () {
       done()
     })
   })
-  it('GET transactions/ should work as expected', (done) => {
+  it('GET transactions/ should return some transactions', (done) => {
     let check = false
 
     fetch(baseurl + apiVersion + txApi, {

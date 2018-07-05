@@ -14,7 +14,7 @@ const Video = require('../src/models').video
 
 const fixtures = require('./data/fixtures')
 
-describe('# Paratii-db Video Model Spec', function (done) {
+describe('📼 Paratii-db Video Model Spec', function (done) {
   let paratii
   let server
   let app
@@ -39,7 +39,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     server.stop(app)
   })
 
-  it('should be able to insert 1 video and get it back.', (done) => {
+  it('Should be able to insert 1 video and get it back.', (done) => {
     Video.upsert(fixtures[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)
@@ -47,7 +47,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('should be able to insert multiple videos.', (done) => {
+  it('Should be able to insert multiple videos.', (done) => {
     Video.bulkUpsert(fixtures, (err, success) => {
       if (err) return done(err)
       assert.isOk(success)
@@ -55,7 +55,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('get a sample of 6 videos', (done) => {
+  it('Get a sample of 6 videos', (done) => {
     Video.getRelated('QmNhyQjsFW2Tvuz7CFwDTBPo3dfBQ3S4StEpfUZPSpK9FY', (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -64,7 +64,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search staked videos', (done) => {
+  it('Search staked videos', (done) => {
     Video.search({ staked: 'true' }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -72,7 +72,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search not staked videos', (done) => {
+  it('Search not staked videos', (done) => {
     Video.search({ staked: 'false' }, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -80,7 +80,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search any videos', (done) => {
+  it('Search any videos', (done) => {
     Video.search({}, (err, result) => {
       if (err) return done(err)
       assert.isOk(result)
@@ -89,7 +89,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search videos by owner and get results back', (done) => {
+  it('Search videos by owner and get results back', (done) => {
     Video.search({
       keyword: '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275'
     }, (err, result) => {
@@ -101,7 +101,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search videos by no results keyword and get no results back', (done) => {
+  it('Search videos by no results keyword and get no results back', (done) => {
     Video.search({
       keyword: 'sanappa'
     }, (err, result) => {
@@ -113,7 +113,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search videos by "tagtarget" and get results back', (done) => {
+  it('Search videos by "tagtarget" and get results back', (done) => {
     Video.search({
       keyword: 'tagtarget'
     }, (err, result) => {
@@ -124,7 +124,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('search videos by "titletarget" and get results back', (done) => {
+  it('Search videos by "titletarget" and get results back', (done) => {
     Video.search({
       keyword: 'titletarget'
     }, (err, result) => {
@@ -134,7 +134,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search videos by "descriptiontarget" and get results back', (done) => {
+  it('Search videos by "descriptiontarget" and get results back', (done) => {
     Video.search({
       keyword: 'descriptiontarget'
     }, (err, result) => {
@@ -144,7 +144,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search videos by uploader address and get results back', (done) => {
+  it('Search videos by uploader address and get results back', (done) => {
     Video.search({
       keyword: '0xa99dBd162ad5E1601E8d8B20703e5A3bA5c00Be7'
     }, (err, result) => {
@@ -154,7 +154,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search videos by uploader name and get results back', (done) => {
+  it('Search videos by uploader name and get results back', (done) => {
     Video.search({
       keyword: 'uploadernametarget'
     }, (err, result) => {
@@ -164,7 +164,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search videos by uploader name and get results back, but just one', (done) => {
+  it('Search videos by uploader name and get results back, but just one', (done) => {
     Video.search({
       keyword: 'uploadernametarget',
       limit: 1,
@@ -176,7 +176,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
       done()
     })
   })
-  it('search videos by owner address and a title and get results back', (done) => {
+  it('Search videos by owner address and a title and get results back', (done) => {
     Video.search({
       keyword: 'uploadernametarget',
       owner: '0xe19678107410951a9ed1f6906ba4c913eb0e44d4'
@@ -188,7 +188,7 @@ describe('# Paratii-db Video Model Spec', function (done) {
     })
   })
 
-  it('update/create username should update related video', (done) => {
+  it('Update/create username should update related video', (done) => {
     Video.find({owner: users[4]}, function (err, result) {
       if (err) {
         throw err

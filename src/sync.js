@@ -1,6 +1,8 @@
 'use strict'
 
 require('dotenv').load()
+const express = require('express')
+
 const paratiilib = require('paratii-js')
 const helper = require('./helper')
 const Models = require('./models')
@@ -8,6 +10,7 @@ const Video = Models.video
 const Transaction = Models.transaction
 const Application = Models.application
 const dbConfiguration = require('../dbconfig.json')
+const app = express()
 
 let observer = null
 
@@ -66,8 +69,10 @@ function start (registry, provider, testlib) {
     // Inizializing observers for sync
     observer.applicationObserver.init({fromBlock: res})
   })
+  const port = 3000
 
   helper.envParams(registry, provider)
+  server = app.listen(port)
 
   return server
 }

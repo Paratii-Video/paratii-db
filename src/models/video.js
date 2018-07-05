@@ -16,7 +16,9 @@ const VideoSchema = new Schema({
   author: String,
   free: String,
   blockNumber: Number,
+  blockTimestamp: Number,
   createBlockNumber: Number,
+  createBlockTimestamp: Number,
   storageStatus: Object,
   transcodingStatus: Object,
   staked: Object,
@@ -59,7 +61,8 @@ VideoSchema.options.toObject.transform = function (doc, ret, options) {
  * @return {[type]}         [description]
  */
 
-VideoSchema.statics.upsert = async function (video, cb) {
+VideoSchema.statics.upsert = async function (videoPromise, cb) {
+  let video = await videoPromise
   if (!video || !video._id) {
     throw new Error('video._id is required for upsert')
   }
@@ -72,11 +75,12 @@ VideoSchema.statics.upsert = async function (video, cb) {
   // to make sure we update the record with the latest block number
   if (!existingVideo) {
     video.createBlockNumber = video.blockNumber
+    video.createBlockTimestamp = video.blockTimestamp
     await this.findOneAndUpdate(query, video, {upsert: true}).exec()
   } else if (video.blockNumber < existingVideo.createBlockNumber) {
       // we have already inserted a existingVideo  that that is more recent than "video"
       // so we only update the createBlockNumber
-    await this.findOneAndUpdate(query, { $set: { createBlockNumber: video.blockNumber } }).exec()
+    await this.findOneAndUpdate(query, { $set: { createBlockNumber: video.blockNumber, createBlockTimestamp: video.blockTimestamp } }).exec()
   } else {
     delete video.createBlockNumber
     await this.findOneAndUpdate(query, video, {upsert: true}).exec()
@@ -272,7 +276,8 @@ VideoSchema.statics.exports = function (cb) {
   })
 }
 
-VideoSchema.statics.updateUsername = async function (user, cb) {
+VideoSchema.statics.updateUsername = async function (userPromise, cb) {
+  let user = await userPromise
   if (!user || !user._id) {
     throw new Error('user._id is required for updateUsername')
   }
