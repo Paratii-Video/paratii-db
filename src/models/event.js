@@ -3,6 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// TODO: to remove this schema
 const EventSchema = new Schema({
   sender: String,
   receiver: String,

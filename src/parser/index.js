@@ -9,6 +9,9 @@ module.exports.video = async function (log, ipfsData, paratii) {
   var video = {}
   // TODO: add data validator -> JOY
   video._id = log.returnValues.videoId
+  video.listingHash = paratii.eth.web3.utils.soliditySha3(log.returnValues.videoId)
+
+  // TODO: add video id to listinghash
   video.price = log.returnValues.price
 
   // TODO: this can be handle better with an assign
@@ -103,6 +106,7 @@ module.exports.application = function (log) {
   application._id = log.returnValues.videoId
   application.deposit = log.returnValues.deposit
   application.blockNumber = log.blockNumber
+  // TODO: add blockTimestamp
   return application
 }
 
