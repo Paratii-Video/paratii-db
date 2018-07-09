@@ -75,7 +75,7 @@ describe('👀 Paratii-db Observer', function (done) {
         let condition = false
         Video.findOne({_id: videoId}).exec().then(function (video) {
           if (video) {
-            condition = (video.id === videoId)
+            condition = (video.id === videoId && video.listingHash === paratii.eth.web3.utils.soliditySha3(videoId))
             cb(condition)
           } else {
             cb(condition)
@@ -118,7 +118,6 @@ describe('👀 Paratii-db Observer', function (done) {
           let condition = false
 
           Video.findOne({_id: videoId}).exec().then(function (video) {
-            console.log(video)
             if (video) {
               condition = (video.blockNumber > video.createBlockNumber && video.blockTimestamp > video.createBlockTimestamp)
               cb(condition)
@@ -335,7 +334,6 @@ describe('👀 Paratii-db Observer', function (done) {
 
     utils.sleep(1000).then(function () {
       paratii.eth.transfer(beneficiary, amount, 'ETH', description).then(function (tx) {
-        console.log(tx)
         let txHash = tx.transactionHash
 
         waitUntil()
