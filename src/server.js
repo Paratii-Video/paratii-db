@@ -53,6 +53,7 @@ function start (registry, provider, testlib, mongoUrl) {
   helper.wellcomeLogo()
 
   let server
+  // TODO: add staging and dev
   if (process.env.NODE_ENV === 'production') {
     observer = require('./observer')(paratiilib.Paratii, registry, provider)
   } else {
