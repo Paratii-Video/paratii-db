@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 
 const VideoSchema = new Schema({
   _id: {type: String},
+  listingHash: {type: String},
   title: {type: String},
   description: {type: String},
   price: Number, // FIXME this should be bignumber.js
