@@ -23,6 +23,7 @@ const apiVersion = 'api/v1/'
 const videoApi = 'videos/'
 const userApi = 'users/'
 const txApi = 'transactions/'
+const chApi = 'challenges/'
 const voteApi = 'votes/'
 const paratiilib = require('paratii-js')
 const request = require('request')
@@ -227,6 +228,62 @@ describe('🐝 Paratii-db API', function () {
       return response.json()
     }).then(function (data) {
       check = data.results.length > 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET votes/?voter=0x2&pollID=0x1 should search for votes and return just one', (done) => {
+    let voter = '0x2'
+    let pollID = '0x1'
+    let check = false
+
+    fetch(baseurl + apiVersion + voteApi + '?voter=' + voter + '&pollID=' + pollID, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length === 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/:id should return a vote', (done) => {
+    const pollID = '0x1'
+    let check = false
+
+    fetch(baseurl + apiVersion + chApi + pollID, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.id === pollID
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/ should return some transactions', (done) => {
+    let check = false
+
+    fetch(baseurl + apiVersion + chApi, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length > 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/?challenger=0x1 should return 1 challenge', (done) => {
+    let check = false
+    let challenger = '0x1'
+
+    fetch(baseurl + apiVersion + chApi + '?challenger=' + challenger, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length === 1
       assert.equal(check, true)
       done()
     })

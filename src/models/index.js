@@ -6,5 +6,6 @@ module.exports = {
   user: require('./user'),
   voucher: require('./voucher'),
   application: require('./application'),
-  vote: require('./vote')
+  vote: require('./vote'),
+  challenge: require('./challenge')
 }

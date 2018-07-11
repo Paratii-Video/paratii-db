@@ -5,6 +5,7 @@ const videoAPI = require('./video')
 const userAPI = require('./user')
 const utilsAPI = require('./utils')
 const voteAPI = require('./vote')
+const challengeAPI = require('./challenge')
 const transactionAPI = require('./transaction')
 const helper = require('../../helper')
 
@@ -45,5 +46,6 @@ router.use('/users', cors(corsOptions), userAPI)
 router.use('/transactions', cors(corsOptions), transactionAPI)
 router.use('/utils', cors(corsOptions), utilsAPI)
 router.use('/votes', cors(corsOptions), voteAPI)
+router.use('/challenges', cors(corsOptions), challengeAPI)
 
 module.exports = router

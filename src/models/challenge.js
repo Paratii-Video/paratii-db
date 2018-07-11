@@ -5,22 +5,29 @@ const Schema = mongoose.Schema
 
 const { eachLimit } = require('async')
 
-const VoteSchema = new Schema({
+const ChallengeSchema = new Schema({
   _id: String,
-  voter: String,
-  pollID: String,
-  numTokens: Number,
-  choice: Boolean, // choice is either 0 or 1, or null
-  voteCommitted: Number, // timestamp,
-  voteRevealed: Number,
+  listingHash: String,
+  rewardPool: Number,
+  challenger: String,
+  resolved: Boolean,
+  stake: Number,
+  totalTokens: Number,
+  voterCanClaimReward: Boolean,
+  commitStartDate: Number,
+  commitEndDate: Number,
+  revealEndDate: Number,
+  voteQuorum: Number,
+  votesFor: Number,
+  votesAgainst: Number,
   blockNumber: Number
 })
 
-VoteSchema.index({voter: 'text'})
+ChallengeSchema.index({challenger: 'text'})
 
-// schema transformation for VoteSchema
-if (!VoteSchema.options.toObject) VoteSchema.options.toObject = {}
-VoteSchema.options.toObject.transform = function (doc, ret, options) {
+// schema transformation for ChallengeSchema
+if (!ChallengeSchema.options.toObject) ChallengeSchema.options.toObject = {}
+ChallengeSchema.options.toObject.transform = function (doc, ret, options) {
   // remove the _id of every document before returning the result
   ret.id = ret._id
   delete ret._id
@@ -29,21 +36,21 @@ VoteSchema.options.toObject.transform = function (doc, ret, options) {
 
 /**
  * Upsert parsed vote events
- * @param  {Object}   tx a parsed vote log
+ * @param  {Object}   tx a parsed challenge log
  * @param  {Function} cb      (err, result)
  * @return {Boolean}      how the upsert goes
  */
-VoteSchema.statics.upsert = function (vote, cb) {
-  if (!vote || !vote._id) {
-    return cb(new Error('vote._id is required for upsert'))
+ChallengeSchema.statics.upsert = function (ch, cb) {
+  if (!ch || !ch._id) {
+    return cb(new Error('ch._id is required for upsert'))
   }
 
-  this.findByIdAndUpdate(vote._id,
-   {$set: vote},
+  this.findByIdAndUpdate(ch._id,
+   {$set: ch},
    {new: true, upsert: true}, cb)
 }
 
-VoteSchema.statics.findLastBlockNumber = async function () {
+ChallengeSchema.statics.findLastBlockNumber = async function () {
   let result = await this.findOne({ }).sort('-blockNumber').exec()
   if (!result) {
     result = {}
@@ -58,14 +65,14 @@ VoteSchema.statics.findLastBlockNumber = async function () {
  * @param  {Function} cb     (err, success)
  * @return {Boolean}          returns error or success once all videos are in.
  */
-VoteSchema.statics.bulkUpsert = function (votes, cb) {
-  if (!Array.isArray(votes)) {
-    votes = [votes]
+ChallengeSchema.statics.bulkUpsert = function (chs, cb) {
+  if (!Array.isArray(chs)) {
+    chs = [chs]
   }
 
-  eachLimit(votes, 50, (vote, callback) => {
-    this.findByIdAndUpdate(vote._id,
-    {$set: vote},
+  eachLimit(chs, 50, (ch, callback) => {
+    this.findByIdAndUpdate(ch._id,
+    {$set: ch},
     {new: true, upsert: true}, callback)
   }, (err) => {
     if (err) return cb(err)
@@ -74,12 +81,12 @@ VoteSchema.statics.bulkUpsert = function (votes, cb) {
 }
 
 /**
- * find vote based on a keyword or params
+ * find challenge based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
- * @return {Array}           returns an array of votes matching keyword. limited to 6
+ * @return {Array}           returns an array of challenges matching keyword. limited to 6
  */
-VoteSchema.statics.search = function (query, cb) {
+ChallengeSchema.statics.search = function (query, cb) {
   let search
   let baseSearch = { $text: { $search: query.keyword } }
 
@@ -145,6 +152,6 @@ VoteSchema.statics.search = function (query, cb) {
     // TODO Add pagination
 }
 
-const Vote = mongoose.model('Vote', VoteSchema)
+const Challenge = mongoose.model('Challenge', ChallengeSchema)
 
-module.exports = Vote
+module.exports = Challenge
