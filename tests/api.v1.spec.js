@@ -8,6 +8,7 @@ const users = require('./data/users')
 const transactions = require('./data/transactions')
 const votes = require('./data/votes')
 const accounts = require('./data/accounts')
+const challenges = require('./data/challenges')
 
 const videos = require('./data/fixtures')
 const fetch = require('isomorphic-fetch')
@@ -49,7 +50,7 @@ describe('🐝 Paratii-db API', function () {
     Vote.bulkUpsert(votes, (err, success) => {
       if (err) throw err
     })
-    Challenge.bulkUpsert(votes, (err, success) => {
+    Challenge.bulkUpsert(challenges, (err, success) => {
       if (err) throw err
     })
 
@@ -260,6 +261,7 @@ describe('🐝 Paratii-db API', function () {
     }).then(function (response) {
       return response.json()
     }).then(function (data) {
+      console.log(data)
       check = data.id === pollID
       assert.equal(check, true)
       done()
