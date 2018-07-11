@@ -17,7 +17,7 @@ module.exports = function (paratii) {
      * Observer and upserter for application TCR  event
      * @param  {String} log the Application event
      */
-    await paratii.eth.events.addListener('PHApplication', options, function (log) {
+    await paratii.eth.events.addListener('Application', options, function (log) {
       helper.logEvents(log, '☝  Application Event at TCR contract events')
       // saving application
       Application.upsert(parser.application(log), (err, res) => {

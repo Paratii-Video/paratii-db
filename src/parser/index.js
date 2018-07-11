@@ -101,12 +101,17 @@ module.exports.voucher = function (log) {
  * @return {Object}     a tcr object acceptable for Application collection
  */
 module.exports.application = function (log) {
+  console.log(log)
   // TODO: add data validator
   var application = {}
-  application._id = log.returnValues.videoId
+  application._id = log.returnValues.listingHash
   application.deposit = log.returnValues.deposit
+  application.appEndDate = log.returnValues.appEndDate
   application.blockNumber = log.blockNumber
+  application.data = log.data
+  application.applicant = log.returnValues.applicant
   // TODO: add blockTimestamp
+  console.log(application)
   return application
 }
 

@@ -6,7 +6,11 @@ const Schema = mongoose.Schema
 const ApplicationSchema = new Schema({
   _id: String,
   deposit: Number,
-  blockNumber: Number
+  appEndDate: Number,
+  blockNumber: Number,
+  data: String,
+  applicant: String
+
 })
 
 /**

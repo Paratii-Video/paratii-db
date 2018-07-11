@@ -38,6 +38,12 @@ describe('👀 Paratii-db Observer', function (done) {
     let token = await paratii.eth.getContract('ParatiiToken')
     let distributor = await paratii.eth.getContract('PTIDistributor')
     let vouchers = await paratii.eth.getContract('Vouchers')
+    let tcr = await paratii.eth.tcr.getTcrContract()
+    let amountToAllowWei = paratii.eth.web3.utils.toWei('100')
+    let amountToAllowInHex = paratii.eth.web3.utils.toHex(amountToAllowWei)
+    await token.methods.approve(tcr.options.address, amountToAllowInHex).send()
+    await token.methods.allowance(accounts[0].publicKey, tcr.options.address).call()
+
     await token.methods.transfer(vouchers.options.address, 2 * 10 ** 18).send()
     await token.methods.transfer(distributor.options.address, 2 * 10 ** 18).send()
 
@@ -48,12 +54,12 @@ describe('👀 Paratii-db Observer', function (done) {
     server.stop(app)
   })
 
-  it('Paratii-js okness', async function (done) {
+  it.skip('Paratii-js okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it('Subscription to CreateVideo event should save a video', function (done) {
+  it.skip('Subscription to CreateVideo event should save a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -91,7 +97,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it.skip('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let price2 = 2 * 10 ** 18
@@ -135,7 +141,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to RemoveVideo events should remove a video', function (done) {
+  it.skip('Subscription to RemoveVideo events should remove a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -183,7 +189,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should create a user', function (done) {
+  it.skip('Subscription to CreateUser event should create a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -217,7 +223,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it.skip('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -253,7 +259,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to RemoveUser event should remove a user', function (done) {
+  it.skip('Subscription to RemoveUser event should remove a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -296,7 +302,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to TranferPTI event should create a new transaction', function (done) {
+  it.skip('Subscription to TranferPTI event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -327,7 +333,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to TranferETH event should create a new transaction', function (done) {
+  it.skip('Subscription to TranferETH event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -359,7 +365,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateVoucher event should create a new voucher', function (done) {
+  it.skip('Subscription to CreateVoucher event should create a new voucher', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -390,7 +396,7 @@ describe('👀 Paratii-db Observer', function (done) {
       })
     })
   })
-  it('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
+  it.skip('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -422,7 +428,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to PHApplication event should set deposit in a video', function (done) {
+  it.skip('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
@@ -455,7 +461,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to PHApplication event should set a video as staked', function (done) {
+  it.skip('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
     let creator = accounts[0].publicKey
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
@@ -520,7 +526,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
+  it.skip('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
     const amount = 5 ** 18
     const reason = 'email_verification'
     const salt = paratii.eth.web3.utils.sha3('' + Date.now())
@@ -569,7 +575,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
+  it.skip('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -600,6 +606,39 @@ describe('👀 Paratii-db Observer', function (done) {
       .done(function (result) {
         assert.equal(true, result)
         done()
+      })
+    })
+  })
+
+  it('Subscription to Application event should set deposit in a video', function (done) {
+    let amount = 5
+    amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
+    let videoId = 'some-vide-id'
+    let listingHash = paratii.eth.web3.utils.soliditySha3(videoId)
+    // let duration = '01:45'
+    // not so elegant, it would be better to wait for server, observer, api ecc.
+    utils.sleep(2000).then(function () {
+      paratii.eth.tcr.apply(videoId, amount).then(function (application) {
+        waitUntil()
+        .interval(2000)
+        .times(40)
+        .condition(function (cb) {
+          let condition = false
+          Application.findOne({_id: listingHash}).exec().then(function (app) {
+            if (app) {
+              condition = (app.deposit === amount && app.applicant === accounts[0].publicKey)
+              cb(condition)
+            } else {
+              cb(condition)
+            }
+          })
+        })
+        .done(function (result) {
+          if (result) {
+            assert.equal(true, result)
+            done()
+          }
+        })
       })
     })
   })
