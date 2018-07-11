@@ -22,14 +22,12 @@ router.get('/:id', (req, res, next) => {
 router.get('/', (req, res, next) => {
   const cleanReq = JSON.parse(JSON.stringify(req.query))
 
-
   Vote.search(cleanReq, (err, result) => {
     if (err) {
       return res.send(err).statusCode(500)
     }
 
     return res.json(result)
-
   })
 })
 

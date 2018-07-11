@@ -12,11 +12,10 @@ const VoteSchema = new Schema({
   numTokens: Number,
   choice: Boolean, // choice is either 0 or 1, or null
   voteCommitted: Number, // timestamp,
-  voteRevealed: Number,
+  voteRevealed: Number
 })
 
 VoteSchema.index({voter: 'text'})
-
 
 // schema transformation for VoteSchema
 if (!VoteSchema.options.toObject) VoteSchema.options.toObject = {}
@@ -73,79 +72,77 @@ VoteSchema.statics.bulkUpsert = function (votes, cb) {
   })
 }
 
-
 /**
  * find vote based on a keyword or params
  * @param  {String}   keyword word to query db with.
  * @param  {Function} cb      (err, result)
  * @return {Array}           returns an array of votes matching keyword. limited to 6
  */
- VoteSchema.statics.search = function (query, cb) {
-   let search
-   let baseSearch = { $text: { $search: query.keyword } }
+VoteSchema.statics.search = function (query, cb) {
+  let search
+  let baseSearch = { $text: { $search: query.keyword } }
 
    // this is due query is an referenced object
-   const originalQuery = JSON.parse(JSON.stringify(query))
+  const originalQuery = JSON.parse(JSON.stringify(query))
    // Pagination variable
-   let offset = parseInt(query.offset)
-   let limit = parseInt(query.limit)
+  let offset = parseInt(query.offset)
+  let limit = parseInt(query.limit)
 
-   let isOffsetInt = (offset === parseInt(offset, 10))
-   let isLimitInt = (limit === parseInt(limit, 10))
-
+  let isOffsetInt = (offset === parseInt(offset, 10))
+  let isLimitInt = (limit === parseInt(limit, 10))
 
    // Setting the query parameters
-   if (Object.keys(query).length === 1 && query.keyword !== undefined) {
+  if (Object.keys(query).length === 1 && query.keyword !== undefined) {
      // A SIMPLE SEARCH
 
-     search = baseSearch
-   } else if (Object.keys(query).length >= 1 && query.keyword !== undefined) {
+    search = baseSearch
+  } else if (Object.keys(query).length >= 1 && query.keyword !== undefined) {
      // A SIMPLE SEARCH WITH EXTRA FILTER
-     search = Object.assign(baseSearch, query)
-     delete search['keyword']
-   } else if (Object.keys(query).length >= 1 && query.keyword === undefined) {
+    search = Object.assign(baseSearch, query)
+    delete search['keyword']
+  } else if (Object.keys(query).length >= 1 && query.keyword === undefined) {
      // A SIMPLE SEARCH WITH EXTRA FILTER
-     search = Object.assign(query)
-     delete search['keyword']
-   } else {
+    search = Object.assign(query)
+    delete search['keyword']
+  } else {
      // GET ALL THE VIDEOS
-     search = {}
-   }
+    search = {}
+  }
 
    // Cleaning up search query
-   delete search['offset']
-   delete search['limit']
+  delete search['offset']
+  delete search['limit']
 
-   let find = this.find(search)
+  let find = this.find(search)
 
    // Setting Pagination
-   if (offset && offset !== 0 && isOffsetInt) {
-     find = find.skip(offset)
-   }
+  if (offset && offset !== 0 && isOffsetInt) {
+    find = find.skip(offset)
+  }
    // Setting Pagination
 
-   if (limit && isLimitInt) {
+  if (limit && isLimitInt) {
      // increment limit by one in order to know if could be a new page
-     find = find.limit(limit + 1)
-   }
+    find = find.limit(limit + 1)
+  }
 
-   find.exec((err, result) => {
-     if (err) {
-       return cb(err)
-     }
+  find.exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
 
-     var parseResult = {}
+    var parseResult = {}
      // compensate for hasNext increment
-     const hasNext = result.length > limit
-     parseResult.total = result.length === 0 ? 0 : result.length
-     parseResult.results = hasNext ? result.slice(0, result.length - 1) : result
-     parseResult.hasNext = hasNext
-     parseResult.query = originalQuery
-     return cb(null, parseResult)
-   })
+    const hasNext = result.length > limit
+    parseResult.total = result.length === 0 ? 0 : result.length
+    parseResult.results = hasNext ? result.slice(0, result.length - 1) : result
+    parseResult.hasNext = hasNext
+    parseResult.query = originalQuery
+    return cb(null, parseResult)
+  })
 
     // TODO Add pagination
- }
+}
 
 const Vote = mongoose.model('Vote', VoteSchema)
 
