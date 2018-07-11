@@ -18,6 +18,7 @@ const User = require('../src/models').user
 const Video = require('../src/models').video
 const Transaction = require('../src/models').transaction
 const Vote = require('../src/models').vote
+const Challenge = require('../src/models').challenge
 const baseurl = 'http://localhost:3000/'
 const apiVersion = 'api/v1/'
 const videoApi = 'videos/'
@@ -46,6 +47,9 @@ describe('🐝 Paratii-db API', function () {
       if (err) throw err
     })
     Vote.bulkUpsert(votes, (err, success) => {
+      if (err) throw err
+    })
+    Challenge.bulkUpsert(votes, (err, success) => {
       if (err) throw err
     })
 
