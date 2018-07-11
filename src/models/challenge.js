@@ -22,7 +22,6 @@ const ChallengeSchema = new Schema({
   votesAgainst: Number,
   blockNumber: Number
 })
-
 ChallengeSchema.index({challenger: 'text'})
 
 // schema transformation for ChallengeSchema
