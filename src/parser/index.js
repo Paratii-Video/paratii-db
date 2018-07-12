@@ -96,12 +96,11 @@ module.exports.voucher = function (log) {
 }
 
 /**
- * Parse the voucher logs as the model require
+ * Parse the application logs as the model require
  * @param  {Object} log the TCR contract event
  * @return {Object}     a tcr object acceptable for Application collection
  */
 module.exports.application = function (log) {
-  console.log(log)
   // TODO: add data validator
   var application = {}
   application._id = log.returnValues.listingHash
@@ -111,8 +110,27 @@ module.exports.application = function (log) {
   application.data = log.data
   application.applicant = log.returnValues.applicant
   // TODO: add blockTimestamp
-  console.log(application)
   return application
+}
+
+/**
+ * Parse the challenge logs as the model require
+ * @param  {Object} log the TCR contract event
+ * @return {Object}     a tcr object acceptable for challenge collection
+ */
+module.exports.challenge = async function (log, paratii) {
+  // TODO: add data validator
+  var challenge = {}
+  challenge._id = log.returnValues.challengeID
+  challenge.listingHash = log.returnValues.listingHash
+  challenge.data = log.returnValues.data
+  challenge.commitEndDate = log.returnValues.commitEndDate
+  challenge.revealEndDate = log.returnValues.revealEndDate
+  challenge.challenger = log.returnValues.challenger
+  challenge.blockNumber = log.blockNumber
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  challenge.commitStartDate = block.timestamp
+  return challenge
 }
 
 /**

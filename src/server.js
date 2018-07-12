@@ -13,6 +13,7 @@ const Video = Models.video
 const Transaction = Models.transaction
 const Application = Models.application
 const User = Models.user
+const Challenge = Models.challenge
 
 let observer = null
 
@@ -78,6 +79,10 @@ function start (registry, provider, testlib, mongoUrl) {
   User.findLastBlockNumber().then(function (res) {
     // Inizializing observers for sync
     observer.userObserver.init({fromBlock: res})
+  })
+  Challenge.findLastBlockNumber().then(function (res) {
+    // Inizializing observers for sync
+    observer.challengeObserver.init({fromBlock: res})
   })
 
   observer.voucherObserver.init({})

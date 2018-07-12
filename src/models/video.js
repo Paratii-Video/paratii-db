@@ -100,7 +100,7 @@ VideoSchema.statics.stake = function (application, cb) {
   if (!application || !application._id) {
     return cb(new Error('application._id is required for staking'))
   }
-  var query = {_id: application._id}
+  var query = {listingHash: application._id}
 
   this.findOneAndUpdate(query, { staked: application }, {upsert: true}, cb)
 }

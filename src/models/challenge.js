@@ -20,7 +20,8 @@ const ChallengeSchema = new Schema({
   voteQuorum: Number,
   votesFor: Number,
   votesAgainst: Number,
-  blockNumber: Number
+  blockNumber: Number,
+  data: String
 })
 ChallengeSchema.index({challenger: 'text'})
 
@@ -39,7 +40,8 @@ ChallengeSchema.options.toObject.transform = function (doc, ret, options) {
  * @param  {Function} cb      (err, result)
  * @return {Boolean}      how the upsert goes
  */
-ChallengeSchema.statics.upsert = function (ch, cb) {
+ChallengeSchema.statics.upsert = async function (chPromise, cb) {
+  let ch = await chPromise
   if (!ch || !ch._id) {
     return cb(new Error('ch._id is required for upsert'))
   }
