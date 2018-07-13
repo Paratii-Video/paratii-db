@@ -771,8 +771,7 @@ describe('👀 Paratii-db Observer', function (done) {
     console.log(challengeCanBeResolved)
     // assert.isTrue(challengeCanBeResolved)
     // assert.equal(true, challengeCanBeResolved)
-
-    return;
+    return
     // make tx so that the commit period is finished
     do {
       await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
