@@ -1,11 +1,11 @@
 /* eslint-env mocha */
 'use strict'
 
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
+// const chai = require('chai')
+// const dirtyChai = require('dirty-chai')
 const paratiilib = require('paratii-js')
 const accounts = require('./data/accounts')
-const assert = chai.assert
+// const assert = chai.assert
 const Video = require('../src/models').video
 const User = require('../src/models').user
 const Transaction = require('../src/models').transaction
@@ -14,8 +14,9 @@ const Application = require('../src/models').application
 const Challenge = require('../src/models').challenge
 const waitUntil = require('wait-until')
 const utils = require('./utils.js')
+const { assert } = require('chai')
 
-chai.use(dirtyChai)
+// chai.use(dirtyChai)
 
 describe('👀 Paratii-db Observer', function (done) {
   let paratii
@@ -763,12 +764,12 @@ describe('👀 Paratii-db Observer', function (done) {
     await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
 
     let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
-    console.log(isCommitPeriodActive)
+    console.log(isCommitPeriodActive, typeof isCommitPeriodActive)
     assert.isFalse(isCommitPeriodActive)
     assert.equal(true, isCommitPeriodActive)
     // challenge can't be resolved because we are still in commit period
     let challengeCanBeResolved = await paratii.eth.tcr.challengeCanBeResolved(videoId)
-    console.log(challengeCanBeResolved)
+    console.log(challengeCanBeResolved, typeof challengeCanBeResolved)
     // assert.isTrue(challengeCanBeResolved)
     // assert.equal(true, challengeCanBeResolved)
 
