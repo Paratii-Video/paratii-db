@@ -22,7 +22,16 @@ describe('👀 Paratii-db Observer', function (done) {
   let server
   let app
   let videoId
+  // to avoid problem with interaction with other tests
+  let myPrivateKey = '0x55e23c060d7d5e836b776852772d7de52d1756fc857d0493b4374a21e03d9c18'
+  // let myAddress = '0x77Db6De1baD96E52492A25e0e86480F3a0A24Ae1'
 
+  let myPrivateKey1 = '0x0690816a7e30ab2865f81ab924e0009d092f5d4c937eb7b39070f93cf153d5c9'
+  // let myAddress2 = '0x246057C676E0EBA07F645A194E99B553b8afd2ad'
+
+  let myPrivateKey2 = '0x4fb2363a8880b279e38316b749ad163708a5dc4445e3f69fdc58475054d77601'
+  // let myAddress3 = '0x7d3f3a0c7ec67675ffc8B10b1F62D10096A14829'
+  //
   before(async () => {
     paratii = await new paratiilib.Paratii({
       account: {
@@ -55,12 +64,12 @@ describe('👀 Paratii-db Observer', function (done) {
     server.stop(app)
   })
 
-  it('Paratii-js okness', async function (done) {
+  it.skip('Paratii-js okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it('Subscription to CreateVideo event should save a video', function (done) {
+  it.skip('Subscription to CreateVideo event should save a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -98,7 +107,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it.skip('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let price2 = 2 * 10 ** 18
@@ -142,7 +151,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to RemoveVideo events should remove a video', function (done) {
+  it.skip('Subscription to RemoveVideo events should remove a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -190,7 +199,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should create a user', function (done) {
+  it.skip('Subscription to CreateUser event should create a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -224,7 +233,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it.skip('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -260,7 +269,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to RemoveUser event should remove a user', function (done) {
+  it.skip('Subscription to RemoveUser event should remove a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -303,7 +312,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to TranferPTI event should create a new transaction', function (done) {
+  it.skip('Subscription to TranferPTI event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -334,7 +343,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to TranferETH event should create a new transaction', function (done) {
+  it.skip('Subscription to TranferETH event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -366,7 +375,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateVoucher event should create a new voucher', function (done) {
+  it.skip('Subscription to CreateVoucher event should create a new voucher', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -397,7 +406,7 @@ describe('👀 Paratii-db Observer', function (done) {
       })
     })
   })
-  it('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
+  it.skip('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -527,7 +536,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
+  it.skip('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
     const amount = 5 ** 18
     const reason = 'email_verification'
     const salt = paratii.eth.web3.utils.sha3('' + Date.now())
@@ -576,7 +585,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
+  it.skip('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -723,7 +732,7 @@ describe('👀 Paratii-db Observer', function (done) {
           let condition = false
           Challenge.findOne({listingHash: listingHash}).exec().then(function (item) {
             if (item) {
-              condition = (item.listingHash === listingHash && item.challenger === accounts[0].publicKey)
+              condition = (item.listingHash === listingHash && item.challenger === accounts[0].publicKey && item.voteQuorum !== undefined)
               cb(condition)
             } else {
               cb(condition)
@@ -738,5 +747,45 @@ describe('👀 Paratii-db Observer', function (done) {
         })
       })
     })
+  })
+
+  it('Subscription to ChallengeFailed event should work as expected', async function () {
+    // haven't applied yet
+    let amount = 5
+    let salt = 420 // this gotta be some random val
+    videoId = 'i-need-a-new-id'
+
+
+    await paratii.eth.tcr.apply(videoId, amount)
+    const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
+    await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
+    await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
+    await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
+
+    let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+    console.log(isCommitPeriodActive)
+    assert.isFalse(isCommitPeriodActive)
+    assert.equal(true, isCommitPeriodActive)
+    // challenge can't be resolved because we are still in commit period
+    let challengeCanBeResolved = await paratii.eth.tcr.challengeCanBeResolved(videoId)
+    console.log(challengeCanBeResolved)
+    // assert.isTrue(challengeCanBeResolved)
+    // assert.equal(true, challengeCanBeResolved)
+
+    return;
+    // make tx so that the commit period is finished
+    do {
+      await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+      isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+    } while (isCommitPeriodActive)
+
+    assert.equal(false, isCommitPeriodActive)
+    //
+    // await revealVoteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, paratii)
+    // await revealVoteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, paratii)
+    // await revealVoteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, paratii)
+  })
+  it.skip('Subscription to ChallengeSucceeded event should work as expected', function (done) {
+
   })
 })

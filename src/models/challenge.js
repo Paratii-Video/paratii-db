@@ -11,6 +11,7 @@ const ChallengeSchema = new Schema({
   rewardPool: Number,
   challenger: String,
   resolved: Boolean,
+  result: String,
   stake: Number,
   totalTokens: Number,
   voterCanClaimReward: Boolean,
@@ -46,6 +47,42 @@ ChallengeSchema.statics.upsert = async function (chPromise, cb) {
     return cb(new Error('ch._id is required for upsert'))
   }
 
+  this.findByIdAndUpdate(ch._id,
+   {$set: ch},
+   {new: true, upsert: true}, cb)
+}
+
+/**
+ * Upsert parsed vote events
+ * @param  {Object}   tx a parsed challenge log
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}      how the upsert goes
+ */
+ChallengeSchema.statics.failed = async function (chPromise, cb) {
+  let ch = await chPromise
+  if (!ch || !ch._id) {
+    return cb(new Error('ch._id is required for upsert'))
+  }
+  ch.resolved = true
+  ch.result = 'failed'
+  this.findByIdAndUpdate(ch._id,
+   {$set: ch},
+   {new: true, upsert: true}, cb)
+}
+
+/**
+ * Upsert parsed vote events
+ * @param  {Object}   tx a parsed challenge log
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}      how the upsert goes
+ */
+ChallengeSchema.statics.succeeded = async function (chPromise, cb) {
+  let ch = await chPromise
+  if (!ch || !ch._id) {
+    return cb(new Error('ch._id is required for upsert'))
+  }
+  ch.resolved = true
+  ch.result = 'succeeded'
   this.findByIdAndUpdate(ch._id,
    {$set: ch},
    {new: true, upsert: true}, cb)

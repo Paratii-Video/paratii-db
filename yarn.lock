@@ -510,6 +510,10 @@ bignumber.js@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-6.0.0.tgz#bbfa047644609a5af093e9cbd83b0461fa3f6002"
 
+bignumber.js@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+
 "bignumber.js@git+https://github.com/debris/bignumber.js#master":
   version "2.0.7"
   resolved "git+https://github.com/debris/bignumber.js#c7a38de919ed75e6fb6ba38051986e294b328df9"
@@ -5543,8 +5547,8 @@ package-json@^4.0.0:
     promisify-node "^0.4.0"
     uuid "^3.2.1"
     web3 "^1.0.0-beta2"
-    web3-utils "1.0.0-beta.33"
-    zeppelin-solidity "1.3.0"
+    web3-utils "^1.0.0-beta.34"
+    zeppelin-solidity "^1.8.0"
 
 "paratii-js@github:Paratii-Video/paratii-js#7c07bec43aea14711164fafd5c1ec710e649f6c2":
   version "0.2.6"
@@ -5557,12 +5561,12 @@ package-json@^4.0.0:
     chai-bignumber "^2.0.2"
     es6-promise "^4.2.4"
     hdkey "^0.8.0"
-    ipfs "github:Paratii-Video/js-ipfs#2bbfcfe711b382d3933af97a6e35f5f769880f6a"
+    ipfs "github:Paratii-Video/js-ipfs#f02bfb4961eaf8fae077eb12e175cd518e602bc4"
     isomorphic-fetch "^2.2.1"
     joi "^13.1.2"
     multiaddr "^3.0.2"
     once "^1.4.0"
-    paratii-contracts "github:Paratii-Video/paratii-contracts#1066061cf5ff4fb69ea061776e1eede08f7eb813"
+    paratii-contracts "github:Paratii-Video/paratii-contracts#b876d8dff960842eb77f5788104f29fcfdc21633"
     paratii-protocol "github:Paratii-Video/paratii-protocol#45aadcf300f1ad184d6d3db8f9c4b3d438b6f658"
     promisify-node "^0.4.0"
     pull-filereader "^1.0.1"

@@ -127,9 +127,24 @@ module.exports.challenge = async function (log, paratii) {
   challenge.commitEndDate = log.returnValues.commitEndDate
   challenge.revealEndDate = log.returnValues.revealEndDate
   challenge.challenger = log.returnValues.challenger
+  challenge.rewardPool = log.returnValues.rewardPool
+  challenge.totalTokens = log.returnValues.totalTokens
   challenge.blockNumber = log.blockNumber
   let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
   challenge.commitStartDate = block.timestamp
+  return challenge
+}
+
+/**
+ * Parse the poll logs as the model require
+ * @param  {Object} log the TCR contract event
+ * @return {Object}     a tcr object acceptable for poll collection
+ */
+module.exports.poll = async function (log, paratii) {
+  // TODO: add data validator
+  var challenge = {}
+  challenge._id = log.returnValues.pollID
+  challenge.voteQuorum = log.returnValues.voteQuorum
   return challenge
 }
 

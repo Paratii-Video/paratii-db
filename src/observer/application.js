@@ -34,6 +34,20 @@ module.exports = function (paratii) {
       })
     })
 
+    /**
+     * Observer and upserter for ApplicationRemoved TCR  event
+     * @param  {String} log the ApplicationRemoved event
+     */
+    await paratii.eth.events.addListener('ApplicationRemoved', options, function (log) {
+      helper.logEvents(log, '☝  ApplicationRemoved Event at TCR contract events')
+      // saving application
+      Application.upsert(parser.application(log), (err, res) => {
+        if (err) {
+          throw err
+        }
+      })
+    })
+
     if (options.fromBlock !== undefined) {
       helper.log('    👓  syncing ☝ TCR contract application events since the block ' + options.fromBlock)
     } else {
