@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 'use strict'
-const chai = require('chai');
-const BigNumber = require('bignumber.js');
+const chai = require('chai')
+const BigNumber = require('bignumber.js')
 
 module.exports.sleep = function (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -23,7 +23,7 @@ module.exports.sleep = function (ms) {
  * @param  {Object} paratii      paratii instance
  * @private
  */
-module.exports.voteFromDifferentAccount = async function  (privateKey, challengeID, vote, salt, amountToFund, paratii) {
+module.exports.voteFromDifferentAccount = async function (privateKey, challengeID, vote, salt, amountToFund, paratii) {
   let tcrPLCRVoting = await paratii.eth.tcr.getPLCRVotingContract()
   chai.assert.isOk(tcrPLCRVoting)
 

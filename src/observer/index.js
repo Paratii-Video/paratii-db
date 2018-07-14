@@ -27,6 +27,7 @@ module.exports = function (Paratii, registry, provider, testlib) {
   module.applicationObserver = require('./application')(paratii)
   module.challengeObserver = require('./challenge')(paratii)
   module.distributorObserver = require('./distribute')(paratii)
+  module.voteObserver = require('./vote')(paratii)
 
   return module
 }

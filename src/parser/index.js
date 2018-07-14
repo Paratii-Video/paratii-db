@@ -161,3 +161,27 @@ module.exports.distribute = function (log) {
   distribute.reason = log.returnValues._reason
   return distribute
 }
+
+/**
+ * Parse the vote logs as the model require
+ * @param  {Object} log the vote contract event
+ * @return {Object}     a vote object acceptable for some reason
+ */
+module.exports.vote = async function (log, paratii) {
+  // TODO: add data validator
+  var vote = {}
+  vote._id = log.transactionHash
+  vote.voter = log.returnValues.voter
+  vote.pollID = log.returnValues.pollID
+  vote.numTokens = log.returnValues.numTokens
+  vote.choice = log.returnValues.choice
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  if (vote.choice) {
+    vote.voteRevealed = block.timestamp
+  } else {
+    vote.voteCommitted = block.timestamp
+  }
+  vote.blockNumber = log.blockNumber
+
+  return vote
+}

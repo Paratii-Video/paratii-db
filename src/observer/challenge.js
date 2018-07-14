@@ -31,7 +31,7 @@ module.exports = function (paratii) {
      * @param  {String} log the ChallengeFailed event
      */
     await paratii.eth.events.addListener('ChallengeFailed', options, function (log) {
-      helper.logEvents(log, '🎭  Challenge Event at TCR contract events')
+      helper.logEvents(log, '🎭  ChallengeFailed Event at TCR contract events')
       // saving application result as failed
       Challenge.failed(parser.challenge(log, paratii), (err, res) => {
         if (err) {
@@ -45,7 +45,7 @@ module.exports = function (paratii) {
      * @param  {String} log the ChallengeSucceeded event
      */
     await paratii.eth.events.addListener('ChallengeSucceeded', options, function (log) {
-      helper.logEvents(log, '🎭  Challenge Event at TCR contract events')
+      helper.logEvents(log, '🎭  ChallengeSucceeded Event at TCR contract events')
       // saving application as succeeded
       Challenge.succeeded(parser.challenge(log, paratii), (err, res) => {
         if (err) {

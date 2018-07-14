@@ -33,7 +33,8 @@ VoteSchema.options.toObject.transform = function (doc, ret, options) {
  * @param  {Function} cb      (err, result)
  * @return {Boolean}      how the upsert goes
  */
-VoteSchema.statics.upsert = function (vote, cb) {
+VoteSchema.statics.upsert = async function (votePromises, cb) {
+  let vote = await votePromises
   if (!vote || !vote._id) {
     return cb(new Error('vote._id is required for upsert'))
   }
@@ -115,7 +116,7 @@ VoteSchema.statics.search = function (query, cb) {
   delete search['limit']
 
   let find = this.find(search)
-
+  console.log('from the model', search)
    // Setting Pagination
   if (offset && offset !== 0 && isOffsetInt) {
     find = find.skip(offset)
@@ -128,6 +129,7 @@ VoteSchema.statics.search = function (query, cb) {
   }
 
   find.exec((err, result) => {
+    console.log('result', result)
     if (err) {
       return cb(err)
     }

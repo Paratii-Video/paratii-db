@@ -37,7 +37,6 @@ ApplicationSchema.statics.findLastBlockNumber = async function () {
   return result.blockNumber
 }
 
-
 /**
  * delete application by applicationid
  * @param  {videoId}   videoId.

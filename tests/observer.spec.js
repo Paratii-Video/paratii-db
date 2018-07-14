@@ -12,6 +12,7 @@ const Transaction = require('../src/models').transaction
 const Voucher = require('../src/models').voucher
 const Application = require('../src/models').application
 const Challenge = require('../src/models').challenge
+const Vote = require('../src/models').vote
 const waitUntil = require('wait-until')
 const utils = require('./utils.js')
 const { assert } = require('chai')
@@ -34,6 +35,9 @@ describe('👀 Paratii-db Observer', function (done) {
   // let myAddress3 = '0x7d3f3a0c7ec67675ffc8B10b1F62D10096A14829'
   //
   before(async () => {
+    await Challenge.collection.drop()
+    await Vote.collection.drop()
+
     paratii = await new paratiilib.Paratii({
       account: {
         address: accounts[0].publicKey,
@@ -65,12 +69,12 @@ describe('👀 Paratii-db Observer', function (done) {
     server.stop(app)
   })
 
-  it.skip('Paratii-js okness', async function (done) {
+  it('Paratii-js okness', async function (done) {
     assert.isOk(paratii)
     done()
   })
 
-  it.skip('Subscription to CreateVideo event should save a video', function (done) {
+  it('Subscription to CreateVideo event should save a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -108,7 +112,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it('Subscription to CreateVideo event should update a video and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let price2 = 2 * 10 ** 18
@@ -152,7 +156,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to RemoveVideo events should remove a video', function (done) {
+  it('Subscription to RemoveVideo events should remove a video', function (done) {
     let creator = accounts[0].publicKey
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -200,7 +204,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to CreateUser event should create a user', function (done) {
+  it('Subscription to CreateUser event should create a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -234,7 +238,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
+  it('Subscription to CreateUser event should update a user and set blockNumber/createBlockNumber and blockTimestamp/createBlockTimestamp properly', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -270,7 +274,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to RemoveUser event should remove a user', function (done) {
+  it('Subscription to RemoveUser event should remove a user', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -313,7 +317,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to TranferPTI event should create a new transaction', function (done) {
+  it('Subscription to TranferPTI event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
 
@@ -344,7 +348,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to TranferETH event should create a new transaction', function (done) {
+  it('Subscription to TranferETH event should create a new transaction', function (done) {
     let beneficiary = '0xDbC8232Bd8DEfCbc034a0303dd3f0Cf41d1a55Cf'
     let amount = paratii.eth.web3.utils.toWei('4', 'ether')
     let description = 'thanks for all the fish'
@@ -376,7 +380,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to CreateVoucher event should create a new voucher', function (done) {
+  it('Subscription to CreateVoucher event should create a new voucher', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -407,7 +411,7 @@ describe('👀 Paratii-db Observer', function (done) {
       })
     })
   })
-  it.skip('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
+  it('Subscription to RedeemVoucher event should set a voucher as redeemed', function (done) {
     let voucher = {
       voucherCode: 'FISHFORFEE42',
       amount: 42
@@ -439,7 +443,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
+  it('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
@@ -472,7 +476,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
+  it('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
     let creator = accounts[0].publicKey
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
@@ -537,7 +541,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
+  it('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
     const amount = 5 ** 18
     const reason = 'email_verification'
     const salt = paratii.eth.web3.utils.sha3('' + Date.now())
@@ -586,7 +590,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
+  it('Subscription to CreateUser event should update user\'s videos with a fresh username', function (done) {
     let userId = accounts[0].publicKey
     let userData = {
       id: userId,
@@ -750,42 +754,209 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('Subscription to ChallengeFailed event should work as expected', async function () {
-    // haven't applied yet
-    let amount = 5
-    let salt = 420 // this gotta be some random val
-    videoId = 'i-need-a-new-id'
+  it('Subscription to ChallengeFailed event should work as expected', function (done) {
+    votingProcess().then(function (listingHash) {
+      waitUntil()
+      .interval(1000)
+      .times(40)
+      .condition(function (cb) {
+        let condition = false
+        Challenge.findOne({listingHash: listingHash}).exec().then(function (item) {
+          if (item) {
+            condition = (item.result === 'failed')
+            cb(condition)
+          } else {
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        if (result) {
+          assert.equal(true, result)
+          done()
+        }
+      })
+    })
 
+    async function votingProcess () {
+      // haven't applied yet
+      let amount = 5
+      let salt = 420 // this gotta be some random val
+      videoId = 'i-need-a-new-id'
 
-    await paratii.eth.tcr.apply(videoId, amount)
-    const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
-    await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
-    await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
-    await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
+      await paratii.eth.tcr.apply(videoId, amount)
+      const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
 
-    let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
-    console.log(isCommitPeriodActive, typeof isCommitPeriodActive)
-    assert.isFalse(isCommitPeriodActive)
-    assert.equal(true, isCommitPeriodActive)
-    // challenge can't be resolved because we are still in commit period
-    let challengeCanBeResolved = await paratii.eth.tcr.challengeCanBeResolved(videoId)
-    console.log(challengeCanBeResolved, typeof challengeCanBeResolved)
-    // assert.isTrue(challengeCanBeResolved)
-    // assert.equal(true, challengeCanBeResolved)
-    return
-    // make tx so that the commit period is finished
-    do {
-      await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
-      isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
-    } while (isCommitPeriodActive)
+      let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      assert.equal(true, isCommitPeriodActive)
+      // challenge can't be resolved because we are still in commit period
 
-    assert.equal(false, isCommitPeriodActive)
-    //
-    // await revealVoteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, paratii)
-    // await revealVoteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, paratii)
-    // await revealVoteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, paratii)
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      } while (isCommitPeriodActive)
+
+      assert.equal(false, isCommitPeriodActive)
+
+      await utils.revealVoteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, paratii)
+
+      let isRevealPeriodActive
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isRevealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeID)
+      } while (isRevealPeriodActive)
+
+      let isPassed = await paratii.eth.tcr.isPassed(challengeID)
+      assert.isTrue(isPassed)
+
+      let updateTx = await paratii.eth.tcr.updateStatus(videoId)
+      assert.isOk(updateTx)
+      assert.isOk(updateTx.events._ApplicationWhitelisted)
+      assert.isOk(updateTx.events._ChallengeFailed)
+      return paratii.eth.web3.utils.soliditySha3(videoId)
+    }
   })
-  it.skip('Subscription to ChallengeSucceeded event should work as expected', function (done) {
+  it('Subscription to ChallengeSucceeded event should work as expected', function (done) {
+    votingProcess().then(function (listingHash) {
+      waitUntil()
+      .interval(1000)
+      .times(40)
+      .condition(function (cb) {
+        let condition = false
+        Challenge.findOne({listingHash: listingHash}).exec().then(function (item) {
+          if (item) {
+            condition = (item.result === 'succeeded')
+            cb(condition)
+          } else {
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        if (result) {
+          assert.equal(true, result)
+          done()
+        }
+      })
+    })
 
+    async function votingProcess () {
+      // haven't applied yet
+      let amount = 5
+      let salt = 420 // this gotta be some random val
+      videoId = 'i-need-a-new-id2'
+
+      await paratii.eth.tcr.apply(videoId, amount)
+      const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 0, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey1, challengeID, 0, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
+
+      let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      assert.equal(true, isCommitPeriodActive)
+      // challenge can't be resolved because we are still in commit period
+
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      } while (isCommitPeriodActive)
+
+      assert.equal(false, isCommitPeriodActive)
+
+      await utils.revealVoteFromDifferentAccount(myPrivateKey, challengeID, 0, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey1, challengeID, 0, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, paratii)
+
+      let isRevealPeriodActive
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isRevealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeID)
+      } while (isRevealPeriodActive)
+
+      // let isPassed = await paratii.eth.tcr.isPassed(challengeID)
+      // assert.isTrue(isPassed)
+      // console.log('broke here 2')
+
+      let updateTx = await paratii.eth.tcr.updateStatus(videoId)
+      assert.isOk(updateTx)
+
+      assert.isOk(updateTx.events._ChallengeSucceeded)
+
+      return paratii.eth.web3.utils.soliditySha3(videoId)
+    }
+  })
+  it('Subscription to VoteCommited and VoteRevealed events should work as expected', function (done) {
+    votingProcess().then(function (challengeID) {
+      waitUntil()
+      .interval(1000)
+      .times(40)
+      .condition(function (cb) {
+        let condition = false
+        Vote.find({pollID: challengeID, voter: '0x77Db6De1baD96E52492A25e0e86480F3a0A24Ae1'}).exec().then(function (result) {
+          if (result) {
+            condition = (result.length === 2)
+            cb(condition)
+          } else {
+            cb(condition)
+          }
+        })
+      })
+      .done(function (result) {
+        if (result) {
+          assert.equal(true, result)
+          done()
+        }
+      })
+    })
+
+    async function votingProcess () {
+      // haven't applied yet
+      let amount = 5
+      let salt = 420 // this gotta be some random val
+      videoId = 'i-need-a-new-id2'
+
+      await paratii.eth.tcr.apply(videoId, amount)
+      const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 0, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey1, challengeID, 0, salt, 1, paratii)
+      await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
+
+      let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      assert.equal(true, isCommitPeriodActive)
+      // challenge can't be resolved because we are still in commit period
+
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
+      } while (isCommitPeriodActive)
+
+      assert.equal(false, isCommitPeriodActive)
+
+      await utils.revealVoteFromDifferentAccount(myPrivateKey, challengeID, 0, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey1, challengeID, 0, salt, paratii)
+      await utils.revealVoteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, paratii)
+
+      let isRevealPeriodActive
+      do {
+        await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
+        isRevealPeriodActive = await paratii.eth.tcr.revealPeriodActive(challengeID)
+      } while (isRevealPeriodActive)
+
+      // let isPassed = await paratii.eth.tcr.isPassed(challengeID)
+      // assert.isTrue(isPassed)
+      // console.log('broke here 2')
+
+      let updateTx = await paratii.eth.tcr.updateStatus(videoId)
+      assert.isOk(updateTx)
+
+      assert.isOk(updateTx.events._ChallengeSucceeded)
+
+      return challengeID
+    }
   })
 })
