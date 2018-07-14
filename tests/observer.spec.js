@@ -918,7 +918,7 @@ describe('👀 Paratii-db Observer', function (done) {
       // haven't applied yet
       let amount = 5
       let salt = 420 // this gotta be some random val
-      videoId = 'i-need-a-new-id2'
+      videoId = 'i-need-a-new-id5'
 
       await paratii.eth.tcr.apply(videoId, amount)
       const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
