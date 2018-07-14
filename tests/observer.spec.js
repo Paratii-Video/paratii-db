@@ -54,7 +54,7 @@ describe('👀 Paratii-db Observer', function (done) {
     let distributor = await paratii.eth.getContract('PTIDistributor')
     let vouchers = await paratii.eth.getContract('Vouchers')
     let tcr = await paratii.eth.tcr.getTcrContract()
-    let amountToAllowWei = paratii.eth.web3.utils.toWei('100')
+    let amountToAllowWei = paratii.eth.web3.utils.toWei('1000')
     let amountToAllowInHex = paratii.eth.web3.utils.toHex(amountToAllowWei)
     await token.methods.approve(tcr.options.address, amountToAllowInHex).send()
     await token.methods.allowance(accounts[0].publicKey, tcr.options.address).call()
@@ -443,104 +443,6 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it.skip('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
-    let amount = 5
-    amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
-    let videoId = 'some-vide-id'
-
-    // let duration = '01:45'
-    // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(2000).then(function () {
-      paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
-        waitUntil()
-        .interval(2000)
-        .times(40)
-        .condition(function (cb) {
-          let condition = false
-          Application.findOne({_id: videoId}).exec().then(function (app) {
-            if (app) {
-              condition = ('' + app.deposit === amount)
-              cb(condition)
-            } else {
-              cb(condition)
-            }
-          })
-        })
-        .done(function (result) {
-          if (result) {
-            assert.equal(true, result)
-            done()
-          }
-        })
-      })
-    })
-  })
-
-  it.skip('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
-    let creator = accounts[0].publicKey
-    let amount = 5
-    amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
-    let price = 3 * 10 ** 18
-    let ipfsHash = 'xyz'
-    let number = Math.random()
-    let videoId = number.toString(36).substr(2, 9)
-    // let duration = '01:45'
-    // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
-      paratii.vids.create({
-        id: videoId,
-        price: price,
-        owner: creator,
-        ipfsHash: ipfsHash
-        // ipfsData: ipfsData
-        // duration
-      })
-      waitUntil()
-      .interval(1000)
-      .times(40)
-      .condition(function (cb) {
-        let condition = false
-
-        Video.findOne({_id: videoId}).exec().then(function (video) {
-          if (video) {
-            condition = (video.id === videoId)
-            cb(condition)
-          } else {
-            cb(condition)
-          }
-        })
-      })
-      .done(function (result) {
-        if (result) {
-          assert.equal(true, result)
-
-          paratii.eth.tcrPlaceholder.checkEligiblityAndApply(videoId, amount).then(function (application) {
-            waitUntil()
-            .interval(1000)
-            .times(40)
-            .condition(function (cb) {
-              let condition = false
-              Video.findOne({_id: videoId}).exec().then(function (video) {
-                if (video) {
-                  condition = (video.staked !== undefined)
-                  cb(condition)
-                } else {
-                  cb(condition)
-                }
-              })
-            })
-            .done(function (result) {
-              if (result) {
-                assert.equal(true, result)
-                done()
-              }
-            })
-          })
-        }
-      })
-    })
-  })
-
   it('Subscription to Disitribute event for a email_verification reason set a user as verified', function (done) {
     const amount = 5 ** 18
     const reason = 'email_verification'
@@ -670,7 +572,7 @@ describe('👀 Paratii-db Observer', function (done) {
 
     // let duration = '01:45'
     // not so elegant, it would be better to wait for server, observer, api ecc.
-    utils.sleep(1000).then(function () {
+    utils.sleep(10000).then(function () {
       paratii.vids.create({
         id: videoId,
         price: price,
@@ -679,6 +581,7 @@ describe('👀 Paratii-db Observer', function (done) {
         // ipfsData: ipfsData
         // duration
       })
+
       waitUntil()
       .interval(1000)
       .times(40)
@@ -696,6 +599,7 @@ describe('👀 Paratii-db Observer', function (done) {
       .done(function (result) {
         if (result) {
           assert.equal(true, result)
+          console.log('here2')
 
           paratii.eth.tcr.apply(videoId, amount).then(function (application) {
             waitUntil()
@@ -783,17 +687,24 @@ describe('👀 Paratii-db Observer', function (done) {
       let amount = 5
       let salt = 420 // this gotta be some random val
       videoId = 'i-need-a-new-id3'
+      console.log('brokes 1')
 
       await paratii.eth.tcr.apply(videoId, amount)
+      console.log('brokes 2')
+
       const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
+      console.log('brokes 3')
+
       await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
+      console.log('brokes 4')
+
       await utils.voteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, 1, paratii)
+
       await utils.voteFromDifferentAccount(myPrivateKey2, challengeID, 0, salt, 1, paratii)
 
       let isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
       assert.equal(true, isCommitPeriodActive)
       // challenge can't be resolved because we are still in commit period
-
       do {
         await paratii.eth.transfer(accounts[0].publicKey, 1, 'PTI')
         isCommitPeriodActive = await paratii.eth.tcr.commitPeriodActive(challengeID)
@@ -818,6 +729,7 @@ describe('👀 Paratii-db Observer', function (done) {
       assert.isOk(updateTx)
       assert.isOk(updateTx.events._ApplicationWhitelisted)
       assert.isOk(updateTx.events._ChallengeFailed)
+
       return paratii.eth.web3.utils.soliditySha3(videoId)
     }
   })

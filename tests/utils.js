@@ -151,6 +151,7 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
   // console.log('challengeFromDifferentAccount ', privateKey.slice(0, 6), videoId, amountToFund)
   // let contracts = await paratii.eth.getContracts()
   // console.log('contracts: ', Object.keys(contracts))
+
   let tcrRegistry = await paratii.eth.tcr.getTcrContract()
   chai.assert.isOk(tcrRegistry)
 
@@ -158,8 +159,11 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
   let challengerAccount = await paratii.eth.web3.eth.accounts.wallet.add({
     privateKey: privateKey
   })
+
   chai.assert.isOk(challengerAccount)
+
   let index = paratii.eth.web3.eth.accounts.wallet.length - 1
+
   chai.assert.equal(challengerAccount.address, paratii.eth.web3.eth.accounts.wallet[index].address)
   // console.log('private key', privateKey.slice(0, 6), 'added, index: ', index)
   let token = await paratii.eth.getContract('ParatiiToken')
@@ -182,15 +186,19 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
   let amount = new BigNumber(paratii.eth.web3.utils.toWei(amountToFund.toString()))
   // console.log('amountToFund', privateKey.slice(0, 6), amountToTransferInWei.toString(), 'balance: ', balanceOfAddress1.toString())
   chai.assert.equal(Number(balanceOfAddress1), Number(amount.plus(startingFund)))
+  console.log('brokes a')
 
   // approve the tcr to spend address1 tokens ------------------------------------
   let approval = await token.methods.approve(
     tcrRegistry.options.address,
     smallerAmountToTransferInWei.toString()
   ).send({from: paratii.eth.web3.eth.accounts.wallet[index].address}) // send from challengerAccount
+  console.log('brokes b')
+
   // console.log('approval ', privateKey.slice(0, 6), approval)
   chai.assert.isOk(approval)
   chai.assert.isOk(approval.events.Approval)
+  console.log('brokes c')
 
   // start the challenge from the challenger account -----------------------------
   let challengeTx = await tcrRegistry.methods.challenge(
@@ -198,6 +206,7 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
     ''
   ).send({from: challengerAccount.address})
   // console.log('challengeTx: ', challengeTx)
+  console.log('brokes d')
 
   chai.assert.isOk(challengeTx)
   chai.assert.isOk(challengeTx.events._Challenge)
@@ -205,7 +214,7 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
   let challengeID = challengeTx.events._Challenge.returnValues.challengeID
   chai.assert.isOk(challengeID)
   // console.log('CHALLENGEID : ', challengeID)
-
+  console.log('brokes e')
   // check that the challenge is actually from the challengerAccount and not from the default one
   let challenge = await tcrRegistry.methods.challenges(challengeID).call()
   chai.assert.equal(challengerAccount.address, challenge.challenger)
