@@ -443,7 +443,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
+  it.skip('DEPRECATED: Subscription to PHApplication event should set deposit in a video', function (done) {
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
@@ -476,7 +476,7 @@ describe('👀 Paratii-db Observer', function (done) {
     })
   })
 
-  it('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
+  it.skip('DEPRECATED: Subscription to PHApplication event should set a video as staked', function (done) {
     let creator = accounts[0].publicKey
     let amount = 5
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
