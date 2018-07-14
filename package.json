@@ -4,7 +4,7 @@
   "description": "paratii database backend",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 40000",
+    "test": "NODE_ENV=test mocha tests/*.spec.js --exit --timeout 100000",
     "start": "NODE_ENV=production node src/server.js",
     "sync-production": "NODE_ENV=production node src/sync.js",
     "sync-staging": "NODE_ENV=staging node src/sync.js",
