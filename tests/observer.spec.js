@@ -81,7 +81,7 @@ describe('👀 Paratii-db Observer', function (done) {
     let number = Math.random()
     videoId = number.toString(36).substr(2, 9)
 
-    utils.sleep(3000).then(async function () {
+    utils.sleep(5000).then(async function () {
       await paratii.vids.create({
         id: videoId,
         price: price,
