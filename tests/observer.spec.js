@@ -44,7 +44,8 @@ describe('👀 Paratii-db Observer', function (done) {
         privateKey: accounts[0].privateKey
       },
       eth: {
-        provider: 'ws://localhost:8546'
+        provider: 'ws://localhost:8546',
+        tcrConfig: require('./data/tcrConfig.json')
       }
     })
 
@@ -528,7 +529,7 @@ describe('👀 Paratii-db Observer', function (done) {
   })
 
   it('Subscription to Application event should set deposit in a video', function (done) {
-    let amount = 5
+    let amount = 10
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let videoId = 'some-vide-id'
     let listingHash = paratii.eth.web3.utils.soliditySha3(videoId)
@@ -562,7 +563,7 @@ describe('👀 Paratii-db Observer', function (done) {
 
   it('Subscription to Application event should set a video as staked', function (done) {
     let creator = accounts[0].publicKey
-    let amount = 5
+    let amount = 10
     amount = '' + paratii.eth.web3.utils.toWei(amount.toString())
     let price = 3 * 10 ** 18
     let ipfsHash = 'xyz'
@@ -684,7 +685,7 @@ describe('👀 Paratii-db Observer', function (done) {
 
     async function votingProcess () {
       // haven't applied yet
-      let amount = 5
+      let amount = 10
       let salt = 420 // this gotta be some random val
       videoId = 'i-need-a-new-id3'
       console.log('brokes 1')
@@ -759,7 +760,7 @@ describe('👀 Paratii-db Observer', function (done) {
 
     async function votingProcess () {
       // haven't applied yet
-      let amount = 5
+      let amount = 10
       let salt = 420 // this gotta be some random val
       videoId = 'i-need-a-new-id4'
 
@@ -828,7 +829,7 @@ describe('👀 Paratii-db Observer', function (done) {
 
     async function votingProcess () {
       // haven't applied yet
-      let amount = 5
+      let amount = 10
       let salt = 420 // this gotta be some random val
       videoId = 'i-need-a-new-id5'
 

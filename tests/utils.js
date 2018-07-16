@@ -189,6 +189,8 @@ module.exports.challengeFromDifferentAccount = async function (privateKey, video
   console.log('brokes a')
 
   // approve the tcr to spend address1 tokens ------------------------------------
+  console.log(tcrRegistry.options.address)
+  console.log(smallerAmountToTransferInWei.toString())
   let approval = await token.methods.approve(
     tcrRegistry.options.address,
     smallerAmountToTransferInWei.toString()
