@@ -24,7 +24,6 @@ module.exports.video = async function (log, ipfsData, paratii) {
   video.filesize = (ipfsData && ipfsData.filesize) ? ipfsData.filesize : ''
   video.filename = (ipfsData && ipfsData.filename) ? ipfsData.filename : ''
   video.uploadStatus = (ipfsData && ipfsData.uploadStatus) ? ipfsData.uploadStatus : { data: {} }
-  video.published = (ipfsData && ipfsData.published) ? ipfsData.published : ''
   video.thumbnails = (ipfsData && ipfsData.thumbnails) ? ipfsData.thumbnails : ''
 
   video.ipfsHash = log.returnValues.ipfsHash
