@@ -26,6 +26,7 @@ router.get('/:id/related', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Video.findOne({_id: req.params.id}, (err, video) => {
     if (err) return res.send(err)
+    if (!video) return res.json({})
     Challenge.findOne({listingHash: video.listingHash}, (err, ch) => {
       let clonedVideo = JSON.parse(JSON.stringify(video))
       if (err) return res.send(err)
