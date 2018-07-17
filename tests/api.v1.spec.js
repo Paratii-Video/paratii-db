@@ -210,20 +210,7 @@ describe('🐝 Paratii-db API', function () {
       done()
     })
   })
-  it('GET votes/:id should return a vote', (done) => {
-    const voteID = '1'
-    let check = false
 
-    fetch(baseurl + apiVersion + voteApi + voteID, {
-      method: 'get'
-    }).then(function (response) {
-      return response.json()
-    }).then(function (data) {
-      check = data.id === voteID
-      assert.equal(check, true)
-      done()
-    })
-  })
   it('GET votes/ should return some transactions', (done) => {
     let check = false
 
