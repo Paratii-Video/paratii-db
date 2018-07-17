@@ -96,18 +96,56 @@ module.exports.voucher = function (log) {
 }
 
 /**
- * Parse the voucher logs as the model require
+ * Parse the application logs as the model require
  * @param  {Object} log the TCR contract event
  * @return {Object}     a tcr object acceptable for Application collection
  */
 module.exports.application = function (log) {
   // TODO: add data validator
   var application = {}
-  application._id = log.returnValues.videoId
+  application._id = log.returnValues.listingHash
   application.deposit = log.returnValues.deposit
+  application.appEndDate = log.returnValues.appEndDate
   application.blockNumber = log.blockNumber
+  application.data = log.data
+  application.applicant = log.returnValues.applicant
   // TODO: add blockTimestamp
   return application
+}
+
+/**
+ * Parse the challenge logs as the model require
+ * @param  {Object} log the TCR contract event
+ * @return {Object}     a tcr object acceptable for challenge collection
+ */
+module.exports.challenge = async function (log, paratii) {
+  // TODO: add data validator
+  var challenge = {}
+  challenge._id = log.returnValues.challengeID
+  challenge.listingHash = log.returnValues.listingHash
+  challenge.data = log.returnValues.data
+  challenge.commitEndDate = log.returnValues.commitEndDate
+  challenge.revealEndDate = log.returnValues.revealEndDate
+  challenge.challenger = log.returnValues.challenger
+  challenge.rewardPool = log.returnValues.rewardPool
+  challenge.totalTokens = log.returnValues.totalTokens
+  challenge.blockNumber = log.blockNumber
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  challenge.commitStartDate = block.timestamp
+  return challenge
+}
+
+/**
+ * Parse the poll logs as the model require
+ * @param  {Object} log the TCR contract event
+ * @return {Object}     a tcr object acceptable for poll collection
+ */
+module.exports.poll = async function (log, paratii) {
+  // TODO: add data validator
+  var challenge = {}
+  challenge._id = log.returnValues.pollID
+  challenge.voteQuorum = log.returnValues.voteQuorum
+  return challenge
 }
 
 /**
@@ -122,4 +160,28 @@ module.exports.distribute = function (log) {
   distribute.toAddress = log.returnValues._toAddress
   distribute.reason = log.returnValues._reason
   return distribute
+}
+
+/**
+ * Parse the vote logs as the model require
+ * @param  {Object} log the vote contract event
+ * @return {Object}     a vote object acceptable for some reason
+ */
+module.exports.vote = async function (log, paratii) {
+  // TODO: add data validator
+  var vote = {}
+  vote._id = log.transactionHash
+  vote.voter = log.returnValues.voter
+  vote.pollID = log.returnValues.pollID
+  vote.numTokens = log.returnValues.numTokens
+  vote.choice = log.returnValues.choice
+  let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
+  if (vote.choice) {
+    vote.voteRevealed = block.timestamp
+  } else {
+    vote.voteCommitted = block.timestamp
+  }
+  vote.blockNumber = log.blockNumber
+
+  return vote
 }

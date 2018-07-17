@@ -6,7 +6,9 @@ const dirtyChai = require('dirty-chai')
 // const accounts = require('./data/accounts')
 const users = require('./data/users')
 const transactions = require('./data/transactions')
+const votes = require('./data/votes')
 const accounts = require('./data/accounts')
+const challenges = require('./data/challenges')
 
 const videos = require('./data/fixtures')
 const fetch = require('isomorphic-fetch')
@@ -16,11 +18,15 @@ chai.use(dirtyChai)
 const User = require('../src/models').user
 const Video = require('../src/models').video
 const Transaction = require('../src/models').transaction
+const Vote = require('../src/models').vote
+const Challenge = require('../src/models').challenge
 const baseurl = 'http://localhost:3000/'
 const apiVersion = 'api/v1/'
 const videoApi = 'videos/'
 const userApi = 'users/'
 const txApi = 'transactions/'
+const chApi = 'challenges/'
+const voteApi = 'votes/'
 const paratiilib = require('paratii-js')
 const request = require('request')
 
@@ -39,6 +45,12 @@ describe('🐝 Paratii-db API', function () {
       if (err) throw err
     })
     Transaction.bulkUpsert(transactions, (err, success) => {
+      if (err) throw err
+    })
+    Vote.bulkUpsert(votes, (err, success) => {
+      if (err) throw err
+    })
+    Challenge.bulkUpsert(challenges, (err, success) => {
       if (err) throw err
     })
 
@@ -194,6 +206,89 @@ describe('🐝 Paratii-db API', function () {
       return response.json()
     }).then(function (data) {
       check = data.length > 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET votes/:id should return a vote', (done) => {
+    const voteID = '1'
+    let check = false
+
+    fetch(baseurl + apiVersion + voteApi + voteID, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.id === voteID
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET votes/ should return some transactions', (done) => {
+    let check = false
+
+    fetch(baseurl + apiVersion + voteApi, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length > 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET votes/?voter=0x2&pollID=0x1 should search for votes and return just one', (done) => {
+    let voter = '0x2'
+    let pollID = '0x1'
+    let check = false
+
+    fetch(baseurl + apiVersion + voteApi + '?voter=' + voter + '&pollID=' + pollID, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length === 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/:id should return a vote', (done) => {
+    const pollID = '0x1'
+    let check = false
+
+    fetch(baseurl + apiVersion + chApi + pollID, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.id === pollID
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/ should return some transactions', (done) => {
+    let check = false
+
+    fetch(baseurl + apiVersion + chApi, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length > 1
+      assert.equal(check, true)
+      done()
+    })
+  })
+  it('GET challenges/?challenger=0x1 should return 1 challenge', (done) => {
+    let check = false
+    let challenger = '0x1'
+
+    fetch(baseurl + apiVersion + chApi + '?challenger=' + challenger, {
+      method: 'get'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      check = data.results.length === 1
       assert.equal(check, true)
       done()
     })
