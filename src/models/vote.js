@@ -6,7 +6,6 @@ const Schema = mongoose.Schema
 const { eachLimit } = require('async')
 
 const VoteSchema = new Schema({
-  _id: String,
   voter: String,
   pollID: String,
   numTokens: Number,
@@ -35,13 +34,15 @@ VoteSchema.options.toObject.transform = function (doc, ret, options) {
  */
 VoteSchema.statics.upsert = async function (votePromises, cb) {
   let vote = await votePromises
-  if (!vote || !vote._id) {
-    return cb(new Error('vote._id is required for upsert'))
+  if (!vote || !vote.voter || !vote.pollID) {
+    return cb(new Error('vote.voter and vote.pollID is required for upsert'))
   }
 
-  this.findByIdAndUpdate(vote._id,
-   {$set: vote},
-   {new: true, upsert: true}, cb)
+  this.collection.findAndModify({pollID: vote.pollID, voter: vote.voter}, null, {$set: vote}, {new: true, upsert: true}, cb)
+}
+
+VoteSchema.statics.findAndModify = function (query, sort, doc, options, callback) {
+  return this.collection.findAndModify(query, sort, doc, options, callback)
 }
 
 VoteSchema.statics.findLastBlockNumber = async function () {
@@ -65,9 +66,7 @@ VoteSchema.statics.bulkUpsert = function (votes, cb) {
   }
 
   eachLimit(votes, 50, (vote, callback) => {
-    this.findByIdAndUpdate(vote._id,
-    {$set: vote},
-    {new: true, upsert: true}, callback)
+    this.collection.findAndModify({pollID: vote.pollID, voter: vote.voter}, null, {$set: vote}, {new: true, upsert: true}, callback)
   }, (err) => {
     if (err) return cb(err)
     return cb(null, true)
@@ -116,7 +115,6 @@ VoteSchema.statics.search = function (query, cb) {
   delete search['limit']
 
   let find = this.find(search)
-  console.log('from the model', search)
    // Setting Pagination
   if (offset && offset !== 0 && isOffsetInt) {
     find = find.skip(offset)
@@ -129,7 +127,6 @@ VoteSchema.statics.search = function (query, cb) {
   }
 
   find.exec((err, result) => {
-    console.log('result', result)
     if (err) {
       return cb(err)
     }

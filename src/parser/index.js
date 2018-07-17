@@ -169,7 +169,6 @@ module.exports.distribute = function (log) {
 module.exports.vote = async function (log, paratii) {
   // TODO: add data validator
   var vote = {}
-  vote._id = log.transactionHash
   vote.voter = log.returnValues.voter
   vote.pollID = log.returnValues.pollID
   vote.numTokens = log.returnValues.numTokens

@@ -690,16 +690,12 @@ describe('👀 Paratii-db Observer', function (done) {
       let amount = 10
       let salt = 420 // this gotta be some random val
       videoId = 'i-need-a-new-id3'
-      console.log('brokes 1')
 
       await paratii.eth.tcr.apply(videoId, amount)
-      console.log('brokes 2')
 
       const challengeID = await utils.challengeFromDifferentAccount(myPrivateKey, videoId, 40, paratii)
-      console.log('brokes 3')
 
       await utils.voteFromDifferentAccount(myPrivateKey, challengeID, 1, salt, 1, paratii)
-      console.log('brokes 4')
 
       await utils.voteFromDifferentAccount(myPrivateKey1, challengeID, 1, salt, 1, paratii)
 
@@ -815,7 +811,7 @@ describe('👀 Paratii-db Observer', function (done) {
         Vote.find({pollID: challengeID, voter: '0x77Db6De1baD96E52492A25e0e86480F3a0A24Ae1'}).exec().then(function (result) {
           console.log(result)
           if (result) {
-            condition = (result.length === 2)
+            condition = (result.length === 1)
             cb(condition)
           } else {
             cb(condition)
