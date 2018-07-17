@@ -35,11 +35,11 @@ describe('👀 Paratii-db Observer', function (done) {
   // let myAddress3 = '0x7d3f3a0c7ec67675ffc8B10b1F62D10096A14829'
   //
   before(async () => {
-    await Challenge.collection.drop()
-    await Video.collection.drop()
-    await Vote.collection.drop()
-    await User.collection.drop()
-    await Transaction.collection.drop()
+    Challenge.remove({})
+    Video.remove({})
+    Vote.remove({})
+    User.remove({})
+    Transaction.remove({})
 
     paratii = await new paratiilib.Paratii({
       account: {
