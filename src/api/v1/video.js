@@ -40,19 +40,6 @@ router.get('/:id', async (req, res, next) => {
   }
 
   res.json(clonedVideo)
-
-  /*
-  Video.findOne({_id: req.params.id}, (err, video) => {
-    if (err) return res.send(err)
-    if(!video){ res.send({}) }
-    Challenge.findOne({listingHash: video.listingHash}, (err, ch) => {
-      let clonedVideo = JSON.parse(JSON.stringify(video))
-      if (err) return res.send(err)
-      clonedVideo.tcrStatus.challenge = ch
-
-      res.json(clonedVideo)
-    })
-  }) */
 })
 
 /**

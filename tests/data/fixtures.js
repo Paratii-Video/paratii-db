@@ -1,4 +1,4 @@
-module.exports = [{
+const videos = [{
   '_id': 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
   'title': 'The mathematician who cracked Wall Street | Jim Simons',
   'description': 'Jim Simons was a mathematician and cryptographer who realized: the complex math he used to break codes could help explain patterns in the world of finance. Billions later, he’s working to support the next generation of math teachers and scholars. TED’s Chris Anderson sits down with Simons to talk about his extraordinary life in numbers.\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference, where the world\'sleading thinkers and doers give the talk of their lives in 18 minutes (or less). Look for talks on Technology, Entertainment and Design -- plus science, business, global issues, the arts and much more.\nFind closed captions and translated subtitles in many languages at http://www.ted.com/translate\n\nFollow TED news on Twitter: http://www.twitter.com/tednews\nLike TED on Facebook: https://www.facebook.com/TED\n\nSubscribe to our channel: http://www.youtube.com/user/TEDtalksD...',
@@ -1325,3 +1325,12 @@ module.exports = [{
     'distributed ledger'
   ]
 }]
+
+const videosResponse = {
+  total: videos.length,
+  results: videos,
+  hasNext: false,
+  query: {}
+}
+
+module.exports = { videos, videosResponse }

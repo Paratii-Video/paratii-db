@@ -3218,14 +3218,15 @@ ipaddr.js@1.6.0:
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.6.0.tgz#e3fa357b773da619f26e95f049d055c72796f86b"
 
 ipfs-api@^22.0.0:
-  version "22.2.3"
-  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-22.2.3.tgz#6ff425070690d3a87234dba3f814d6e03fdf2900"
+  version "22.2.4"
+  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-22.2.4.tgz#226ebe5caffb5c58ae8d96d1ed3870a694b24cc7"
   dependencies:
     async "^2.6.1"
     big.js "^5.1.2"
     bs58 "^4.0.1"
     cids "~0.5.3"
     concat-stream "^1.6.2"
+    debug "^3.1.0"
     detect-node "^2.0.3"
     flatmap "0.0.3"
     glob "^7.1.2"
@@ -3324,7 +3325,7 @@ ipfs-multipart@~0.1.0:
     content "^3.0.0"
     dicer "^0.2.5"
 
-ipfs-repo@~0.22.0, ipfs-repo@~0.22.1:
+ipfs-repo@~0.22.1:
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/ipfs-repo/-/ipfs-repo-0.22.1.tgz#39a1d07f56a95455ab1aca85cac3391cdcb62c6a"
   dependencies:
@@ -3473,7 +3474,7 @@ ipfs-unixfs@^0.1.14, ipfs-unixfs@~0.1.14, ipfs-unixfs@~0.1.15:
     prom-client "^11.0.0"
     prometheus-gc-stats "~0.5.1"
 
-ipld-bitcoin@~0.1.5:
+ipld-bitcoin@~0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ipld-bitcoin/-/ipld-bitcoin-0.1.6.tgz#1b8002bf2bff5c327be45372177d3d3f7361545d"
   dependencies:
@@ -3512,7 +3513,7 @@ ipld-dag-pb@~0.14.3, ipld-dag-pb@~0.14.4, ipld-dag-pb@~0.14.5:
     pull-traverse "^1.0.3"
     stable "~0.1.8"
 
-ipld-ethereum@^2.0.0:
+ipld-ethereum@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ipld-ethereum/-/ipld-ethereum-2.0.1.tgz#673b189f1506540d3509db208bb95adbefcda462"
   dependencies:
@@ -3527,7 +3528,7 @@ ipld-ethereum@^2.0.0:
     multihashing-async "~0.4.7"
     rlp "^2.0.0"
 
-ipld-git@~0.2.0:
+ipld-git@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/ipld-git/-/ipld-git-0.2.1.tgz#89d65fe4712493742e942c0a764d2c142d071701"
   dependencies:
@@ -3539,14 +3540,14 @@ ipld-git@~0.2.0:
     smart-buffer "^4.0.0"
     traverse "~0.6.6"
 
-ipld-raw@^2.0.0:
+ipld-raw@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ipld-raw/-/ipld-raw-2.0.1.tgz#aff7d471ebc26e9283910a23eff43857e3c1ab46"
   dependencies:
     cids "~0.5.2"
     multihashing-async "~0.5.1"
 
-ipld-zcash@~0.1.3:
+ipld-zcash@~0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/ipld-zcash/-/ipld-zcash-0.1.4.tgz#b67077448adf29b100162e468979ea9eb3956f0e"
   dependencies:
@@ -3557,28 +3558,28 @@ ipld-zcash@~0.1.3:
     zcash-bitcore-lib "~0.13.20-rc3"
 
 ipld@^0.17.0, ipld@~0.17.1:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/ipld/-/ipld-0.17.2.tgz#a84a978bf04591cae79099cf736b584467faf076"
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/ipld/-/ipld-0.17.3.tgz#ede5440a5b8469b1f0280502e21a5d83011d8630"
   dependencies:
     async "^2.6.1"
     cids "~0.5.3"
     interface-datastore "~0.4.2"
     ipfs-block "~0.7.1"
     ipfs-block-service "~0.14.0"
-    ipfs-repo "~0.22.0"
-    ipld-bitcoin "~0.1.5"
-    ipld-dag-cbor "~0.12.0"
-    ipld-dag-pb "~0.14.4"
-    ipld-ethereum "^2.0.0"
-    ipld-git "~0.2.0"
-    ipld-raw "^2.0.0"
-    ipld-zcash "~0.1.3"
+    ipfs-repo "~0.22.1"
+    ipld-bitcoin "~0.1.6"
+    ipld-dag-cbor "~0.12.1"
+    ipld-dag-pb "~0.14.5"
+    ipld-ethereum "^2.0.1"
+    ipld-git "~0.2.1"
+    ipld-raw "^2.0.1"
+    ipld-zcash "~0.1.4"
     is-ipfs "~0.3.2"
     lodash.flatten "^4.4.0"
     lodash.includes "^4.3.0"
     memdown "^3.0.0"
     multihashes "~0.4.13"
-    pull-defer "^0.2.2"
+    pull-defer "~0.2.2"
     pull-sort "^1.0.1"
     pull-stream "^3.6.8"
     pull-traverse "^1.0.3"
@@ -5019,8 +5020,8 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
 mongoose@^5.0.0-rc2:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.2.3.tgz#667b92c394a6aa81c3c9f2f45f3a8f28cea28e9c"
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.2.4.tgz#52b3385bee9420cf6bbd7e4ebfb211523c37a9e3"
   dependencies:
     async "2.6.1"
     bson "~1.0.5"
