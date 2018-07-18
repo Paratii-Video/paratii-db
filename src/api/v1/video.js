@@ -23,16 +23,36 @@ router.get('/:id/related', (req, res, next) => {
  * @param {String}  id  video _id
  */
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
+  let video = await Video.findOne({_id: req.params.id})
+  if (!video) { res.send({}) }
+  let clonedVideo = JSON.parse(JSON.stringify(video))
+  let challenge = await Challenge.findOne({listingHash: video.listingHash})
+
+  if (clonedVideo.tcrStatus !== undefined) {
+    clonedVideo.tcrStatus.data.challenge = challenge
+    if (clonedVideo.tcrStatus.data.staked) {
+      clonedVideo.tcrStatus.name = 'appWasMade'
+    }
+  } else {
+    clonedVideo.tcrStatus = {}
+    clonedVideo.tcrStatus.name = 'notInTCR'
+  }
+
+  res.json(clonedVideo)
+
+  /*
   Video.findOne({_id: req.params.id}, (err, video) => {
     if (err) return res.send(err)
+    if(!video){ res.send({}) }
     Challenge.findOne({listingHash: video.listingHash}, (err, ch) => {
       let clonedVideo = JSON.parse(JSON.stringify(video))
       if (err) return res.send(err)
-      clonedVideo.tcrStatus = ch
+      clonedVideo.tcrStatus.challenge = ch
+
       res.json(clonedVideo)
     })
-  })
+  }) */
 })
 
 /**
