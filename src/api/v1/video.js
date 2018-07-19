@@ -49,7 +49,7 @@ router.get('/:id', async (req, res, next) => {
         $group: {
           _id: '$pollID',
           votesFor: {$sum: '$choice'},
-          totalVote: {$sum: 1}
+          totalVotes: {$sum: 1}
         }
       }
     ]
