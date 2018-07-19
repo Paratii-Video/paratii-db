@@ -42,7 +42,7 @@ router.get('/:id', async (req, res, next) => {
     let votes = await Vote.aggregate([
       {
         $match: {
-          pollID: clonedVideo.id,
+          pollID: '2',
           voteRevealed: {'$ne': null}
         }
       },
@@ -60,7 +60,7 @@ router.get('/:id', async (req, res, next) => {
       let clonedVote = JSON.parse(JSON.stringify(votes[0]))
 
       delete clonedVote._id
-      clonedVote.votesAgainst = clonedVote.totalVote - clonedVote.voteFor
+      clonedVote.votesAgainst = clonedVote.totalVotes - clonedVote.votesFor
       clonedVideo.tcrStatus.data.challenge = Object.assign(clonedChallenge, clonedVote)
     }
   } else {
