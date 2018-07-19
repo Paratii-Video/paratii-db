@@ -172,7 +172,7 @@ module.exports.vote = async function (log, paratii) {
   vote.voter = log.returnValues.voter
   vote.pollID = log.returnValues.pollID
   vote.numTokens = log.returnValues.numTokens
-  vote.choice = log.returnValues.choice
+  vote.choice = parseInt(log.returnValues.choice)
   let block = await paratii.eth.web3.eth.getBlock(log.blockNumber)
   if (vote.choice) {
     vote.voteRevealed = block.timestamp

@@ -4,6 +4,7 @@ const router = express.Router()
 const Models = require('../../models')
 const Video = Models.video
 const Challenge = Models.challenge
+const Vote = Models.vote
 const Json2csvParser = require('json2csv').Parser
 
 router.get('/:id/related', (req, res, next) => {
@@ -29,11 +30,41 @@ router.get('/:id', async (req, res, next) => {
   let clonedVideo = JSON.parse(JSON.stringify(video))
   let challenge = await Challenge.findOne({listingHash: video.listingHash})
 
+
   if (clonedVideo.tcrStatus !== undefined) {
-    clonedVideo.tcrStatus.data.challenge = challenge
+    let clonedChallenge = JSON.parse(JSON.stringify(challenge))
+
+    clonedVideo.tcrStatus.data.challenge = clonedChallenge
     if (clonedVideo.tcrStatus.data.staked) {
       clonedVideo.tcrStatus.name = 'appWasMade'
     }
+
+    let votes = await Vote.aggregate([
+          {
+            $match: {
+              pollID: clonedVideo.id,
+              voteRevealed: {'$ne': null}
+            }
+          },
+          {
+              $group: {
+                  _id: '$pollID',
+                  votesFor: {$sum: '$choice'},
+                  totalVote: {$sum: 1},
+              }
+          }
+      ]
+    )
+
+    if(votes.length > 0){
+      let clonedVote = JSON.parse(JSON.stringify(votes[0]))
+
+      delete clonedVote._id
+      clonedVote.votesAgainst = clonedVote.totalVote - clonedVote.voteFor
+      clonedVideo.tcrStatus.data.challenge = Object.assign(clonedChallenge, clonedVote);
+    }
+
+
   } else {
     clonedVideo.tcrStatus = {}
     clonedVideo.tcrStatus.name = 'notInTCR'
