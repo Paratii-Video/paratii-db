@@ -27,8 +27,9 @@ router.get('/:id/related', (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   let video = await Video.findOne({_id: req.params.id})
   if (!video) { res.send({}) }
+  console.log(req.params.id)
   let clonedVideo = JSON.parse(JSON.stringify(video))
-  let challenge = await Challenge.findOne({listingHash: video.listingHash})
+  let challenge = await Challenge.findOne({listingHash: clonedVideo.listingHash})
 
   if (clonedVideo.tcrStatus !== undefined) {
     let clonedChallenge = JSON.parse(JSON.stringify(challenge))
