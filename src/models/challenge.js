@@ -19,8 +19,8 @@ const ChallengeSchema = new Schema({
   commitEndDate: Number,
   revealEndDate: Number,
   voteQuorum: Number,
-  votesFor: Number,
-  votesAgainst: Number,
+  // votesFor: Number,
+  // votesAgainst: Number,
   blockNumber: Number,
   data: String
 })

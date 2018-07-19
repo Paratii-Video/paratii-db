@@ -9,7 +9,7 @@ const VoteSchema = new Schema({
   voter: String,
   pollID: String,
   numTokens: Number,
-  choice: Boolean, // choice is either 0 or 1, or null
+  choice: Number, // choice is either 0 or 1, or null
   voteCommitted: Number, // timestamp,
   voteRevealed: Number,
   blockNumber: Number

@@ -611,8 +611,9 @@ describe('👀 Paratii-db Observer', function (done) {
             .condition(function (cb) {
               let condition = false
               Video.findOne({listingHash: listingHash}).exec().then(function (video) {
+                console.log(video)
                 if (video) {
-                  condition = (video.staked !== undefined)
+                  condition = (video.tcrStatus.data.staked !== undefined)
                   cb(condition)
                 } else {
                   cb(condition)

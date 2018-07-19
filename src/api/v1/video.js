@@ -4,6 +4,7 @@ const router = express.Router()
 const Models = require('../../models')
 const Video = Models.video
 const Challenge = Models.challenge
+const Vote = Models.vote
 const Json2csvParser = require('json2csv').Parser
 
 router.get('/:id/related', (req, res, next) => {
@@ -23,17 +24,49 @@ router.get('/:id/related', (req, res, next) => {
  * @param {String}  id  video _id
  */
 
-router.get('/:id', (req, res, next) => {
-  Video.findOne({_id: req.params.id}, (err, video) => {
-    if (err) return res.send(err)
-    if (!video) return res.json({})
-    Challenge.findOne({listingHash: video.listingHash}, (err, ch) => {
-      let clonedVideo = JSON.parse(JSON.stringify(video))
-      if (err) return res.send(err)
-      clonedVideo.tcrStatus = ch
-      res.json(clonedVideo)
-    })
-  })
+router.get('/:id', async (req, res, next) => {
+  let video = await Video.findOne({_id: req.params.id})
+  if (!video) { res.send({}) }
+  let clonedVideo = JSON.parse(JSON.stringify(video))
+  let challenge = await Challenge.findOne({listingHash: clonedVideo.listingHash})
+  let clonedChallenge
+  if (challenge && clonedVideo.tcrStatus !== undefined) {
+    clonedChallenge = JSON.parse(JSON.stringify(challenge))
+
+    clonedVideo.tcrStatus.data.challenge = clonedChallenge
+    if (clonedVideo.tcrStatus.data.staked) {
+      clonedVideo.tcrStatus.name = 'appWasMade'
+    }
+    let votes = await Vote.aggregate([
+      {
+        $match: {
+          pollID: clonedChallenge.id,
+          voteRevealed: {'$ne': null}
+        }
+      },
+      {
+        $group: {
+          _id: '$pollID',
+          votesFor: {$sum: '$choice'},
+          totalVotes: {$sum: 1}
+        }
+      }
+    ]
+    )
+
+    if (votes.length > 0) {
+      let clonedVote = JSON.parse(JSON.stringify(votes[0]))
+      delete clonedVote._id
+
+      clonedVote.votesAgainst = clonedVote.totalVotes - clonedVote.votesFor
+      clonedVideo.tcrStatus.data.challenge = Object.assign(clonedChallenge, clonedVote)
+    }
+  } else {
+    clonedVideo.tcrStatus = {}
+    clonedVideo.tcrStatus.name = 'notInTCR'
+  }
+
+  res.json(clonedVideo)
 })
 
 /**

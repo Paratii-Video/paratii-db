@@ -23,6 +23,11 @@ const VideoSchema = new Schema({
   storageStatus: Object,
   transcodingStatus: Object,
   staked: Object,
+  tcrStatus: {
+    data: {
+      staked: Object
+    }
+  },
   filesize: String,
   filename: String,
   uploadStatus: Object,
@@ -102,7 +107,7 @@ VideoSchema.statics.stake = function (application, cb) {
   }
   var query = {listingHash: application._id}
 
-  this.findOneAndUpdate(query, { staked: application }, {upsert: true}, cb)
+  this.findOneAndUpdate(query, { 'tcrStatus.data.staked': application }, {upsert: true}, cb)
 }
 
 /**
@@ -196,10 +201,10 @@ VideoSchema.statics.search = function (query, cb) {
   // Setting Staked FILTER
   if (staked !== undefined) {
     if (staked === 'true') {
-      let stakedQuery = {'staked': {'$ne': null}}
+      let stakedQuery = {'tcrStatus.data.staked': {'$ne': null}}
       search = Object.assign(search, stakedQuery)
     } else {
-      let stakedQuery = {'staked': null}
+      let stakedQuery = {'tcrStatus.data.staked': null}
       search = Object.assign(search, stakedQuery)
     }
   }

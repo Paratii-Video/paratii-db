@@ -38,7 +38,7 @@ describe('🐝 Paratii-db API', function () {
     Video.remove({})
     User.remove({})
     Transaction.remove({})
-    Video.bulkUpsert(videos, (err, success) => {
+    Video.bulkUpsert(videos.videos, (err, success) => {
       if (err) throw err
     })
     User.bulkUpsert(users, (err, success) => {
