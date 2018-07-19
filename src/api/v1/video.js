@@ -27,22 +27,20 @@ router.get('/:id/related', (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   let video = await Video.findOne({_id: req.params.id})
   if (!video) { res.send({}) }
-  console.log(req.params.id)
   let clonedVideo = JSON.parse(JSON.stringify(video))
   let challenge = await Challenge.findOne({listingHash: clonedVideo.listingHash})
-
-  if (clonedVideo.tcrStatus !== undefined) {
-    let clonedChallenge = JSON.parse(JSON.stringify(challenge))
+  let clonedChallenge
+  if (challenge && clonedVideo.tcrStatus !== undefined) {
+    clonedChallenge = JSON.parse(JSON.stringify(challenge))
 
     clonedVideo.tcrStatus.data.challenge = clonedChallenge
     if (clonedVideo.tcrStatus.data.staked) {
       clonedVideo.tcrStatus.name = 'appWasMade'
     }
-
     let votes = await Vote.aggregate([
       {
         $match: {
-          pollID: '2',
+          pollID: clonedChallenge.id,
           voteRevealed: {'$ne': null}
         }
       },
@@ -58,8 +56,8 @@ router.get('/:id', async (req, res, next) => {
 
     if (votes.length > 0) {
       let clonedVote = JSON.parse(JSON.stringify(votes[0]))
-
       delete clonedVote._id
+
       clonedVote.votesAgainst = clonedVote.totalVotes - clonedVote.votesFor
       clonedVideo.tcrStatus.data.challenge = Object.assign(clonedChallenge, clonedVote)
     }
