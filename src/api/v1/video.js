@@ -29,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
   if (!video) { res.send({}) }
   let clonedVideo = JSON.parse(JSON.stringify(video))
   let clonedChallenge
-  if (clonedVideo.tcrStatus !== undefined) {
+  if (clonedVideo && clonedVideo.tcrStatus !== undefined) {
     clonedVideo.tcrStatus.name =  'appWasMade'
     let challenge = await Challenge.findOne({listingHash: clonedVideo.listingHash})
     if (challenge) {
@@ -66,7 +66,7 @@ router.get('/:id', async (req, res, next) => {
     }
   } else {
     clonedVideo.tcrStatus = {}
-    clonedVideo.tcrStatus.name = 'notInTCR'
+    clonedVideo.tcrStatus.name = 'notInTcr'
   }
 
   res.json(clonedVideo)
