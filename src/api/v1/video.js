@@ -30,7 +30,7 @@ router.get('/:id', async (req, res, next) => {
   let clonedVideo = JSON.parse(JSON.stringify(video))
   let clonedChallenge
   if (clonedVideo && clonedVideo.tcrStatus !== undefined) {
-    clonedVideo.tcrStatus.name =  'appWasMade'
+    clonedVideo.tcrStatus.name = 'appWasMade'
     let challenge = await Challenge.findOne({listingHash: clonedVideo.listingHash})
     if (challenge) {
       clonedChallenge = JSON.parse(JSON.stringify(challenge))
