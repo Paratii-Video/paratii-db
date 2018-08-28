@@ -1,3 +1,3 @@
 {
-  "whitelisted":["https://portal.paratii.video","https://staging.paratii.video",  "http://localhost:8080", "http://localhost:3000", "undefined"]
+  "whitelisted":["https://lab.paratii.video","https://portal.paratii.video","https://staging.paratii.video",  "http://localhost:8080", "http://localhost:3000", "undefined"]
 }

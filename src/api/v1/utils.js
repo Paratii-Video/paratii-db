@@ -24,7 +24,7 @@ router.get('/exports', (req, res, next) => {
           baseurl = 'https://staging.paratii.video/play/'
           break
         case 'production':
-          baseurl = 'https://portal.paratii.video/play/'
+          baseurl = 'https://lab.paratii.video/play/'
 
           break
         case 'development':
