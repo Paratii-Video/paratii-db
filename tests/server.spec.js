@@ -32,7 +32,7 @@ describe('🚑 Paratii-db server', function (done) {
         provider: 'ws://localhost:8546'
       }
     })
-
+    await Video.collection.drop()
     contract = await paratii.eth.deployContracts()
     server = require('../src/server')
     let token = await paratii.eth.getContract('ParatiiToken')

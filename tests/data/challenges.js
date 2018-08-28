@@ -1,0 +1,50 @@
+module.exports = [
+  {
+    '_id': '0x1',
+    'listingHash': '0x1',
+    'rewardPool': 5e18,
+    'challenger': '0x1',
+    'resolved': true,
+    'stake': 10e18,
+    'totalTokens': 14e18,
+    'voterCanClaimReward': false,
+    'commitStartDate': 1530741082,
+    'commitEndDate': 1530741182,
+    'revealEndDate': 1530741282,
+    'voteQuorum': 30,
+    'votesFor': 3e18,
+    'votesAgainst': 4e18
+  },
+  {
+    '_id': '0x2',
+    'listingHash': '0x1',
+    'rewardPool': 5e18,
+    'challenger': '0x2',
+    'resolved': true,
+    'stake': 10e18,
+    'totalTokens': 14e18,
+    'voterCanClaimReward': false,
+    'commitStartDate': 1530741082,
+    'commitEndDate': 1530741182,
+    'revealEndDate': 1530741282,
+    'voteQuorum': 30,
+    'votesFor': 3e18,
+    'votesAgainst': 4e18
+  },
+  {
+    '_id': '0x3',
+    'listingHash': '0x2',
+    'rewardPool': 5e18,
+    'challenger': '0x3',
+    'resolved': true,
+    'stake': 10e18,
+    'totalTokens': 14e18,
+    'voterCanClaimReward': true,
+    'commitStartDate': 1530741082,
+    'commitEndDate': 1530741182,
+    'revealEndDate': 1530741282,
+    'voteQuorum': 30,
+    'votesFor': 3e18,
+    'votesAgainst': 4e18
+  }
+]

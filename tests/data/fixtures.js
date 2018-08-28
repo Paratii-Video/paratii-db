@@ -1,4 +1,4 @@
-module.exports = [{
+const videos = [{
   '_id': 'QmNZS5J3LS1tMEVEP3tz3jyd2LXUEjkYJHyWSuwUvHDaRJ',
   'title': 'The mathematician who cracked Wall Street | Jim Simons',
   'description': 'Jim Simons was a mathematician and cryptographer who realized: the complex math he used to break codes could help explain patterns in the world of finance. Billions later, he’s working to support the next generation of math teachers and scholars. TED’s Chris Anderson sits down with Simons to talk about his extraordinary life in numbers.\n\nTEDTalks is a daily video podcast of the best talks and performances from the TED Conference, where the world\'sleading thinkers and doers give the talk of their lives in 18 minutes (or less). Look for talks on Technology, Entertainment and Design -- plus science, business, global issues, the arts and much more.\nFind closed captions and translated subtitles in many languages at http://www.ted.com/translate\n\nFollow TED news on Twitter: http://www.twitter.com/tednews\nLike TED on Facebook: https://www.facebook.com/TED\n\nSubscribe to our channel: http://www.youtube.com/user/TEDtalksD...',
@@ -15,8 +15,12 @@ module.exports = [{
     'address': '0x9e2d04eef5b16CFfB4328Ddd027B55736407B275',
     'name': 'TED'
   },
-  'staked': {
-    'something': true
+  'tcrStatus': {
+    'data': {
+      'staked': {
+        'something': true
+      }
+    }
   },
   'tags': [
     'TEDTalk',
@@ -207,8 +211,12 @@ module.exports = [{
   'mimetype': 'video/mp4',
   'thumb': '/ipfs/QmevuGixcmVJg8FB2y6i1GvBSNWTaTNFpbxwgKnhUf2RAd/thumbnail-1280x720_2.png',
   'owner': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
-  'staked': {
-    'something': true
+  'tcrStatus': {
+    'data': {
+      'staked': {
+        'something': true
+      }
+    }
   },
   'stats': {
     'likes': 0,
@@ -309,8 +317,12 @@ module.exports = [{
     'likes': 0,
     'dislikes': 0
   },
-  'staked': {
-    'something': true
+  'tcrStatus': {
+    'data': {
+      'staked': {
+        'something': true
+      }
+    }
   },
   'uploader': {
     'address': '0xe19678107410951a9ed1f6906ba4c913eb0e44d4',
@@ -1325,3 +1337,12 @@ module.exports = [{
     'distributed ledger'
   ]
 }]
+
+const videosResponse = {
+  total: videos.length,
+  results: videos,
+  hasNext: false,
+  query: {}
+}
+
+module.exports = { videos, videosResponse }

@@ -264,7 +264,7 @@ User:
 
 ## Request cors access
 
-Currently our API have limited cors access.
+Currently our API has limited cors access.
 Want to develop a project that use Paratii API?
 Write us on our beloved telegram channel =)
 

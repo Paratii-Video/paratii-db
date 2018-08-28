@@ -40,7 +40,7 @@ describe('📼 Paratii-db Video Model Spec', function (done) {
   })
 
   it('Should be able to insert 1 video and get it back.', (done) => {
-    Video.upsert(fixtures[0], (err, vid) => {
+    Video.upsert(fixtures.videos[0], (err, vid) => {
       if (err) return done(err)
       assert.isOk(vid)
       done()
@@ -48,7 +48,7 @@ describe('📼 Paratii-db Video Model Spec', function (done) {
   })
 
   it('Should be able to insert multiple videos.', (done) => {
-    Video.bulkUpsert(fixtures, (err, success) => {
+    Video.bulkUpsert(fixtures.videos, (err, success) => {
       if (err) return done(err)
       assert.isOk(success)
       Video.ensureIndexes(done)

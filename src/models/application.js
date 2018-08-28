@@ -6,7 +6,10 @@ const Schema = mongoose.Schema
 const ApplicationSchema = new Schema({
   _id: String,
   deposit: Number,
-  blockNumber: Number
+  appEndDate: Number,
+  blockNumber: Number,
+  data: String,
+  applicant: String
 })
 
 /**
@@ -32,6 +35,25 @@ ApplicationSchema.statics.findLastBlockNumber = async function () {
     result.blockNumber = 0
   }
   return result.blockNumber
+}
+
+/**
+ * delete application by applicationid
+ * @param  {videoId}   videoId.
+ * @param  {Function} cb      (err, result)
+ * @return {Boolean}          returns error or success once application is deleted.
+ */
+ApplicationSchema.statics.delete = function (applicationId, cb) {
+  const query = {
+    _id: applicationId
+  }
+  this.remove(query).exec((err, result) => {
+    if (err) {
+      return cb(err)
+    }
+
+    return cb(null, true)
+  })
 }
 
 const Application = mongoose.model('Application', ApplicationSchema)
