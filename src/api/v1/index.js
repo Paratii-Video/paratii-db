@@ -22,8 +22,8 @@ if (process.env.NODE_ENV === 'production') {
         callback(null, true)
       } else {
         // FIXME: opening cors temporarly
-        callback(new Error(origin + 'Not allowed by CORS'))
-        // callback(null, true)
+        // callback(new Error(origin + 'Not allowed by CORS'))
+        callback(null, true)
       }
     }
   }
